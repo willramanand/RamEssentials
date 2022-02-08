@@ -98,10 +98,6 @@ public class PlayerConfig {
                 }
             }
 
-            if (!(plugin.getAccountManager().getPlayerNameByUUID(player.getUniqueId()).equalsIgnoreCase(player.getName()))) {
-                plugin.getAccountManager().updateUserName(player.getName(), player.getUniqueId());
-            }
-
             plugin.getPlayerManager().addPlayerData(ePlayer);
         } else {
             Bukkit.getServer().getConsoleSender().sendMessage(ColorUtils.colorMessage("&bCould not load player config for UUID: " + player.getUniqueId()));

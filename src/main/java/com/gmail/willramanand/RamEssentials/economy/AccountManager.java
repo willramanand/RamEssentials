@@ -183,14 +183,4 @@ public class AccountManager {
         double initial = accounts.get(uuid);
         return (initial - amount) >= 0;
     }
-
-    @Deprecated
-    public void updateUserName(String playerName, UUID uuid) {
-        playerNames.put(playerName, uuid);
-    }
-
-    @Deprecated
-    public String getPlayerNameByUUID(UUID uuid) {
-        return playerNames.inverse().get(uuid);
-    }
 }
