@@ -216,6 +216,7 @@ public final class RamEssentials extends JavaPlugin {
         // Money Commands
         commandManager.registerCommand(new BalanceCommand(this));
         commandManager.registerCommand(new EcoCommand(this));
+        commandManager.registerCommand(new PayCommand(this));
     }
 
     private void registerEvents() {

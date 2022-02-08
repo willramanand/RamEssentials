@@ -7,6 +7,7 @@ import co.aikar.commands.annotation.Description;
 import co.aikar.commands.annotation.Subcommand;
 import com.gmail.willramanand.RamEssentials.RamEssentials;
 import com.gmail.willramanand.RamEssentials.utils.ColorUtils;
+import com.gmail.willramanand.RamEssentials.utils.TeleportUtils;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerTeleportEvent;
@@ -24,7 +25,7 @@ public class SpawnCommand extends BaseCommand {
     @Description("Teleports you to server spawn.")
     public void serverSpawn(CommandSender sender) {
         Player player = (Player) sender;
-        player.teleportAsync(plugin.getServerSpawn().getLocation(), PlayerTeleportEvent.TeleportCause.COMMAND);
+        TeleportUtils.teleport(player, plugin.getServerSpawn().getLocation());
         sender.sendMessage(ColorUtils.colorMessage("&eTeleporting to server spawn."));
     }
 
@@ -32,7 +33,7 @@ public class SpawnCommand extends BaseCommand {
     @Description("Teleports you to world spawn.")
     public void worldSpawn(CommandSender sender) {
         Player player = (Player) sender;
-        player.teleportAsync(player.getWorld().getSpawnLocation(), PlayerTeleportEvent.TeleportCause.COMMAND);
+        TeleportUtils.teleport(player, player.getWorld().getSpawnLocation());
         sender.sendMessage(ColorUtils.colorMessage("&eTeleporting to world spawn."));
     }
 }

@@ -10,6 +10,7 @@ import org.bukkit.entity.Player;
 
 @CommandAlias("eco|economy")
 @CommandPermission("ramessentials.eco")
+@Description("Manage the server's economy")
 public class EcoCommand extends BaseCommand {
 
     private final RamEssentials plugin;

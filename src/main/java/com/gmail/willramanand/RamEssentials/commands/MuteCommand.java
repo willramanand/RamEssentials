@@ -66,7 +66,7 @@ public class MuteCommand extends BaseCommand {
         plugin.getTempMutedPlayers().add(ePlayer.getUuid());
         MuteTimer.runTimer(ePlayer, seconds);
 
-        sender.sendMessage(ColorUtils.colorMessage("&eYou have muted the player &d" + player.getName() + " &efor &d" + seconds + "&eseconds."));
+        sender.sendMessage(ColorUtils.colorMessage("&eYou have muted the player &d" + player.getName() + " &efor &d" + seconds + " &eseconds."));
         player.sendMessage(ColorUtils.colorMessage("&eYou have been muted for &d" + seconds + " &eseconds."));
     }
 

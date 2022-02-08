@@ -40,10 +40,9 @@ public class Warps {
 
     public void save() {
         FileConfiguration config = plugin.getConfig();
-        ConfigurationSection section = config.getConfigurationSection("warps");
 
         for (String s : warps.keySet()) {
-            section.set(s, warps.get(s));
+            config.set("warps." + s, warps.get(s));
         }
 
         plugin.saveConfig();
