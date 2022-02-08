@@ -1,0 +1,3 @@
+&eWelcome, {PLAYER}&e!
+&eType &d/help&e for a list of commands.
+&ePlayers online:&d {ONLINE} &e- World time:&d {WORLDTIME12}

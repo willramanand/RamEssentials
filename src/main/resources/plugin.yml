@@ -1,0 +1,51 @@
+name: RamEssentials
+version: '${project.version}'
+main: com.gmail.willramanand.RamEssentials.RamEssentials
+api-version: 1.18
+softdepend: [ Vault ]
+authors: [ WillRam ]
+description: Provides essentials commands and functionality to your paper server.
+website: willramanand.github.io
+permissions:
+  ramessentials.broadcast:
+    default: op
+  ramessentials.enderchest:
+    default: op
+  ramessentials.enderchest.other:
+    default: op
+  ramessentials.workbench:
+    default: true
+  ramessentials.anvil:
+    default: op
+  ramessentials.smithingtable:
+    default: op
+  ramessentials.cartographytable:
+    default: op
+  ramessentials.grindstone:
+    default: op
+  ramessentials.loom:
+    default: op
+  ramessentials.stonecutter:
+    default: op
+  ramessentials.invsee:
+    default: op
+  ramessentials.killplayer:
+    default: op
+  ramessentials.setspawn:
+    default: op
+  ramessentials.setwarp:
+    default: op
+  ramessentials.delwarp:
+    default: op
+  ramessentials.tp:
+    default: op
+  ramessentials.mute:
+    default: op
+  ramessentials.unmute:
+    default: op
+  ramessentials.fly:
+    default: op
+  ramessentials.walkspeed:
+    default: op
+  ramessentials.eco:
+    default: op
