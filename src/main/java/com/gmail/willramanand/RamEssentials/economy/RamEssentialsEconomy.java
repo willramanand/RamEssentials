@@ -52,6 +52,7 @@ public class RamEssentialsEconomy implements Economy {
         return "$";
     }
 
+    @Deprecated
     @Override
     public boolean hasAccount(String playerName) {
         return plugin.getAccountManager().hasAccount(playerName);
@@ -62,6 +63,7 @@ public class RamEssentialsEconomy implements Economy {
         return plugin.getAccountManager().hasAccount(player);
     }
 
+    @Deprecated
     @Override
     public boolean hasAccount(String playerName, String worldName) {
         return hasAccount(playerName);
@@ -72,6 +74,7 @@ public class RamEssentialsEconomy implements Economy {
         return hasAccount(player);
     }
 
+    @Deprecated
     @Override
     public double getBalance(String playerName) {
         return plugin.getAccountManager().getBalance(playerName);
@@ -82,6 +85,7 @@ public class RamEssentialsEconomy implements Economy {
         return plugin.getAccountManager().getBalance(player);
     }
 
+    @Deprecated
     @Override
     public double getBalance(String playerName, String world) {
         return getBalance(playerName);
@@ -92,6 +96,7 @@ public class RamEssentialsEconomy implements Economy {
         return getBalance(player);
     }
 
+    @Deprecated
     @Override
     public boolean has(String playerName, double amount) {
         return false;
@@ -102,6 +107,7 @@ public class RamEssentialsEconomy implements Economy {
         return false;
     }
 
+    @Deprecated
     @Override
     public boolean has(String playerName, String worldName, double amount) {
         return plugin.getAccountManager().isValidTransaction(playerName, amount);
@@ -112,6 +118,7 @@ public class RamEssentialsEconomy implements Economy {
         return plugin.getAccountManager().isValidTransaction(player, amount);
     }
 
+    @Deprecated
     @Override
     public EconomyResponse withdrawPlayer(String playerName, double amount) {
         if (playerName == null) {
@@ -138,6 +145,7 @@ public class RamEssentialsEconomy implements Economy {
         return new EconomyResponse(amount, getBalance(player), EconomyResponse.ResponseType.SUCCESS, null);
     }
 
+    @Deprecated
     @Override
     public EconomyResponse withdrawPlayer(String playerName, String worldName, double amount) {
         return withdrawPlayer(playerName, amount);
@@ -148,6 +156,7 @@ public class RamEssentialsEconomy implements Economy {
         return withdrawPlayer(player, amount);
     }
 
+    @Deprecated
     @Override
     public EconomyResponse depositPlayer(String playerName, double amount) {
         if (playerName == null) {
@@ -174,6 +183,7 @@ public class RamEssentialsEconomy implements Economy {
         return new EconomyResponse(amount, getBalance(player), EconomyResponse.ResponseType.SUCCESS, null);
     }
 
+    @Deprecated
     @Override
     public EconomyResponse depositPlayer(String playerName, String worldName, double amount) {
         return depositPlayer(playerName, amount);
@@ -184,6 +194,7 @@ public class RamEssentialsEconomy implements Economy {
         return depositPlayer(player, amount);
     }
 
+    @Deprecated
     @Override
     public EconomyResponse createBank(String name, String player) {
         return new EconomyResponse(0, 0, EconomyResponse.ResponseType.NOT_IMPLEMENTED, "RamEssentials does not support bank accounts!");
@@ -219,6 +230,7 @@ public class RamEssentialsEconomy implements Economy {
         return new EconomyResponse(0, 0, EconomyResponse.ResponseType.NOT_IMPLEMENTED, "RamEssentials does not support bank accounts!");
     }
 
+    @Deprecated
     @Override
     public EconomyResponse isBankOwner(String name, String playerName) {
         return new EconomyResponse(0, 0, EconomyResponse.ResponseType.NOT_IMPLEMENTED, "RamEssentials does not support bank accounts!");
@@ -229,6 +241,7 @@ public class RamEssentialsEconomy implements Economy {
         return new EconomyResponse(0, 0, EconomyResponse.ResponseType.NOT_IMPLEMENTED, "RamEssentials does not support bank accounts!");
     }
 
+    @Deprecated
     @Override
     public EconomyResponse isBankMember(String name, String playerName) {
         return new EconomyResponse(0, 0, EconomyResponse.ResponseType.NOT_IMPLEMENTED, "RamEssentials does not support bank accounts!");
@@ -244,23 +257,35 @@ public class RamEssentialsEconomy implements Economy {
         return Collections.emptyList();
     }
 
+    @Deprecated
     @Override
     public boolean createPlayerAccount(String playerName) {
-        return false;
+        if (hasAccount(playerName)) {
+            return false;
+        }
+
+        plugin.getAccountManager().createAccount(playerName, 0);
+        return true;
     }
 
     @Override
     public boolean createPlayerAccount(OfflinePlayer player) {
-        return false;
+        if (hasAccount(player)) {
+            return false;
+        }
+
+        plugin.getAccountManager().createAccount(player, 0.0);
+        return true;
     }
 
+    @Deprecated
     @Override
     public boolean createPlayerAccount(String playerName, String worldName) {
-        return false;
+        return createPlayerAccount(playerName);
     }
 
     @Override
     public boolean createPlayerAccount(OfflinePlayer player, String worldName) {
-        return false;
+        return createPlayerAccount(player);
     }
 }

@@ -41,6 +41,7 @@ public class Warps {
     public void save() {
         FileConfiguration config = plugin.getConfig();
 
+        config.set("warps", null);
         for (String s : warps.keySet()) {
             config.set("warps." + s, warps.get(s));
         }

@@ -3,6 +3,8 @@ package com.gmail.willramanand.RamEssentials.commands;
 import co.aikar.commands.BaseCommand;
 import co.aikar.commands.annotation.*;
 import com.gmail.willramanand.RamEssentials.RamEssentials;
+import com.gmail.willramanand.RamEssentials.listeners.PlayerListener;
+import com.gmail.willramanand.RamEssentials.player.EPlayer;
 import com.gmail.willramanand.RamEssentials.utils.ColorUtils;
 import com.gmail.willramanand.RamEssentials.utils.TeleportUtils;
 import org.bukkit.command.CommandSender;
@@ -21,9 +23,22 @@ public class TPACommand extends BaseCommand {
     @Description("Make a teleport requests to specified player.")
     @CommandCompletion("@players")
     public void makeRequest(CommandSender sender, @Flags("other") Player playerTo) {
+        if (!(sender instanceof Player)) {
+            sender.sendMessage(ColorUtils.colorMessage("&cYou must be player to use this command!"));
+            return;
+        }
+
         Player player = (Player) sender;
+
         if (plugin.getRequestManager().hasRequest(playerTo, player)) {
             player.sendMessage(ColorUtils.colorMessage("&cYou already have an active request with this player!"));
+            return;
+        }
+
+        EPlayer ePlayer = plugin.getPlayerManager().getPlayerData(playerTo);
+
+        if (ePlayer.getIgnoredPlayers().contains(player.getUniqueId())) {
+            player.sendMessage(ColorUtils.colorMessage("&cYou cannot send a request to a player ignoring you!"));
             return;
         }
 

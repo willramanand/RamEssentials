@@ -188,6 +188,8 @@ public final class RamEssentials extends JavaPlugin {
         commandManager.registerCommand(new BroadcastCommand(this));
         commandManager.registerCommand(new BroadcastWorldCommand(this));
         commandManager.registerCommand(new MessageCommand(this));
+        commandManager.registerCommand(new DNDCommand(this));
+        commandManager.registerCommand(new IgnoreCommand(this));
 
         // Inventory Commands
         commandManager.registerCommand(new EnderChestCommand(this));

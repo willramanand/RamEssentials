@@ -98,6 +98,10 @@ public class PlayerConfig {
                 }
             }
 
+            if (!(plugin.getAccountManager().getPlayerNameByUUID(player.getUniqueId()).equalsIgnoreCase(player.getName()))) {
+                plugin.getAccountManager().updateUserName(player.getName(), player.getUniqueId());
+            }
+
             plugin.getPlayerManager().addPlayerData(ePlayer);
         } else {
             Bukkit.getServer().getConsoleSender().sendMessage(ColorUtils.colorMessage("&bCould not load player config for UUID: " + player.getUniqueId()));
@@ -128,6 +132,7 @@ public class PlayerConfig {
             config.set("logoutLocation", ePlayer.getPlayer().getLocation());
 
             if (!(ePlayer.getHomeList().isEmpty())) {
+                config.set("homes", null);
                 for (String s : ePlayer.getHomeList()) {
                     config.set("homes." + s, ePlayer.getHome(s));
                 }

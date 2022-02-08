@@ -2,10 +2,11 @@ package com.gmail.willramanand.RamEssentials.economy;
 
 import com.gmail.willramanand.RamEssentials.RamEssentials;
 import com.gmail.willramanand.RamEssentials.utils.ColorUtils;
+import com.google.common.collect.BiMap;
+import com.google.common.collect.HashBiMap;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.entity.Player;
 
 import java.io.File;
 import java.io.IOException;
@@ -19,12 +20,12 @@ public class AccountManager {
     private final RamEssentials plugin;
 
     private final Map<UUID, Double> accounts;
-    private final Map<String, UUID> playerNames;
+    private final BiMap<String, UUID> playerNames;
 
     public AccountManager(RamEssentials plugin) {
         this.plugin = plugin;
         this.accounts = new HashMap<>();
-        this.playerNames = new HashMap<>();
+        this.playerNames = HashBiMap.create();
     }
 
     public void load() {
@@ -77,6 +78,7 @@ public class AccountManager {
         accounts.put(uuid, amount);
     }
 
+    @Deprecated
     public void createAccount(String playerName, double amount) {
         UUID uuid = playerNames.get(playerName);
         accounts.put(uuid, amount);
@@ -90,6 +92,7 @@ public class AccountManager {
         return accounts.containsKey(uuid);
     }
 
+    @Deprecated
     public boolean hasAccount(String playerName) {
         UUID uuid = playerNames.get(playerName);
         return accounts.containsKey(uuid);
@@ -104,6 +107,7 @@ public class AccountManager {
         accounts.put(uuid, amount);
     }
 
+    @Deprecated
     public void setBalance(String playerName, double amount) {
         UUID uuid = playerNames.get(playerName);
         accounts.put(uuid, amount);
@@ -117,6 +121,7 @@ public class AccountManager {
         return accounts.get(uuid);
     }
 
+    @Deprecated
     public double getBalance(String playerName) {
         UUID uuid = playerNames.get(playerName);
         return accounts.get(uuid);
@@ -134,6 +139,7 @@ public class AccountManager {
         accounts.put(uuid, newAmount);
     }
 
+    @Deprecated
     public void addToBalance(String playerName, double amount) {
         UUID uuid = playerNames.get(playerName);
         double initial = accounts.get(uuid);
@@ -153,6 +159,7 @@ public class AccountManager {
         accounts.put(uuid, newAmount);
     }
 
+    @Deprecated
     public void subFromBalance(String playerName, double amount) {
         UUID uuid = playerNames.get(playerName);
         double initial = accounts.get(uuid);
@@ -170,9 +177,20 @@ public class AccountManager {
         return (initial - amount) >= 0;
     }
 
+    @Deprecated
     public boolean isValidTransaction(String playerName, double amount) {
         UUID uuid = playerNames.get(playerName);
         double initial = accounts.get(uuid);
         return (initial - amount) >= 0;
+    }
+
+    @Deprecated
+    public void updateUserName(String playerName, UUID uuid) {
+        playerNames.put(playerName, uuid);
+    }
+
+    @Deprecated
+    public String getPlayerNameByUUID(UUID uuid) {
+        return playerNames.inverse().get(uuid);
     }
 }
