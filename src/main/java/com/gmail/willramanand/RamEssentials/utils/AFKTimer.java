@@ -40,7 +40,7 @@ public class AFKTimer {
             if (player1 == player) continue;
             player1.sendMessage(ColorUtils.colorMessage("&d" + player.getName() + " &eis now AFK."));
         }
-   }
+    }
 
     public void removeAfk(Player player) {
         isAfk.remove(player);
@@ -81,22 +81,25 @@ public class AFKTimer {
         new BukkitRunnable() {
             @Override
             public void run() {
-                    if (getLocationAfk(player).getBlockX() == player.getLocation().getBlockX() && getLocationAfk(player).getBlockY() == player.getLocation().getBlockY()
-                            && getLocationAfk(player).getBlockZ() == player.getLocation().getBlockZ()) {
-                        if (!isAfk(player)) {
-                            incrementTimer(player);
-                            if (getTimer(player) >= 300) {
-                                addAfk(player);
-                            }
-                        }
-                    } else {
-                        setLocationAfk(player, player.getLocation());
-                        resetTimer(player);
-                        if (isAfk(player)) {
-                            removeAfk(player);
+                if (!player.isOnline()) {
+                    cancel();
+                }
+                if (getLocationAfk(player).getBlockX() == player.getLocation().getBlockX() && getLocationAfk(player).getBlockY() == player.getLocation().getBlockY()
+                        && getLocationAfk(player).getBlockZ() == player.getLocation().getBlockZ()) {
+                    if (!isAfk(player)) {
+                        incrementTimer(player);
+                        if (getTimer(player) >= 300) {
+                            addAfk(player);
                         }
                     }
+                } else {
+                    setLocationAfk(player, player.getLocation());
+                    resetTimer(player);
+                    if (isAfk(player)) {
+                        removeAfk(player);
+                    }
                 }
+            }
         }.runTaskTimerAsynchronously(plugin, 0L, 20L);
     }
 }
