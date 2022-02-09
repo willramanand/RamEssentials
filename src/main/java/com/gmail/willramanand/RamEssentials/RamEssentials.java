@@ -89,6 +89,7 @@ public final class RamEssentials extends JavaPlugin {
         registerEvents();
 
         playerManager.startAutoSave();
+        accountManager.runAutoSave();
 
         startTime = System.currentTimeMillis() - startTime;
         log.info(ColorUtils.colorMessage("[" + this.getName() + "] &6=== &bENABLE &2COMPLETE &6(&eTook &d" + startTime +"ms&6) ==="));

@@ -8,6 +8,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import java.io.File;
 import java.io.IOException;
@@ -21,12 +22,12 @@ public class AccountManager {
     private final RamEssentials plugin;
 
     private final Map<UUID, Double> accounts;
-    private final BiMap<String, UUID> playerNames;
+    private final Map<UUID, String> playerNames;
 
     public AccountManager(RamEssentials plugin) {
         this.plugin = plugin;
         this.accounts = new HashMap<>();
-        this.playerNames = HashBiMap.create();
+        this.playerNames = new HashMap<>();
     }
 
     public void load() {
@@ -46,8 +47,8 @@ public class AccountManager {
 
         int i = 0;
         for (String s : stringUUIDs) {
+            playerNames.put(UUID.fromString(s), config.getString(s + ".name"));
             createAccount(UUID.fromString(s), config.getDouble(s + ".balance"));
-            playerNames.put(config.getString(s + ".name"), UUID.fromString(s));
             i++;
         }
         plugin.getLogger().info(ColorUtils.colorMessage("&eLoaded &d" + i + " &eaccounts!"));
@@ -60,8 +61,8 @@ public class AccountManager {
             FileConfiguration config = YamlConfiguration.loadConfiguration(file);
 
             for (UUID uuid : accounts.keySet()) {
+                config.set(uuid + ".name", playerNames.get(uuid));
                 config.set(uuid + ".balance", accounts.get(uuid));
-                config.set(uuid + ".name", playerNames.inverse().get(uuid));
             }
             try {
                 config.save(file);
@@ -71,23 +72,27 @@ public class AccountManager {
         }
     }
 
+    public void runAutoSave() {
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                save();
+            }
+        }.runTaskTimerAsynchronously(plugin, 6000L, 6000L);
+    }
+
     public void createAccount(OfflinePlayer player, double amount) {
         accounts.put(player.getUniqueId(), amount);
-        playerNames.put(player.getName(), player.getUniqueId());
+        playerNames.put(player.getUniqueId(), player.getName());
     }
 
     public void createAccount(UUID uuid, double amount) {
         accounts.put(uuid, amount);
-
-        OfflinePlayer player = Bukkit.getOfflinePlayer(uuid);
-        if (playerNames.inverse().get(uuid) == null || !(player.getName().equalsIgnoreCase(playerNames.inverse().get(uuid)))) {
-            playerNames.put(player.getName(), uuid);
-        }
     }
 
     @Deprecated
     public void createAccount(String playerName, double amount) {
-        UUID uuid = playerNames.get(playerName);
+        UUID uuid = getUUIDByPlayerName(playerName);
         accounts.put(uuid, amount);
     }
 
@@ -101,7 +106,7 @@ public class AccountManager {
 
     @Deprecated
     public boolean hasAccount(String playerName) {
-        UUID uuid = playerNames.get(playerName);
+        UUID uuid = getUUIDByPlayerName(playerName);
         return accounts.containsKey(uuid);
     }
 
@@ -116,7 +121,7 @@ public class AccountManager {
 
     @Deprecated
     public void setBalance(String playerName, double amount) {
-        UUID uuid = playerNames.get(playerName);
+        UUID uuid = getUUIDByPlayerName(playerName);
         accounts.put(uuid, amount);
     }
 
@@ -130,7 +135,7 @@ public class AccountManager {
 
     @Deprecated
     public double getBalance(String playerName) {
-        UUID uuid = playerNames.get(playerName);
+        UUID uuid = getUUIDByPlayerName(playerName);
         return accounts.get(uuid);
     }
 
@@ -148,7 +153,7 @@ public class AccountManager {
 
     @Deprecated
     public void addToBalance(String playerName, double amount) {
-        UUID uuid = playerNames.get(playerName);
+        UUID uuid = getUUIDByPlayerName(playerName);
         double initial = accounts.get(uuid);
         double newAmount = initial + amount;
         accounts.put(uuid, newAmount);
@@ -168,7 +173,7 @@ public class AccountManager {
 
     @Deprecated
     public void subFromBalance(String playerName, double amount) {
-        UUID uuid = playerNames.get(playerName);
+        UUID uuid = getUUIDByPlayerName(playerName);
         double initial = accounts.get(uuid);
         double newAmount = initial - amount;
         accounts.put(uuid, newAmount);
@@ -186,14 +191,27 @@ public class AccountManager {
 
     @Deprecated
     public boolean isValidTransaction(String playerName, double amount) {
-        UUID uuid = playerNames.get(playerName);
+        UUID uuid = getUUIDByPlayerName(playerName);
         double initial = accounts.get(uuid);
         return (initial - amount) >= 0;
     }
 
-    @Deprecated
     public String getPlayerNameByUUID(UUID uuid) {
-        return playerNames.inverse().get(uuid);
+        OfflinePlayer player = Bukkit.getPlayer(uuid);
+
+        if (player != null) {
+            return player.getName();
+        }
+        return null;
+    }
+
+    @Deprecated
+    public UUID getUUIDByPlayerName(String playerName) {
+        OfflinePlayer player = Bukkit.getOfflinePlayer(playerName);
+        if (player != null) {
+            return player.getUniqueId();
+        }
+        return null;
     }
 
 }
