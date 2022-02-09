@@ -12,6 +12,15 @@
     <description>Provides essentials commands and functionality to your paper server.</description>
     <url>willramanand.github.io</url>
 
+    <properties>
+        <!-- Removes warnings -->
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <!-- Used in plugin.yml -->
+        <mainClass>RamMMO</mainClass>
+        <!-- Also used in plugin.yml -->
+        <author>WillRam</author>
+    </properties>
+
     <build>
         <!-- Uses the properties in this file for plugin.yml and config.yml -->
         <resources>

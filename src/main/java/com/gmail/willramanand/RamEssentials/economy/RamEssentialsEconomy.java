@@ -99,23 +99,23 @@ public class RamEssentialsEconomy implements Economy {
     @Deprecated
     @Override
     public boolean has(String playerName, double amount) {
-        return false;
+        return plugin.getAccountManager().isValidTransaction(playerName, amount);
     }
 
     @Override
     public boolean has(OfflinePlayer player, double amount) {
-        return false;
+        return plugin.getAccountManager().isValidTransaction(player, amount);
     }
 
     @Deprecated
     @Override
     public boolean has(String playerName, String worldName, double amount) {
-        return plugin.getAccountManager().isValidTransaction(playerName, amount);
+        return has(playerName, amount);
     }
 
     @Override
     public boolean has(OfflinePlayer player, String worldName, double amount) {
-        return plugin.getAccountManager().isValidTransaction(player, amount);
+        return has(player, amount);
     }
 
     @Deprecated

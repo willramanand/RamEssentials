@@ -49,3 +49,5 @@ permissions:
     default: op
   ramessentials.eco:
     default: op
+  ramessentials.world:
+    default: op

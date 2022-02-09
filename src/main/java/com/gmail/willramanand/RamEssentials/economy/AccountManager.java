@@ -4,6 +4,7 @@ import com.gmail.willramanand.RamEssentials.RamEssentials;
 import com.gmail.willramanand.RamEssentials.utils.ColorUtils;
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
+import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -59,7 +60,8 @@ public class AccountManager {
             FileConfiguration config = YamlConfiguration.loadConfiguration(file);
 
             for (UUID uuid : accounts.keySet()) {
-                config.set(uuid.toString() + ".balance", accounts.get(uuid));
+                config.set(uuid + ".balance", accounts.get(uuid));
+                config.set(uuid + ".name", playerNames.inverse().get(uuid));
             }
             try {
                 config.save(file);
@@ -76,6 +78,11 @@ public class AccountManager {
 
     public void createAccount(UUID uuid, double amount) {
         accounts.put(uuid, amount);
+
+        OfflinePlayer player = Bukkit.getOfflinePlayer(uuid);
+        if (playerNames.inverse().get(uuid) == null || !(player.getName().equalsIgnoreCase(playerNames.inverse().get(uuid)))) {
+            playerNames.put(player.getName(), uuid);
+        }
     }
 
     @Deprecated
@@ -183,4 +190,10 @@ public class AccountManager {
         double initial = accounts.get(uuid);
         return (initial - amount) >= 0;
     }
+
+    @Deprecated
+    public String getPlayerNameByUUID(UUID uuid) {
+        return playerNames.inverse().get(uuid);
+    }
+
 }

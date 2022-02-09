@@ -12,6 +12,7 @@ import com.gmail.willramanand.RamEssentials.listeners.PlayerListener;
 import com.gmail.willramanand.RamEssentials.player.EPlayer;
 import com.gmail.willramanand.RamEssentials.player.PlayerConfig;
 import com.gmail.willramanand.RamEssentials.player.PlayerManager;
+import com.gmail.willramanand.RamEssentials.utils.AFKTimer;
 import com.gmail.willramanand.RamEssentials.utils.ColorUtils;
 import com.gmail.willramanand.RamEssentials.utils.TxtReader;
 import com.gmail.willramanand.RamEssentials.utils.MuteTimer;
@@ -39,6 +40,7 @@ public final class RamEssentials extends JavaPlugin {
 
     private ServerSpawn serverSpawn;
     private Warps warps;
+    private AFKTimer afkTimer;
 
     private RequestManager requestManager;
     private MessageManager messageManager;
@@ -67,6 +69,7 @@ public final class RamEssentials extends JavaPlugin {
         requestManager = new RequestManager(this);
         messageManager = new MessageManager(this);
         accountManager = new AccountManager(this);
+        afkTimer = new AFKTimer(this);
 
         // Config
         this.getConfig().options().copyDefaults(true);
@@ -183,6 +186,7 @@ public final class RamEssentials extends JavaPlugin {
         commandManager.registerCommand(new BackCommand(this));
         commandManager.registerCommand(new HomeCommand(this));
         commandManager.registerCommand(new TPACommand(this));
+        commandManager.registerCommand(new WorldCommand(this));
 
         // Messaging Commands
         commandManager.registerCommand(new BroadcastCommand(this));
@@ -211,6 +215,7 @@ public final class RamEssentials extends JavaPlugin {
         commandManager.registerCommand(new FlyCommand(this));
         commandManager.registerCommand(new WalkSpeedCommand(this));
         commandManager.registerCommand(new FlySpeedCommand(this));
+        commandManager.registerCommand(new AFKCommand(this));
 
         // Admin Commands
         commandManager.registerCommand(new MuteCommand(this));
@@ -241,6 +246,8 @@ public final class RamEssentials extends JavaPlugin {
     public MessageManager getMessageManager() { return messageManager; }
 
     public AccountManager getAccountManager() { return accountManager; }
+
+    public AFKTimer getAfkTimer() { return afkTimer; }
 
     public int getHouseLimit() { return houseLimit; }
 }

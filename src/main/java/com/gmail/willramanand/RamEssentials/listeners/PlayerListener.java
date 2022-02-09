@@ -29,6 +29,9 @@ public class PlayerListener implements Listener {
         if (!(plugin.getAccountManager().hasAccount(event.getPlayer()))) {
             plugin.getAccountManager().createAccount(event.getPlayer(), 0.0);
         }
+
+        plugin.getAfkTimer().setupPlayer(event.getPlayer());
+        plugin.getAfkTimer().runAfkTimer(event.getPlayer());
     }
 
     @EventHandler

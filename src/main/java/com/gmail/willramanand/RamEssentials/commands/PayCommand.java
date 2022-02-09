@@ -5,9 +5,8 @@ import co.aikar.commands.annotation.*;
 import com.gmail.willramanand.RamEssentials.RamEssentials;
 import com.gmail.willramanand.RamEssentials.utils.ColorUtils;
 import com.gmail.willramanand.RamEssentials.utils.Formatter;
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-
-import java.util.UUID;
 
 @CommandAlias("pay")
 public class PayCommand extends BaseCommand {
@@ -21,7 +20,14 @@ public class PayCommand extends BaseCommand {
     @Default
     @CommandCompletion("@players")
     @Description("Pay another player")
-    public void payPlayer(Player player, @Flags("other") Player other, double amount) {
+    public void payPlayer(CommandSender sender, @Flags("other") Player other, double amount) {
+        if (!(sender instanceof Player)) {
+            sender.sendMessage(ColorUtils.colorMessage("&cYou must be player to use this command!"));
+            return;
+        }
+
+        Player player = (Player) sender;
+
         if (plugin.getAccountManager().isValidTransaction(player, amount)) {
             plugin.getAccountManager().subFromBalance(player, amount);
             plugin.getAccountManager().addToBalance(other, amount);
