@@ -24,9 +24,10 @@ public class HomeCommand extends BaseCommand {
         EPlayer ePlayer = plugin.getPlayerManager().getPlayerData(player);
 
         if (name == null) {
-            if (ePlayer.getHomeList() == null) {
+            if (ePlayer.getHomeList().isEmpty()) {
                 player.sendMessage(ColorUtils.colorMessage("&cYou have no homes to list!"));
             } else {
+                player.sendMessage(ColorUtils.colorMessage("&6---- &bHomes &6----"));
                 for (String s : ePlayer.getHomeList()) {
                     player.sendMessage(s);
                 }

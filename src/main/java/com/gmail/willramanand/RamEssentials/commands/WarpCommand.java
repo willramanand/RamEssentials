@@ -29,6 +29,7 @@ public class WarpCommand extends BaseCommand {
                 player.sendMessage(ColorUtils.colorMessage("&cThere are no warps on this server!"));
                 return;
             }
+            player.sendMessage(ColorUtils.colorMessage("&6---- &bWarps &6----"));
             for (String s : plugin.getWarps().getWarpList()) {
                 player.sendMessage(s);
             }
@@ -51,9 +52,6 @@ public class WarpCommand extends BaseCommand {
         Player player = (Player) sender;
         if (plugin.getWarps().getWarpList().contains(name)) {
             player.sendMessage(ColorUtils.colorMessage("&d" + name + " &ealready exists!"));
-            return;
-        } else if (name.equalsIgnoreCase("list")) {
-            player.sendMessage(ColorUtils.colorMessage("&d" + name + " &ecannot be used!"));
             return;
         }
         plugin.getWarps().addWarp(name, player.getLocation());

@@ -1,7 +1,7 @@
 package com.gmail.willramanand.RamEssentials.player;
 
-import com.gmail.willramanand.RamEssentials.data.MuteType;
 import com.gmail.willramanand.RamEssentials.RamEssentials;
+import com.gmail.willramanand.RamEssentials.data.MuteType;
 import com.gmail.willramanand.RamEssentials.utils.ColorUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -39,9 +39,9 @@ public class PlayerConfig {
                 EPlayer ePlayer = new EPlayer(plugin, player);
 
                 if (file.exists()) {
-
                     plugin.getPlayerManager().addPlayerData(ePlayer);
                     plugin.getAccountManager().createAccount(player, 0.0);
+                    convertEssentialsData(player);
 
                     try {
                         config.save(file);
@@ -150,5 +150,50 @@ public class PlayerConfig {
             Bukkit.getServer().getConsoleSender().sendMessage(ColorUtils.colorMessage("&bCould not save player config for UUID: " + player.getUniqueId() + " because it does not exist!"));
         }
         ePlayer.setSaving(false);
+    }
+
+
+    public void convertEssentialsData(Player player) {
+        File file = new File(Bukkit.getServer().getPluginsFolder().getPath() + "/Essentials/userdata/" + player.getUniqueId() + ".yml");
+
+        if (file.exists()) {
+            plugin.getLogger().info(ColorUtils.colorMessage("&eConverting essentials data for &d" + player.getName()));
+            FileConfiguration essConfig = YamlConfiguration.loadConfiguration(file);
+            EPlayer ePlayer = plugin.getPlayerManager().getPlayerData(player);
+
+            boolean isGod = essConfig.getBoolean("godmode");
+            if (isGod) {
+                ePlayer.setGodMode(true);
+            }
+
+            boolean isMuted = essConfig.getBoolean("muted");
+            if (isMuted) {
+                ePlayer.setMuted(true);
+                ePlayer.setMuteReason("Muted by OP");
+                ePlayer.setMuteType(MuteType.PERM);
+            }
+
+            String moneyString = essConfig.getString("money");
+            if (moneyString != null) {
+                double balance = Double.parseDouble(moneyString);
+                plugin.getAccountManager().setBalance(player, balance);
+            }
+
+            ConfigurationSection homeSection = essConfig.getConfigurationSection("homes");
+
+            if (homeSection != null) {
+                for (String s : homeSection.getKeys(false)) {
+                    String worldName = homeSection.getString(s + ".world-name");
+                    double xCoord = homeSection.getDouble(s + ".x");
+                    double yCoord = homeSection.getDouble(s + ".y");
+                    double zCoord = homeSection.getDouble(s + ".z");
+                    double yaw = homeSection.getDouble(s + ".yaw");
+                    double pitch = homeSection.getDouble(s + ".pitch");
+
+                    ePlayer.addHome(s, new Location(Bukkit.getWorld(worldName), xCoord, yCoord, zCoord, (float) yaw, (float) pitch));
+                }
+            }
+            plugin.getLogger().info(ColorUtils.colorMessage("&eConversion &2COMPLETE&e!"));
+        }
     }
 }
