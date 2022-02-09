@@ -82,6 +82,9 @@ public class AFKTimer {
             @Override
             public void run() {
                 if (!player.isOnline()) {
+                    if (isAfk(player)) {
+                        removeAfk(player);
+                    }
                     cancel();
                 }
                 if (getLocationAfk(player).getBlockX() == player.getLocation().getBlockX() && getLocationAfk(player).getBlockY() == player.getLocation().getBlockY()
