@@ -14,13 +14,12 @@ import com.gmail.willramanand.RamEssentials.player.PlayerConfig;
 import com.gmail.willramanand.RamEssentials.player.PlayerManager;
 import com.gmail.willramanand.RamEssentials.utils.AFKTimer;
 import com.gmail.willramanand.RamEssentials.utils.ColorUtils;
-import com.gmail.willramanand.RamEssentials.utils.TxtReader;
 import com.gmail.willramanand.RamEssentials.utils.MuteTimer;
+import com.gmail.willramanand.RamEssentials.utils.TxtReader;
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
-import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.ServicePriority;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -30,10 +29,7 @@ import java.util.logging.Logger;
 public final class RamEssentials extends JavaPlugin {
 
     private static final Logger log = Logger.getLogger("Minecraft");
-    public static RamEssentials i;
-    private static Economy econ = null;
-
-    private PaperCommandManager commandManager;
+    private static RamEssentials i;
 
     private PlayerManager playerManager;
     private PlayerConfig playerConfig;
@@ -46,9 +42,9 @@ public final class RamEssentials extends JavaPlugin {
     private MessageManager messageManager;
     private AccountManager accountManager;
 
-    private List<UUID> tempMutedPlayers = new ArrayList<>();
+    private final List<UUID> tempMutedPlayers = new ArrayList<>();
 
-    private final int houseLimit = 3;
+    private int houseLimit = this.getConfig().getInt("home-limit");
 
     @Override
     public void onEnable() {
@@ -59,7 +55,6 @@ public final class RamEssentials extends JavaPlugin {
 
         if (isVaultActive()) {
             log.info(ColorUtils.colorMessage("[" + this.getName() + "] &eEnabling &dVault &eintegration."));
-            setupEconomy();
         }
 
         playerManager = new PlayerManager(this);
@@ -90,6 +85,8 @@ public final class RamEssentials extends JavaPlugin {
 
         playerManager.startAutoSave();
         accountManager.runAutoSave();
+
+        setupHomeLimit();
 
         startTime = System.currentTimeMillis() - startTime;
         log.info(ColorUtils.colorMessage("[" + this.getName() + "] &6=== &bENABLE &2COMPLETE &6(&eTook &d" + startTime +"ms&6) ==="));
@@ -136,21 +133,17 @@ public final class RamEssentials extends JavaPlugin {
         return true;
     }
 
-    private boolean setupEconomy() {
-        RegisteredServiceProvider<Economy> rsp = getServer().getServicesManager().getRegistration(Economy.class);
-        if (rsp == null) {
-            return false;
+    private void setupHomeLimit() {
+        if (houseLimit == 0) {
+            houseLimit = 3;
+            this.getConfig().set("home-limit", 3);
+            this.getLogger().info(ColorUtils.colorMessage("&eHomes limit is empty in config! Setting to &d3"));
+            this.saveConfig();
         }
-        econ = rsp.getProvider();
-        return econ != null;
-    }
-
-    public static Economy getEconomy() {
-        return econ;
     }
 
     private void registerCommands() {
-        commandManager = new PaperCommandManager(this);
+        PaperCommandManager commandManager = new PaperCommandManager(this);
 
         commandManager.enableUnstableAPI("help");
 

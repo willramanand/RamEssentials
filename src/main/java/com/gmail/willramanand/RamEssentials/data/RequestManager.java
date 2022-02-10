@@ -2,6 +2,9 @@ package com.gmail.willramanand.RamEssentials.data;
 
 import com.gmail.willramanand.RamEssentials.RamEssentials;
 import com.gmail.willramanand.RamEssentials.utils.ColorUtils;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.event.ClickEvent;
+import net.kyori.adventure.text.event.HoverEvent;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -28,9 +31,13 @@ public class RequestManager {
         }
         requests.get(playerTo).add(playerFrom);
 
+        playerFrom.sendMessage(ColorUtils.colorMessage("&eRequest sent."));
+
         playerTo.sendMessage(ColorUtils.colorMessage("&eYou have received a teleport request from &d" + playerFrom.getName()));
-        playerTo.sendMessage(ColorUtils.colorMessage("&eType &d/tpaccept &eto accept this request."));
-        playerTo.sendMessage(ColorUtils.colorMessage("&eType &d/tpadeny &eto deny this request."));
+        playerTo.sendMessage(Component.text(ColorUtils.colorMessage("&eType &d/tpaaccept &eto accept this request.")).clickEvent(ClickEvent.clickEvent(ClickEvent.Action.RUN_COMMAND, "/tpa accept " + playerFrom.getName()))
+                .hoverEvent(HoverEvent.hoverEvent(HoverEvent.Action.SHOW_TEXT, Component.text(ColorUtils.colorMessage("&6Click here to accept &b" + playerFrom.getName() + "'s &6request!")))));
+        playerTo.sendMessage(Component.text(ColorUtils.colorMessage("&eType &d/tpadeny &eto deny this request.")).clickEvent(ClickEvent.clickEvent(ClickEvent.Action.RUN_COMMAND, "/tpa deny " + playerFrom.getName()))
+                .hoverEvent(HoverEvent.hoverEvent(HoverEvent.Action.SHOW_TEXT, Component.text(ColorUtils.colorMessage("&6Click here to deny &b" + playerFrom.getName() + "'s &6request!")))));
         playerTo.sendMessage(ColorUtils.colorMessage("&eThis request will be automatically denied in &d120 &eseconds."));
 
         startTimer(playerTo, playerFrom);
