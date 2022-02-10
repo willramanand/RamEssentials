@@ -6,7 +6,7 @@
 
     <groupId>com.gmail.willramanand</groupId>
     <artifactId>RamEssentials</artifactId>
-    <version>1.0.0-SNAPSHOT</version>
+    <version>1.0.0-BETA</version>
     <packaging>jar</packaging>
     <name>RamEssentials</name>
     <description>Provides essentials commands and functionality to your paper server.</description>

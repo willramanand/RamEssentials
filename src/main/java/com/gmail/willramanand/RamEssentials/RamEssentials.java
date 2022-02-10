@@ -44,7 +44,7 @@ public final class RamEssentials extends JavaPlugin {
 
     private final List<UUID> tempMutedPlayers = new ArrayList<>();
 
-    private int houseLimit = this.getConfig().getInt("home-limit");
+    private int houseLimit = 0;
 
     @Override
     public void onEnable() {
@@ -86,6 +86,7 @@ public final class RamEssentials extends JavaPlugin {
         playerManager.startAutoSave();
         accountManager.runAutoSave();
 
+        houseLimit = this.getConfig().getInt("home-limit");
         setupHomeLimit();
 
         startTime = System.currentTimeMillis() - startTime;
@@ -213,6 +214,7 @@ public final class RamEssentials extends JavaPlugin {
 
         // Admin Commands
         commandManager.registerCommand(new MuteCommand(this));
+        commandManager.registerCommand(new GamemodeCommand(this));
 
         // Money Commands
         commandManager.registerCommand(new BalanceCommand(this));
