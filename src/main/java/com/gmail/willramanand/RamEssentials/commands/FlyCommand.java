@@ -24,9 +24,11 @@ public class FlyCommand extends BaseCommand {
     public void fly(Player player) {
 
         if (player.isFlying()) {
+            player.setAllowFlight(false);
             player.setFlying(false);
             player.sendMessage(ColorUtils.colorMessage("&eFly mode &cdisabled&e."));
         } else {
+            player.setAllowFlight(true);
             player.setFlying(true);
             player.sendMessage(ColorUtils.colorMessage("&eFly mode &aenabled&e."));
         }

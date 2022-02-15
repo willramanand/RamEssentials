@@ -5,6 +5,7 @@ import com.gmail.willramanand.RamEssentials.player.EPlayer;
 import com.gmail.willramanand.RamEssentials.utils.ColorUtils;
 import com.gmail.willramanand.RamEssentials.utils.TxtReader;
 import io.papermc.paper.event.player.AsyncChatEvent;
+import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -32,6 +33,35 @@ public class PlayerListener implements Listener {
 
         plugin.getAfkTimer().setupPlayer(event.getPlayer());
         plugin.getAfkTimer().runAfkTimer(event.getPlayer());
+
+        EPlayer ePlayer = plugin.getPlayerManager().getPlayerData(event.getPlayer());
+
+        boolean isOp = event.getPlayer().isOp();
+        if (ePlayer.isGodMode()) {
+            if (!isOp) {
+                ePlayer.setGodMode(false);
+                event.getPlayer().sendMessage(ColorUtils.colorMessage("&eGod mode &cdisabled&e."));
+            } else {
+                event.getPlayer().sendMessage(ColorUtils.colorMessage("&eGod mode &aenabled&e."));
+            }
+        }
+
+        if (event.getPlayer().isFlying()) {
+            if (!isOp) {
+                event.getPlayer().setAllowFlight(false);
+                event.getPlayer().setFlying(false);
+                event.getPlayer().sendMessage(ColorUtils.colorMessage("&eFly mode &cdisabled&e."));
+            } else {
+                event.getPlayer().sendMessage(ColorUtils.colorMessage("&eFly mode &aenabled&e."));
+            }
+        }
+
+        if (event.getPlayer().getGameMode() != GameMode.SURVIVAL) {
+            if (!isOp) {
+                event.getPlayer().setGameMode(GameMode.SURVIVAL);
+            }
+            event.getPlayer().sendMessage(ColorUtils.colorMessage("&eGamemode set to &d" + event.getPlayer().getGameMode().name() + "&e."));
+        }
     }
 
     @EventHandler

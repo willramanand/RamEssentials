@@ -8,6 +8,7 @@ import com.gmail.willramanand.RamEssentials.utils.ColorUtils;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.event.entity.EntityDamageEvent;
 
 @CommandAlias("killplayer|killp")
 public class KillPlayerCommand extends BaseCommand {
@@ -22,7 +23,12 @@ public class KillPlayerCommand extends BaseCommand {
     @Description("Kills player")
     @CommandPermission("ramessentials.killplayer")
     public void killPlayer(CommandSender sender, @Flags("other")Player player) {
-        player.damage(player.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue());
+        final EntityDamageEvent ede = new EntityDamageEvent(player, EntityDamageEvent.DamageCause.MAGIC, player.getHealth());
+        plugin.getServer().getPluginManager().callEvent(ede);
+
+        if (ede.isCancelled()) return;
+
+        player.setHealth(0);
         sender.sendMessage(ColorUtils.colorMessage("&eKilled &d" + player.getName()));
     }
 }

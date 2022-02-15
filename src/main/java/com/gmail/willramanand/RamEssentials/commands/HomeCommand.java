@@ -8,7 +8,6 @@ import com.gmail.willramanand.RamEssentials.utils.ColorUtils;
 import com.gmail.willramanand.RamEssentials.utils.TeleportUtils;
 import org.bukkit.entity.Player;
 
-@CommandAlias("home")
 public class HomeCommand extends BaseCommand {
 
     private final RamEssentials plugin;
@@ -17,7 +16,7 @@ public class HomeCommand extends BaseCommand {
         this.plugin = plugin;
     }
 
-    @Default
+    @CommandAlias("home")
     @CommandCompletion("@homes")
     @Description("Teleport to one of your homes.")
     public void tpHome(Player player, @Optional String name) {
@@ -49,7 +48,6 @@ public class HomeCommand extends BaseCommand {
         TeleportUtils.teleport(player, ePlayer.getHome(name));
     }
 
-    @Subcommand("set")
     @CommandAlias("sethome")
     @Description("Set a new home.")
     public void setHome(Player player, String name) {
@@ -60,13 +58,12 @@ public class HomeCommand extends BaseCommand {
             return;
         }
 
-        if (ePlayer.getHomeList().size() == plugin.getHouseLimit()) {
-            player.sendMessage(ColorUtils.colorMessage("&eYou already have the max amount of homes!"));
-            return;
+        if (ePlayer.getHomeList().contains(name)) {
+            ePlayer.delHome(name);
         }
 
-        if (ePlayer.getHomeList().contains(name)) {
-            player.sendMessage(ColorUtils.colorMessage("&cYou already have a home of that name!"));
+        if (ePlayer.getHomeList().size() == plugin.getHouseLimit()) {
+            player.sendMessage(ColorUtils.colorMessage("&eYou already have the max amount of homes!"));
             return;
         }
 
@@ -74,7 +71,6 @@ public class HomeCommand extends BaseCommand {
         player.sendMessage(ColorUtils.colorMessage("&eYou have set a home named &d" + name + " &eat this location."));
     }
 
-    @Subcommand("del|delete")
     @CommandAlias("delhome")
     @CommandCompletion("@homes")
     @Description("Delete a home.")

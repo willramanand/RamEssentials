@@ -42,16 +42,18 @@ public class AccountManager {
             }
         }
 
-        FileConfiguration config = YamlConfiguration.loadConfiguration(file);
-        Set<String> stringUUIDs = config.getKeys(false);
+        if (file.exists()) {
+            FileConfiguration config = YamlConfiguration.loadConfiguration(file);
+            Set<String> stringUUIDs = config.getKeys(false);
 
-        int i = 0;
-        for (String s : stringUUIDs) {
-            playerNames.put(UUID.fromString(s), config.getString(s + ".name"));
-            createAccount(UUID.fromString(s), config.getDouble(s + ".balance"));
-            i++;
+            int i = 0;
+            for (String s : stringUUIDs) {
+                playerNames.put(UUID.fromString(s), config.getString(s + ".name"));
+                createAccount(UUID.fromString(s), config.getDouble(s + ".balance"));
+                i++;
+            }
+            plugin.getLogger().info(ColorUtils.colorMessage("&eLoaded &d" + i + " &eaccounts!"));
         }
-        plugin.getLogger().info(ColorUtils.colorMessage("&eLoaded &d" + i + " &eaccounts!"));
     }
 
     public void save() {

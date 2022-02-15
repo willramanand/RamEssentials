@@ -12,7 +12,7 @@ import org.bukkit.entity.Player;
 
 @CommandAlias("gamemode|gm")
 @CommandPermission("ramessentials.gamemode")
-@Description("Switch you gamemode")
+@Description("Switch your gamemode")
 public class GamemodeCommand extends BaseCommand {
 
     private final RamEssentials plugin;

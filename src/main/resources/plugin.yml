@@ -51,3 +51,7 @@ permissions:
     default: op
   ramessentials.world:
     default: op
+  ramessentials.gamemode:
+    default: op
+  ramessentials.heal:
+    default: op

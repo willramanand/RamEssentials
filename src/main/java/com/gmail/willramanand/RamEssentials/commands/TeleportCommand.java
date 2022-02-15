@@ -9,8 +9,6 @@ import org.bukkit.Location;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-@CommandAlias("teleport|tp")
-@CommandPermission("ramessentials.tp")
 public class TeleportCommand extends BaseCommand {
 
     private final RamEssentials plugin;
@@ -19,8 +17,9 @@ public class TeleportCommand extends BaseCommand {
         this.plugin = plugin;
     }
 
-    @Default
+    @CommandAlias("teleport|tp")
     @Description("Teleport to specific coordinates.")
+    @CommandPermission("ramessentials.tp")
     public void tpCoords(CommandSender sender, String x, String y, String z) {
         Player player = (Player) sender;
 
@@ -58,9 +57,10 @@ public class TeleportCommand extends BaseCommand {
         sender.sendMessage(ColorUtils.colorMessage("&eTeleporting to &d" + xCoord + " " + yCoord + " " + zCoord + "&e."));
     }
 
-    @Subcommand("player|p")
+    @CommandAlias("teleportp|tpp")
     @Description("Teleport to player.")
     @CommandCompletion("@players")
+    @CommandPermission("ramessentials.tp")
     public void tpToPlayer(CommandSender sender, @Flags("other") Player player) {
         Player playerSender = (Player) sender;
 
@@ -68,9 +68,10 @@ public class TeleportCommand extends BaseCommand {
         sender.sendMessage(ColorUtils.colorMessage("&eTeleporting to &d" + player.getName() + "&e."));
     }
 
-    @Subcommand("player2player|p2p")
+    @CommandAlias("teleportp2p|tpp2p")
     @Description("Teleport player to player.")
     @CommandCompletion("@players")
+    @CommandPermission("ramessentials.tp")
     public void tpPlayerToPlayer(CommandSender sender, @Flags("other") Player player1, @Flags("other") Player player2) {
         TeleportUtils.teleport(player1, player2.getLocation());
         sender.sendMessage(ColorUtils.colorMessage("&eTeleporting &d" + player1.getName() + " &eto &d" + player2.getName() + "&e."));

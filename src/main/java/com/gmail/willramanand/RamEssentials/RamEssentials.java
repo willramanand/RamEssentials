@@ -28,7 +28,7 @@ import java.util.logging.Logger;
 
 public final class RamEssentials extends JavaPlugin {
 
-    private static final Logger log = Logger.getLogger("Minecraft");
+    private final Logger log = this.getLogger();
     private static RamEssentials i;
 
     private PlayerManager playerManager;
@@ -51,10 +51,10 @@ public final class RamEssentials extends JavaPlugin {
         i = this;
 
         long startTime = System.currentTimeMillis();
-        log.info(ColorUtils.colorMessage("[" + this.getName() + "] &6===&b ENABLE START &6==="));
+        log.info(ColorUtils.colorMessage("&6===&b ENABLE START &6==="));
 
         if (isVaultActive()) {
-            log.info(ColorUtils.colorMessage("[" + this.getName() + "] &eEnabling &dVault &eintegration."));
+            log.info(ColorUtils.colorMessage("&eEnabling &dVault &eintegration."));
         }
 
         playerManager = new PlayerManager(this);
@@ -90,7 +90,7 @@ public final class RamEssentials extends JavaPlugin {
         setupHomeLimit();
 
         startTime = System.currentTimeMillis() - startTime;
-        log.info(ColorUtils.colorMessage("[" + this.getName() + "] &6=== &bENABLE &2COMPLETE &6(&eTook &d" + startTime +"ms&6) ==="));
+        log.info(ColorUtils.colorMessage("&6=== &bENABLE &2COMPLETE &6(&eTook &d" + startTime +"ms&6) ==="));
     }
 
     @Override
@@ -109,7 +109,7 @@ public final class RamEssentials extends JavaPlugin {
             playerConfig.save(player, true);
         }
 
-        log.info("Disabled");
+        log.info("&cDisabled");
     }
 
     @Override
@@ -138,7 +138,7 @@ public final class RamEssentials extends JavaPlugin {
         if (houseLimit == 0) {
             houseLimit = 3;
             this.getConfig().set("home-limit", 3);
-            this.getLogger().info(ColorUtils.colorMessage("&eHomes limit is empty in config! Setting to &d3"));
+            log.info(ColorUtils.colorMessage("&eHomes limit is empty in config! Setting to &d3"));
             this.saveConfig();
         }
     }
@@ -211,10 +211,12 @@ public final class RamEssentials extends JavaPlugin {
         commandManager.registerCommand(new WalkSpeedCommand(this));
         commandManager.registerCommand(new FlySpeedCommand(this));
         commandManager.registerCommand(new AFKCommand(this));
+        commandManager.registerCommand(new RamEssentialsCommand(this));
 
         // Admin Commands
         commandManager.registerCommand(new MuteCommand(this));
         commandManager.registerCommand(new GamemodeCommand(this));
+        commandManager.registerCommand(new HealCommand(this));
 
         // Money Commands
         commandManager.registerCommand(new BalanceCommand(this));
