@@ -1,6 +1,5 @@
 package com.gmail.willramanand.RamEssentials.commands;
 
-import co.aikar.commands.BaseCommand;
 import co.aikar.commands.annotation.CommandAlias;
 import co.aikar.commands.annotation.Default;
 import co.aikar.commands.annotation.Description;
@@ -9,7 +8,7 @@ import com.gmail.willramanand.RamEssentials.utils.TxtReader;
 import org.bukkit.entity.Player;
 
 @CommandAlias("rules")
-public class RulesCommand extends BaseCommand {
+public class RulesCommand extends RBaseCommand {
 
     private final RamEssentials plugin;
 

@@ -1,15 +1,13 @@
 package com.gmail.willramanand.RamEssentials.commands;
 
-import co.aikar.commands.BaseCommand;
 import co.aikar.commands.annotation.*;
 import com.gmail.willramanand.RamEssentials.RamEssentials;
-import com.gmail.willramanand.RamEssentials.utils.ColorUtils;
 import com.gmail.willramanand.RamEssentials.utils.TeleportUtils;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 
 @CommandAlias("world")
-public class WorldCommand extends BaseCommand {
+public class WorldCommand extends RBaseCommand {
 
     private final RamEssentials plugin;
 
@@ -22,7 +20,7 @@ public class WorldCommand extends BaseCommand {
     @CommandPermission("ramessentials.world")
     @Description("Teleport to spawn location of each world")
     public void worldTeleport(Player player, World world) {
-        player.sendMessage(ColorUtils.colorMessage("&eTeleporting to &d" + world.getName()));
+        msg(player, "{s}Teleporting to {h}" + world.getName());
         TeleportUtils.teleport(player, world.getSpawnLocation());
     }
 }

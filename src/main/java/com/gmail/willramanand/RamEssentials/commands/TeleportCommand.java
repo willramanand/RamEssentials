@@ -1,15 +1,13 @@
 package com.gmail.willramanand.RamEssentials.commands;
 
-import co.aikar.commands.BaseCommand;
 import co.aikar.commands.annotation.*;
 import com.gmail.willramanand.RamEssentials.RamEssentials;
-import com.gmail.willramanand.RamEssentials.utils.ColorUtils;
 import com.gmail.willramanand.RamEssentials.utils.TeleportUtils;
 import org.bukkit.Location;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-public class TeleportCommand extends BaseCommand {
+public class TeleportCommand extends RBaseCommand {
 
     private final RamEssentials plugin;
 
@@ -20,9 +18,7 @@ public class TeleportCommand extends BaseCommand {
     @CommandAlias("teleport|tp")
     @Description("Teleport to specific coordinates.")
     @CommandPermission("ramessentials.tp")
-    public void tpCoords(CommandSender sender, String x, String y, String z) {
-        Player player = (Player) sender;
-
+    public void tpCoords(Player player, String x, String y, String z) {
         double xCoord = 0;
         double yCoord = 0;
         double zCoord = 0;
@@ -47,14 +43,14 @@ public class TeleportCommand extends BaseCommand {
             }
 
         } catch (NumberFormatException e) {
-            sender.sendMessage(ColorUtils.colorMessage("&cNot valid coordinates!"));
+            msg(player, "{w}Not valid coordinates!");
             return;
         }
 
 
         Location tpLocation = new Location(player.getWorld(), xCoord, yCoord, zCoord);
         TeleportUtils.teleport(player, tpLocation);
-        sender.sendMessage(ColorUtils.colorMessage("&eTeleporting to &d" + xCoord + " " + yCoord + " " + zCoord + "&e."));
+        msg(player, "{s}Teleporting to {h}" + xCoord + " " + yCoord + " " + zCoord + "{s}.");
     }
 
     @CommandAlias("teleportp|tpp")
@@ -62,10 +58,15 @@ public class TeleportCommand extends BaseCommand {
     @CommandCompletion("@players")
     @CommandPermission("ramessentials.tp")
     public void tpToPlayer(CommandSender sender, @Flags("other") Player player) {
+        if (!(sender instanceof Player)) {
+            msg(sender, "{w}You must be player to use this command!");
+            return;
+        }
+
         Player playerSender = (Player) sender;
 
         TeleportUtils.teleport(playerSender, player.getLocation());
-        sender.sendMessage(ColorUtils.colorMessage("&eTeleporting to &d" + player.getName() + "&e."));
+        msg(sender, "{s}Teleporting to {h}" + player.getName() + "{s}.");
     }
 
     @CommandAlias("teleportp2p|tpp2p")
@@ -74,6 +75,6 @@ public class TeleportCommand extends BaseCommand {
     @CommandPermission("ramessentials.tp")
     public void tpPlayerToPlayer(CommandSender sender, @Flags("other") Player player1, @Flags("other") Player player2) {
         TeleportUtils.teleport(player1, player2.getLocation());
-        sender.sendMessage(ColorUtils.colorMessage("&eTeleporting &d" + player1.getName() + " &eto &d" + player2.getName() + "&e."));
+        msg(sender, "{s}Teleporting {h}" + player1.getName() + " {s}to {h}" + player2.getName() + "{s}.");
     }
 }

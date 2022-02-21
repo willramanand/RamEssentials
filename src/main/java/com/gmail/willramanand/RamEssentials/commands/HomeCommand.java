@@ -1,14 +1,16 @@
 package com.gmail.willramanand.RamEssentials.commands;
 
-import co.aikar.commands.BaseCommand;
-import co.aikar.commands.annotation.*;
+import co.aikar.commands.annotation.CommandAlias;
+import co.aikar.commands.annotation.CommandCompletion;
+import co.aikar.commands.annotation.Description;
+import co.aikar.commands.annotation.Optional;
 import com.gmail.willramanand.RamEssentials.RamEssentials;
 import com.gmail.willramanand.RamEssentials.player.EPlayer;
-import com.gmail.willramanand.RamEssentials.utils.ColorUtils;
+import com.gmail.willramanand.RamEssentials.utils.EasyComponent;
 import com.gmail.willramanand.RamEssentials.utils.TeleportUtils;
 import org.bukkit.entity.Player;
 
-public class HomeCommand extends BaseCommand {
+public class HomeCommand extends RBaseCommand {
 
     private final RamEssentials plugin;
 
@@ -20,41 +22,42 @@ public class HomeCommand extends BaseCommand {
     @CommandCompletion("@homes")
     @Description("Teleport to one of your homes.")
     public void tpHome(Player player, @Optional String name) {
-        EPlayer ePlayer = plugin.getPlayerManager().getPlayerData(player);
+        EPlayer ePlayer = getData(player);
 
         if (name == null) {
             if (ePlayer.getHomeList().isEmpty()) {
-                player.sendMessage(ColorUtils.colorMessage("&cYou have no homes to list!"));
+                msg(player, "{w}You have no homes to list!");
             } else {
-                player.sendMessage(ColorUtils.colorMessage("&6---- &bHomes &6----"));
+                msg(player, "{gold}---- {aqua}Homes {gold}----");
                 for (String s : ePlayer.getHomeList()) {
-                    player.sendMessage(s);
+                    EasyComponent component = new EasyComponent(s);
+                    msg(player, component.clickEvent("/home " + s).hoverEvent("{s}Click to teleport to {h}" + s + "{s}!").get());
                 }
             }
             return;
         }
 
         if (ePlayer.getHomeList().size() == 0) {
-            player.sendMessage(ColorUtils.colorMessage("&cYou have no set homes!"));
+            msg(player, "{w}You have no set homes!");
             return;
         }
 
         if (!(ePlayer.getHomeList().contains(name))) {
-            player.sendMessage(ColorUtils.colorMessage("&cThat is not one of your set homes!"));
+            msg(player, "{w}That is not one of your set homes!");
             return;
         }
 
-        player.sendMessage(ColorUtils.colorMessage("&eTeleporting to home &d" + name));
+        msg(player, "{s}Teleporting to home {h}" + name);
         TeleportUtils.teleport(player, ePlayer.getHome(name));
     }
 
     @CommandAlias("sethome")
     @Description("Set a new home.")
     public void setHome(Player player, String name) {
-        EPlayer ePlayer = plugin.getPlayerManager().getPlayerData(player);
+        EPlayer ePlayer = getData(player);
 
         if (name.equalsIgnoreCase("")) {
-            player.sendMessage(ColorUtils.colorMessage("&cNo name entered!"));
+            msg(player, "{w}No name entered!");
             return;
         }
 
@@ -63,36 +66,36 @@ public class HomeCommand extends BaseCommand {
         }
 
         if (ePlayer.getHomeList().size() == plugin.getHouseLimit()) {
-            player.sendMessage(ColorUtils.colorMessage("&eYou already have the max amount of homes!"));
+            msg(player,"{s}You already have the max amount of homes!");
             return;
         }
 
         ePlayer.addHome(name, player.getLocation());
-        player.sendMessage(ColorUtils.colorMessage("&eYou have set a home named &d" + name + " &eat this location."));
+        msg(player, "{s}You have set a home named {h}" + name + " {s}at this location.");
     }
 
     @CommandAlias("delhome")
     @CommandCompletion("@homes")
     @Description("Delete a home.")
     public void delHome(Player player, String name) {
-        EPlayer ePlayer = plugin.getPlayerManager().getPlayerData(player);
+        EPlayer ePlayer = getData(player);
 
         if (name.equalsIgnoreCase("")) {
-            player.sendMessage(ColorUtils.colorMessage("&cNo name entered!"));
+            msg(player, "{w}No name entered!");
             return;
         }
 
         if (ePlayer.getHomeList().size() == 0) {
-            player.sendMessage(ColorUtils.colorMessage("&cYou have no set homes!"));
+            msg(player, "{w}You have no set homes!");
             return;
         }
 
         if (!(ePlayer.getHomeList().contains(name))) {
-            player.sendMessage(ColorUtils.colorMessage("&cThat is not one of your set homes!"));
+            msg(player, "{w}That is not one of your set homes!");
             return;
         }
 
         ePlayer.delHome(name);
-        player.sendMessage(ColorUtils.colorMessage("&eYou have deleted the home &d" + name));
+        msg(player, "{s}You have deleted the home {h}" + name);
     }
 }

@@ -1,12 +1,10 @@
 package com.gmail.willramanand.RamEssentials.commands;
 
-import co.aikar.commands.BaseCommand;
 import co.aikar.commands.annotation.CommandAlias;
 import co.aikar.commands.annotation.CommandPermission;
 import co.aikar.commands.annotation.Default;
 import co.aikar.commands.annotation.Description;
 import com.gmail.willramanand.RamEssentials.RamEssentials;
-import com.gmail.willramanand.RamEssentials.utils.ColorUtils;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityRegainHealthEvent;
@@ -14,7 +12,7 @@ import org.bukkit.event.entity.EntityRegainHealthEvent;
 @CommandAlias("heal")
 @CommandPermission("ramessentials.heal")
 @Description("Heal yourself to max health and hunger")
-public class HealCommand extends BaseCommand {
+public class HealCommand extends RBaseCommand {
 
     private final RamEssentials plugin;
 
@@ -32,6 +30,6 @@ public class HealCommand extends BaseCommand {
         player.setHealth(player.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue());
         player.setFoodLevel(20);
         player.setFireTicks(0);
-        player.sendMessage(ColorUtils.colorMessage("&eYou have been &ahealed&e."));
+        msg(player, "{s}You have been {green}healed{s}.");
     }
 }

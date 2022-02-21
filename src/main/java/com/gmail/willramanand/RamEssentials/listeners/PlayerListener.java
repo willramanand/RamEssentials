@@ -2,7 +2,7 @@ package com.gmail.willramanand.RamEssentials.listeners;
 
 import com.gmail.willramanand.RamEssentials.RamEssentials;
 import com.gmail.willramanand.RamEssentials.player.EPlayer;
-import com.gmail.willramanand.RamEssentials.utils.ColorUtils;
+import com.gmail.willramanand.RamEssentials.utils.Txt;
 import com.gmail.willramanand.RamEssentials.utils.TxtReader;
 import io.papermc.paper.event.player.AsyncChatEvent;
 import org.bukkit.GameMode;
@@ -40,9 +40,9 @@ public class PlayerListener implements Listener {
         if (ePlayer.isGodMode()) {
             if (!isOp) {
                 ePlayer.setGodMode(false);
-                event.getPlayer().sendMessage(ColorUtils.colorMessage("&eGod mode &cdisabled&e."));
+                event.getPlayer().sendMessage(Txt.parse("{s}God mode {red}disabled{s}."));
             } else {
-                event.getPlayer().sendMessage(ColorUtils.colorMessage("&eGod mode &aenabled&e."));
+                event.getPlayer().sendMessage(Txt.parse("{s}God mode {green}enabled{s}."));
             }
         }
 
@@ -50,9 +50,9 @@ public class PlayerListener implements Listener {
             if (!isOp) {
                 event.getPlayer().setAllowFlight(false);
                 event.getPlayer().setFlying(false);
-                event.getPlayer().sendMessage(ColorUtils.colorMessage("&eFly mode &cdisabled&e."));
+                event.getPlayer().sendMessage(Txt.parse("{s}Fly mode {red}disabled{s}."));
             } else {
-                event.getPlayer().sendMessage(ColorUtils.colorMessage("&eFly mode &aenabled&e."));
+                event.getPlayer().sendMessage(Txt.parse("{s}Fly mode {green}enabled{s}."));
             }
         }
 
@@ -60,7 +60,7 @@ public class PlayerListener implements Listener {
             if (!isOp) {
                 event.getPlayer().setGameMode(GameMode.SURVIVAL);
             }
-            event.getPlayer().sendMessage(ColorUtils.colorMessage("&eGamemode set to &d" + event.getPlayer().getGameMode().name() + "&e."));
+            event.getPlayer().sendMessage(Txt.parse("{s}Gamemode set to {h}" + event.getPlayer().getGameMode().name() + "{s}."));
         }
     }
 
@@ -73,7 +73,7 @@ public class PlayerListener implements Listener {
     public void checkMuted(AsyncChatEvent event) {
         EPlayer ePlayer = plugin.getPlayerManager().getPlayerData(event.getPlayer());
         if (ePlayer.isMuted()) {
-            event.getPlayer().sendMessage(ColorUtils.colorMessage("&cYou are currently muted!"));
+            event.getPlayer().sendMessage(Txt.parse("{w}You are currently muted!"));
             event.setCancelled(true);
         }
     }

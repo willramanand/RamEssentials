@@ -33,7 +33,7 @@ public class TxtReader {
             Scanner sc = new Scanner(file);
 
             while (sc.hasNextLine()) {
-                player.sendMessage(ColorUtils.colorMessage(replace(sc.nextLine(), player)));
+                player.sendMessage(Txt.parse(replace(sc.nextLine(), player)));
             }
         } catch (FileNotFoundException e) {
             RamEssentials.getInstance().getLogger().info("motd.txt not found!");
@@ -43,12 +43,12 @@ public class TxtReader {
     public static void sendRules(Player player) {
         File file = new File(RamEssentials.getInstance().getDataFolder().getPath() + "/rules.txt");
 
-        player.sendMessage(ColorUtils.colorMessage("&6---- &bRules &6----"));
+        player.sendMessage(Txt.parse("&6---- &bRules &6----"));
         try {
             Scanner sc = new Scanner(file);
 
             while (sc.hasNextLine()) {
-                player.sendMessage(ColorUtils.colorMessage(sc.nextLine()));
+                player.sendMessage(Txt.parse(sc.nextLine()));
             }
         } catch (FileNotFoundException e) {
             RamEssentials.getInstance().getLogger().info("rules.txt not found!");

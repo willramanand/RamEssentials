@@ -13,8 +13,8 @@ import com.gmail.willramanand.RamEssentials.player.EPlayer;
 import com.gmail.willramanand.RamEssentials.player.PlayerConfig;
 import com.gmail.willramanand.RamEssentials.player.PlayerManager;
 import com.gmail.willramanand.RamEssentials.utils.AFKTimer;
-import com.gmail.willramanand.RamEssentials.utils.ColorUtils;
 import com.gmail.willramanand.RamEssentials.utils.MuteTimer;
+import com.gmail.willramanand.RamEssentials.utils.Txt;
 import com.gmail.willramanand.RamEssentials.utils.TxtReader;
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.Bukkit;
@@ -45,16 +45,17 @@ public final class RamEssentials extends JavaPlugin {
     private final List<UUID> tempMutedPlayers = new ArrayList<>();
 
     private int houseLimit = 0;
+    private int commandsPerPage = 0;
 
     @Override
     public void onEnable() {
         i = this;
 
         long startTime = System.currentTimeMillis();
-        log.info(ColorUtils.colorMessage("&6===&b ENABLE START &6==="));
+        log.info(Txt.parse("{gold}==={aqua} ENABLE START {gold}==="));
 
         if (isVaultActive()) {
-            log.info(ColorUtils.colorMessage("&eEnabling &dVault &eintegration."));
+            log.info(Txt.parse("{s}Enabling {h}Vault {s}integration."));
         }
 
         playerManager = new PlayerManager(this);
@@ -69,6 +70,12 @@ public final class RamEssentials extends JavaPlugin {
         // Config
         this.getConfig().options().copyDefaults(true);
         this.saveConfig();
+
+        houseLimit = this.getConfig().getInt("home-limit");
+        setupHomeLimit();
+
+        commandsPerPage = this.getConfig().getInt("commandsPerPage");
+        setupHelpLimit();
 
         TxtReader.setup();
 
@@ -86,11 +93,8 @@ public final class RamEssentials extends JavaPlugin {
         playerManager.startAutoSave();
         accountManager.runAutoSave();
 
-        houseLimit = this.getConfig().getInt("home-limit");
-        setupHomeLimit();
-
         startTime = System.currentTimeMillis() - startTime;
-        log.info(ColorUtils.colorMessage("&6=== &bENABLE &2COMPLETE &6(&eTook &d" + startTime +"ms&6) ==="));
+        log.info(Txt.parse("{gold}=== {aqua}ENABLE {darkgreen}COMPLETE {gold}({s}Took {h}" + startTime +"ms{gold}) ==="));
     }
 
     @Override
@@ -138,7 +142,16 @@ public final class RamEssentials extends JavaPlugin {
         if (houseLimit == 0) {
             houseLimit = 3;
             this.getConfig().set("home-limit", 3);
-            log.info(ColorUtils.colorMessage("&eHomes limit is empty in config! Setting to &d3"));
+            log.info(Txt.parse("{s}Homes limit is empty in config! Setting to {h}3"));
+            this.saveConfig();
+        }
+    }
+
+    private void setupHelpLimit() {
+        if (commandsPerPage == 0) {
+            commandsPerPage = 6;
+            this.getConfig().set("commandsPerPage", 6);
+            log.info(Txt.parse("{s}Commands per page is empty in config! Setting to {h}6"));
             this.saveConfig();
         }
     }
@@ -212,6 +225,7 @@ public final class RamEssentials extends JavaPlugin {
         commandManager.registerCommand(new FlySpeedCommand(this));
         commandManager.registerCommand(new AFKCommand(this));
         commandManager.registerCommand(new RamEssentialsCommand(this));
+        commandManager.registerCommand(new HelpCommand(this, commandsPerPage));
 
         // Admin Commands
         commandManager.registerCommand(new MuteCommand(this));

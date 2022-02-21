@@ -1,7 +1,8 @@
 package com.gmail.willramanand.RamEssentials.data;
 
 import com.gmail.willramanand.RamEssentials.RamEssentials;
-import com.gmail.willramanand.RamEssentials.utils.ColorUtils;
+import com.gmail.willramanand.RamEssentials.utils.EasyComponent;
+import com.gmail.willramanand.RamEssentials.utils.Txt;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.event.ClickEvent;
 import net.kyori.adventure.text.event.HoverEvent;
@@ -31,14 +32,14 @@ public class RequestManager {
         }
         requests.get(playerTo).add(playerFrom);
 
-        playerFrom.sendMessage(ColorUtils.colorMessage("&eRequest sent."));
+        playerFrom.sendMessage(Txt.parse("{s}Request sent."));
 
-        playerTo.sendMessage(ColorUtils.colorMessage("&eYou have received a teleport request from &d" + playerFrom.getName()));
-        playerTo.sendMessage(Component.text(ColorUtils.colorMessage("&eType &d/tpaaccept &eto accept this request.")).clickEvent(ClickEvent.clickEvent(ClickEvent.Action.RUN_COMMAND, "/tpa accept " + playerFrom.getName()))
-                .hoverEvent(HoverEvent.hoverEvent(HoverEvent.Action.SHOW_TEXT, Component.text(ColorUtils.colorMessage("&6Click here to accept &b" + playerFrom.getName() + "'s &6request!")))));
-        playerTo.sendMessage(Component.text(ColorUtils.colorMessage("&eType &d/tpadeny &eto deny this request.")).clickEvent(ClickEvent.clickEvent(ClickEvent.Action.RUN_COMMAND, "/tpa deny " + playerFrom.getName()))
-                .hoverEvent(HoverEvent.hoverEvent(HoverEvent.Action.SHOW_TEXT, Component.text(ColorUtils.colorMessage("&6Click here to deny &b" + playerFrom.getName() + "'s &6request!")))));
-        playerTo.sendMessage(ColorUtils.colorMessage("&eThis request will be automatically denied in &d120 &eseconds."));
+        playerTo.sendMessage(Txt.parse("{s}You have received a teleport request from {h}" + playerFrom.getName()));
+        EasyComponent componentAccept = new EasyComponent("{s}Type {h}/tpaaccept {s}to accept this request.");
+        playerTo.sendMessage(componentAccept.clickEvent("/tpa accept " + playerFrom.getName()).hoverEvent("&6Click here to accept &b" + playerFrom.getName() + "'s &6request!").get());
+        EasyComponent componentDeny = new EasyComponent("{s}Type {h}/tpadeny {s}to deny this request.");
+        playerTo.sendMessage(componentDeny.clickEvent("/tpa deny " + playerFrom.getName()).hoverEvent("&6Click here to deny &b" + playerFrom.getName() + "'s &6request!").get());
+        playerTo.sendMessage(Txt.parse("{s}This request will be automatically denied in {h}120 {s}seconds."));
 
         startTimer(playerTo, playerFrom);
     }
@@ -76,7 +77,7 @@ public class RequestManager {
             @Override
             public void run() {
                 if (hasRequest(playerTo, playerFrom)) {
-                    playerFrom.sendMessage(ColorUtils.colorMessage("&eRequest to &d" + playerTo.getName() + " &edenied!"));
+                    playerFrom.sendMessage(Txt.parse("{s}Request to {d}" + playerTo.getName() + " {s}denied!"));
                     removeRequest(playerTo, playerFrom);
                 }
             }

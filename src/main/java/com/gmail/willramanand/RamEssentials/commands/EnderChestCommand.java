@@ -1,13 +1,12 @@
 package com.gmail.willramanand.RamEssentials.commands;
 
-import co.aikar.commands.BaseCommand;
 import co.aikar.commands.annotation.*;
 import com.gmail.willramanand.RamEssentials.RamEssentials;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 @CommandAlias("enderchest|echest")
-public class EnderChestCommand extends BaseCommand {
+public class EnderChestCommand extends RBaseCommand {
 
     private final RamEssentials plugin;
 
@@ -18,8 +17,7 @@ public class EnderChestCommand extends BaseCommand {
     @Default
     @Description("View your enderchest.")
     @CommandPermission("ramessentials.enderchest")
-    public void enderChest(CommandSender sender) {
-        Player player = (Player) sender;
+    public void enderChest(Player player) {
         player.openInventory(player.getEnderChest());
     }
 
@@ -28,6 +26,11 @@ public class EnderChestCommand extends BaseCommand {
     @CommandCompletion("@players")
     @CommandPermission("ramessentials.enderchest.other")
     public void enderChestOther(CommandSender sender, @Flags("other") Player player) {
+        if (!(sender instanceof Player)) {
+            msg(sender, "{w}You must be player to use this command!");
+            return;
+        }
+
         Player playerSender = (Player) sender;
         playerSender.openInventory(player.getEnderChest());
     }

@@ -1,14 +1,12 @@
 package com.gmail.willramanand.RamEssentials.commands;
 
-import co.aikar.commands.BaseCommand;
 import co.aikar.commands.annotation.*;
 import com.gmail.willramanand.RamEssentials.RamEssentials;
-import com.gmail.willramanand.RamEssentials.utils.ColorUtils;
 import com.gmail.willramanand.RamEssentials.utils.Formatter;
 import org.bukkit.entity.Player;
 
 @CommandAlias("balance|bal|money")
-public class BalanceCommand extends BaseCommand {
+public class BalanceCommand extends RBaseCommand {
 
     private final RamEssentials plugin;
 
@@ -28,6 +26,6 @@ public class BalanceCommand extends BaseCommand {
             balance = plugin.getAccountManager().getBalance(other);
         }
 
-        player.sendMessage(ColorUtils.colorMessage("&aBalance: &6" + Formatter.formatMoney(balance)));
+        msg(player,"{green}Balance: {gold}" + Formatter.formatMoney(balance));
     }
 }

@@ -34,22 +34,22 @@ public class AFKTimer {
 
     public void addAfk(Player player) {
         isAfk.add(player);
-        player.sendMessage(ColorUtils.colorMessage("&eYou are now AFK."));
+        player.sendMessage(Txt.parse("{s}You are now AFK."));
 
         for (Player player1 : Bukkit.getOnlinePlayers()) {
             if (player1 == player) continue;
-            player1.sendMessage(ColorUtils.colorMessage("&d" + player.getName() + " &eis now AFK."));
+            player1.sendMessage(Txt.parse("{h}" + player.getName() + " {s}is now AFK."));
         }
     }
 
     public void removeAfk(Player player) {
         isAfk.remove(player);
 
-        player.sendMessage(ColorUtils.colorMessage("&eYou are no longer AFK."));
+        player.sendMessage(Txt.parse("{s}You are no longer AFK."));
 
         for (Player player1 : Bukkit.getOnlinePlayers()) {
             if (player1 == player) continue;
-            player1.sendMessage(ColorUtils.colorMessage("&d" + player.getName() + " &eis no longer AFK."));
+            player1.sendMessage(Txt.parse("{h}" + player.getName() + " {s}is no longer AFK."));
         }
     }
 

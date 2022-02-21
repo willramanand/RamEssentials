@@ -1,13 +1,16 @@
 package com.gmail.willramanand.RamEssentials.player;
 
-import com.gmail.willramanand.RamEssentials.data.MuteType;
 import com.gmail.willramanand.RamEssentials.RamEssentials;
+import com.gmail.willramanand.RamEssentials.data.MuteType;
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
+import java.util.UUID;
 
 public class EPlayer {
 

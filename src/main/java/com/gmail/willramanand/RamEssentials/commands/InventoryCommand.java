@@ -1,16 +1,12 @@
 package com.gmail.willramanand.RamEssentials.commands;
 
-import co.aikar.commands.BaseCommand;
 import co.aikar.commands.annotation.*;
 import com.gmail.willramanand.RamEssentials.RamEssentials;
-import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.event.inventory.InventoryType;
-import org.bukkit.inventory.Inventory;
 
 @CommandAlias("invsee")
-public class InventoryCommand extends BaseCommand {
+public class InventoryCommand extends RBaseCommand {
 
     private final RamEssentials plugin;
 
@@ -23,6 +19,10 @@ public class InventoryCommand extends BaseCommand {
     @CommandCompletion("@players")
     @CommandPermission("ramessentials.invsee")
     public void inventorySee(CommandSender sender, @Flags("other") Player player) {
+        if (!(sender instanceof Player)) {
+            msg(sender, "{w}You must be player to use this command!");
+            return;
+        }
         Player playerSender = (Player) sender;
         playerSender.openInventory(player.getInventory());
     }

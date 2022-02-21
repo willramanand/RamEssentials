@@ -1,17 +1,14 @@
 package com.gmail.willramanand.RamEssentials.commands;
 
 
-import co.aikar.commands.BaseCommand;
 import co.aikar.commands.annotation.*;
 import com.gmail.willramanand.RamEssentials.RamEssentials;
-import com.gmail.willramanand.RamEssentials.utils.ColorUtils;
-import org.bukkit.attribute.Attribute;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageEvent;
 
 @CommandAlias("killplayer|killp")
-public class KillPlayerCommand extends BaseCommand {
+public class KillPlayerCommand extends RBaseCommand {
 
     private final RamEssentials plugin;
 
@@ -27,8 +24,7 @@ public class KillPlayerCommand extends BaseCommand {
         plugin.getServer().getPluginManager().callEvent(ede);
 
         if (ede.isCancelled()) return;
-
         player.setHealth(0);
-        sender.sendMessage(ColorUtils.colorMessage("&eKilled &d" + player.getName()));
+        msg(sender, "{s}Killed {h}" + player.getName());
     }
 }

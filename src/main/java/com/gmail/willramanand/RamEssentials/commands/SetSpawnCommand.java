@@ -1,15 +1,14 @@
 package com.gmail.willramanand.RamEssentials.commands;
 
-import co.aikar.commands.BaseCommand;
-import co.aikar.commands.annotation.*;
+import co.aikar.commands.annotation.CommandAlias;
+import co.aikar.commands.annotation.CommandPermission;
+import co.aikar.commands.annotation.Default;
+import co.aikar.commands.annotation.Description;
 import com.gmail.willramanand.RamEssentials.RamEssentials;
-import com.gmail.willramanand.RamEssentials.utils.ColorUtils;
-import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.event.player.PlayerTeleportEvent;
 
 @CommandAlias("setspawn")
-public class SetSpawnCommand extends BaseCommand {
+public class SetSpawnCommand extends RBaseCommand {
 
     private final RamEssentials plugin;
 
@@ -20,13 +19,12 @@ public class SetSpawnCommand extends BaseCommand {
     @Default
     @Description("Set the server spawn.")
     @CommandPermission("ramessentials.setspawn")
-    public void serverSpawn(CommandSender sender) {
-        Player player = (Player) sender;
+    public void serverSpawn(Player player) {
         plugin.getServerSpawn().setLocation(player.getLocation());
-        sender.sendMessage(ColorUtils.colorMessage("&Set server spawn to &d"
-                + player.getLocation().getBlockX() + ", "
-                + player.getLocation().getBlockY() + ", "
-                + player.getLocation().getBlockZ() + " &ein &d"
-                + player.getWorld().getName()));
+        msg(player, "{s}Set server spawn to {h}"
+                + player.getLocation().getBlockX() + "{s}, {h}"
+                + player.getLocation().getBlockY() + "{s}, {h}"
+                + player.getLocation().getBlockZ() + " {s}in {h}"
+                + player.getWorld().getName());
     }
 }

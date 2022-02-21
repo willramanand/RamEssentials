@@ -1,7 +1,7 @@
 package com.gmail.willramanand.RamEssentials.data;
 
 import com.gmail.willramanand.RamEssentials.RamEssentials;
-import com.gmail.willramanand.RamEssentials.utils.ColorUtils;
+import com.gmail.willramanand.RamEssentials.utils.Txt;
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
 import org.bukkit.Location;
@@ -36,7 +36,7 @@ public class Warps {
                 ConfigurationSection section = config.getConfigurationSection("warps");
 
                 if (section == null) {
-                    plugin.getLogger().info(ColorUtils.colorMessage("&eNo warps section detected."));
+                    plugin.getLogger().info(Txt.parse("{s}No warps section detected."));
                 } else {
                     Set<String> warpNames = section.getKeys(false);
 
@@ -45,11 +45,11 @@ public class Warps {
                         i++;
                         warps.put(s, section.getLocation(s));
                     }
-                    plugin.getLogger().info(ColorUtils.colorMessage("&eLoaded &d" + i + " &ewarps."));
+                    plugin.getLogger().info(Txt.parse("{s}Loaded {h}" + i + " {s}warps."));
                 }
             }
         } catch (IOException exception) {
-            plugin.getLogger().info(ColorUtils.colorMessage("&cFailed to create warps file!"));
+            plugin.getLogger().info(Txt.parse("{w}Failed to create warps file!"));
         }
     }
 
@@ -72,7 +72,7 @@ public class Warps {
                 config.save(warpsFile);
             }
         } catch (IOException e) {
-            plugin.getLogger().info(ColorUtils.colorMessage("&cFailed to create warps file!"));
+            plugin.getLogger().info(Txt.parse("{w}Failed to create warps file!"));
         }
     }
 

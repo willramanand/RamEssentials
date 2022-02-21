@@ -1,16 +1,14 @@
 package com.gmail.willramanand.RamEssentials.commands;
 
-import co.aikar.commands.BaseCommand;
 import co.aikar.commands.annotation.CommandAlias;
 import co.aikar.commands.annotation.CommandPermission;
 import co.aikar.commands.annotation.Default;
 import co.aikar.commands.annotation.Description;
 import com.gmail.willramanand.RamEssentials.RamEssentials;
-import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 @CommandAlias("loom")
-public class LoomCommand extends BaseCommand {
+public class LoomCommand extends RBaseCommand {
 
     private final RamEssentials plugin;
 
@@ -21,8 +19,7 @@ public class LoomCommand extends BaseCommand {
     @Default
     @Description("Opens loom inventory.")
     @CommandPermission("ramessentials.loom")
-    public void loom(CommandSender sender) {
-        Player player = (Player) sender;
+    public void loom(Player player) {
         player.openLoom(player.getLocation(), true);
     }
 }

@@ -1,11 +1,9 @@
 package com.gmail.willramanand.RamEssentials.data;
 
 import com.gmail.willramanand.RamEssentials.RamEssentials;
-import com.gmail.willramanand.RamEssentials.utils.ColorUtils;
+import com.gmail.willramanand.RamEssentials.utils.Txt;
 import org.bukkit.Bukkit;
-import org.bukkit.Color;
 import org.bukkit.Location;
-import org.bukkit.World;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 
@@ -23,7 +21,7 @@ public class ServerSpawn {
         ConfigurationSection section = config.getConfigurationSection("server_spawn");
 
         if (section == null || section.getLocation("location") == null) {
-            plugin.getLogger().info(ColorUtils.colorMessage("&eSetting server spawn to overworld default spawn."));
+            plugin.getLogger().info(Txt.parse("{s}Setting server spawn to {h}overworld {s}default spawn."));
 
             spawnLoc = Bukkit.getWorlds().get(0).getSpawnLocation();
 

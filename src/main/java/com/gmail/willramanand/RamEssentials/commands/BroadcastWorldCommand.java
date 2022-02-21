@@ -1,17 +1,14 @@
 package com.gmail.willramanand.RamEssentials.commands;
 
-import co.aikar.commands.BaseCommand;
 import co.aikar.commands.annotation.*;
 import com.gmail.willramanand.RamEssentials.RamEssentials;
-import com.gmail.willramanand.RamEssentials.utils.ColorUtils;
-import net.kyori.adventure.text.Component;
-import org.bukkit.Bukkit;
+import com.gmail.willramanand.RamEssentials.utils.Txt;
 import org.bukkit.World;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 @CommandAlias("broadcastworld|bcw")
-public class BroadcastWorldCommand extends BaseCommand {
+public class BroadcastWorldCommand extends RBaseCommand {
 
     private final RamEssentials plugin;
 
@@ -26,14 +23,14 @@ public class BroadcastWorldCommand extends BaseCommand {
     public void broadcastWorld(CommandSender sender, World world, String message) {
 
         if (message.equalsIgnoreCase("")) {
-            sender.sendMessage(ColorUtils.colorMessage("&cYou cannot broadcast an empty message."));
+            msg(sender,"{w}You cannot broadcast an empty message.");
             return;
         }
 
         for (Player player : world.getPlayers()) {
-            player.sendMessage(ColorUtils.colorMessage(message));
+            msg(player, message);
         }
-        plugin.getLogger().info(ColorUtils.colorMessage("&6Broadcasted to &d" + world.getName() + "&6: &f" + message));
+        plugin.getLogger().info(Txt.parse("{gold}Broadcasted to {h}" + world.getName() + "{gold}: {white}" + message));
     }
 
 }

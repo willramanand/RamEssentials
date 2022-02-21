@@ -1,17 +1,15 @@
 package com.gmail.willramanand.RamEssentials.commands;
 
-import co.aikar.commands.BaseCommand;
 import co.aikar.commands.annotation.*;
-import com.gmail.willramanand.RamEssentials.data.MuteType;
 import com.gmail.willramanand.RamEssentials.RamEssentials;
+import com.gmail.willramanand.RamEssentials.data.MuteType;
 import com.gmail.willramanand.RamEssentials.player.EPlayer;
-import com.gmail.willramanand.RamEssentials.utils.ColorUtils;
 import com.gmail.willramanand.RamEssentials.utils.MuteTimer;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 @CommandAlias("mute")
-public class MuteCommand extends BaseCommand {
+public class MuteCommand extends RBaseCommand {
 
     private final RamEssentials plugin;
 
@@ -24,14 +22,10 @@ public class MuteCommand extends BaseCommand {
     @CommandCompletion("@players")
     @Description("Permanently mute a user")
     public void permaMute(CommandSender sender, @Flags("other") Player player, @Default("Muted by operator") String reason) {
-        EPlayer ePlayer = plugin.getPlayerManager().getPlayerData(player);
-
-        if (ePlayer == null) {
-            sender.sendMessage(ColorUtils.colorMessage("&cPlayer does not exist or is not online!"));
-        }
+        EPlayer ePlayer = getData(player);
 
         if (ePlayer.isMuted()) {
-            sender.sendMessage(ColorUtils.colorMessage("&cPlayer is already muted!"));
+            msg(sender, "{w}Player is already muted!");
             return;
         }
 
@@ -39,8 +33,8 @@ public class MuteCommand extends BaseCommand {
         ePlayer.setMuteReason(reason);
         ePlayer.setMuteType(MuteType.PERM);
 
-        sender.sendMessage(ColorUtils.colorMessage("&eYou have muted the player &d" + player.getName() + " &epermanently."));
-        player.sendMessage(ColorUtils.colorMessage("&eYou have been muted &dPERMANENTLY&e."));
+        msg(sender, "{s}You have muted the player {h}" + player.getName() + " {s}permanently.");
+        msg(player, "{s}You have been muted {h}PERMANENTLY{s}.");
     }
 
     @Subcommand("temp|t")
@@ -49,14 +43,10 @@ public class MuteCommand extends BaseCommand {
     @CommandCompletion("@players")
     @Description("Temporarily mute a player")
     public void tempMute(CommandSender sender, @Flags("other") Player player, @Default("60") int seconds, @Default("Muted by operator") String reason) {
-        EPlayer ePlayer = plugin.getPlayerManager().getPlayerData(player);
-
-        if (ePlayer == null) {
-            sender.sendMessage(ColorUtils.colorMessage("&cPlayer does not exist or is not online!"));
-        }
+        EPlayer ePlayer = getData(player);
 
         if (ePlayer.isMuted()) {
-            sender.sendMessage(ColorUtils.colorMessage("&cPlayer is already muted!"));
+            msg(sender, "{w}Player is already muted!");
             return;
         }
 
@@ -66,8 +56,8 @@ public class MuteCommand extends BaseCommand {
         plugin.getTempMutedPlayers().add(ePlayer.getUuid());
         MuteTimer.runTimer(ePlayer, seconds);
 
-        sender.sendMessage(ColorUtils.colorMessage("&eYou have muted the player &d" + player.getName() + " &efor &d" + seconds + " &eseconds."));
-        player.sendMessage(ColorUtils.colorMessage("&eYou have been muted for &d" + seconds + " &eseconds."));
+        msg(sender, "{s}You have muted the player {h}" + player.getName() + " {s}for {h}" + seconds + " {s}seconds.");
+        msg(player, "{s}You have been muted for {h}" + seconds + " {s}seconds.");
     }
 
     @Subcommand("remove|r")
@@ -76,14 +66,14 @@ public class MuteCommand extends BaseCommand {
     @CommandCompletion("@players")
     @Description("Unmutes a muted player.")
     public void removeMute(CommandSender sender, @Flags("other") Player player) {
-        EPlayer ePlayer = plugin.getPlayerManager().getPlayerData(player);
+        EPlayer ePlayer = getData(player);
 
         if (ePlayer == null) {
-            sender.sendMessage(ColorUtils.colorMessage("&cPlayer does not exist or is not online!"));
+            msg(sender, "{w}Player does not exist or is not online!");
         }
 
         if (!(ePlayer.isMuted())) {
-            sender.sendMessage(ColorUtils.colorMessage("&cPlayer is not muted!"));
+            msg(sender, "{w}Player is not muted!");
             return;
         }
 
@@ -95,7 +85,7 @@ public class MuteCommand extends BaseCommand {
         ePlayer.setMuteReason(null);
         ePlayer.setMuteType(null);
 
-        sender.sendMessage(ColorUtils.colorMessage("&eYou have unmuted the player &d" + player.getName() + "&e."));
-        player.sendMessage(ColorUtils.colorMessage("&eYou have been unmuted."));
+        msg(sender,"{s}You have unmuted the player {h}" + player.getName() + "{s}.");
+        msg(player, "{s}You have been unmuted.");
     }
 }

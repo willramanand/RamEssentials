@@ -1,17 +1,15 @@
 package com.gmail.willramanand.RamEssentials.commands;
 
 
-import co.aikar.commands.BaseCommand;
-import co.aikar.commands.annotation.*;
+import co.aikar.commands.annotation.CommandAlias;
+import co.aikar.commands.annotation.Default;
+import co.aikar.commands.annotation.Description;
 import com.gmail.willramanand.RamEssentials.RamEssentials;
-import com.gmail.willramanand.RamEssentials.utils.ColorUtils;
-import org.bukkit.attribute.Attribute;
-import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageEvent;
 
 @CommandAlias("suicide")
-public class SuicideCommand extends BaseCommand {
+public class SuicideCommand extends RBaseCommand {
 
     private final RamEssentials plugin;
 
@@ -28,7 +26,6 @@ public class SuicideCommand extends BaseCommand {
         if (ede.isCancelled()) return;
 
         player.setHealth(0);
-        player.damage(player.getAttribute(Attribute.GENERIC_MAX_HEALTH).getValue());
-        player.sendMessage(ColorUtils.colorMessage("&eKilled yourself!"));
+        msg(player, "{w}Killed yourself!");
     }
 }

@@ -1,16 +1,13 @@
 package com.gmail.willramanand.RamEssentials.commands;
 
-import co.aikar.commands.BaseCommand;
 import co.aikar.commands.annotation.*;
 import com.gmail.willramanand.RamEssentials.RamEssentials;
-import com.gmail.willramanand.RamEssentials.utils.ColorUtils;
+import com.gmail.willramanand.RamEssentials.utils.EasyComponent;
 import com.gmail.willramanand.RamEssentials.utils.TeleportUtils;
-import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.event.player.PlayerTeleportEvent;
 
 @CommandAlias("warp")
-public class WarpCommand extends BaseCommand {
+public class WarpCommand extends RBaseCommand {
 
     private final RamEssentials plugin;
 
@@ -21,41 +18,39 @@ public class WarpCommand extends BaseCommand {
     @Default
     @CommandCompletion("@warps")
     @Description("Teleport to warp location.")
-    public void warp(CommandSender sender, @Optional String name) {
-        Player player = (Player) sender;
-
+    public void warp(Player player, @Optional String name) {
         if (name == null) {
             if (plugin.getWarps().getWarpList().isEmpty()) {
-                player.sendMessage(ColorUtils.colorMessage("&cThere are no warps on this server!"));
+                msg(player,"{w}There are no warps on this server!");
                 return;
             }
-            player.sendMessage(ColorUtils.colorMessage("&6---- &bWarps &6----"));
+            msg(player, "{gold}---- {aqua}Warps {gold}----");
             for (String s : plugin.getWarps().getWarpList()) {
-                player.sendMessage(s);
+                EasyComponent component = new EasyComponent(s);
+                msg(player, component.clickEvent("/warp " + s).hoverEvent("{s}Click to warp to {h}" + s + "{s}!").get());
             }
             return;
         }
 
         if (plugin.getWarps().getWarpList().contains(name)) {
-            player.sendMessage(ColorUtils.colorMessage("&eTeleport to warp &d" + name));
+            msg(player, "{s}Teleporting to warp {h}" + name);
             TeleportUtils.teleport(player, plugin.getWarps().warpLocation(name));
             return;
         }
-        player.sendMessage(ColorUtils.colorMessage("&cThat warp does not exist!"));
+        msg(player, "{w}That warp does not exist!");
     }
 
     @Subcommand("set")
     @CommandAlias("setwarp")
     @CommandPermission("ramessentials.setwarp")
     @Description("Set a new warp.")
-    public void setWarp(CommandSender sender, String name) {
-        Player player = (Player) sender;
+    public void setWarp(Player player, String name) {
         if (plugin.getWarps().getWarpList().contains(name)) {
-            player.sendMessage(ColorUtils.colorMessage("&d" + name + " &ealready exists!"));
+            msg(player, "{h}" + name + " {s}already exists!");
             return;
         }
         plugin.getWarps().addWarp(name, player.getLocation());
-        player.sendMessage(ColorUtils.colorMessage("&eSet warp &d" + name + " &eto this location."));
+        msg(player, "{s}Set warp {h}" + name + " {s}to this location.");
     }
 
     @Subcommand("del")
@@ -63,13 +58,12 @@ public class WarpCommand extends BaseCommand {
     @CommandCompletion("@warps")
     @Description("Delete a warp.")
     @CommandPermission("ramessentials.delwarp")
-    public void delWarp(CommandSender sender, String warpName) {
-        Player player = (Player) sender;
+    public void delWarp(Player player, String warpName) {
         if (plugin.getWarps().getWarpList().contains(warpName)) {
-            player.sendMessage(ColorUtils.colorMessage("&eDeleted warp &d" + warpName));
+            msg(player, "{s}Deleted warp {h}" + warpName);
             plugin.getWarps().delWarp(warpName);
             return;
         }
-        player.sendMessage(ColorUtils.colorMessage("&cThat warp does not exist!"));
+        msg(player, "{w}That warp does not exist!");
     }
 }

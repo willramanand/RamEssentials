@@ -1,6 +1,5 @@
 package com.gmail.willramanand.RamEssentials.commands;
 
-import co.aikar.commands.BaseCommand;
 import co.aikar.commands.annotation.CommandAlias;
 import co.aikar.commands.annotation.Default;
 import co.aikar.commands.annotation.Description;
@@ -8,7 +7,7 @@ import com.gmail.willramanand.RamEssentials.RamEssentials;
 import org.bukkit.entity.Player;
 
 @CommandAlias("afk")
-public class AFKCommand extends BaseCommand {
+public class AFKCommand extends RBaseCommand {
 
     private final RamEssentials plugin;
 

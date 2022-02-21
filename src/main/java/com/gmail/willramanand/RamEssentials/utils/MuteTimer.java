@@ -2,7 +2,6 @@ package com.gmail.willramanand.RamEssentials.utils;
 
 import com.gmail.willramanand.RamEssentials.RamEssentials;
 import com.gmail.willramanand.RamEssentials.player.EPlayer;
-import com.gmail.willramanand.RamEssentials.utils.ColorUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
@@ -23,7 +22,7 @@ public class MuteTimer {
                 ePlayer.setMuteReason(null);
                 RamEssentials.getInstance().getTempMutedPlayers().remove(ePlayer.getUuid());
 
-                ePlayer.getPlayer().sendMessage(ColorUtils.colorMessage("&eYour mute penalty has ended!"));
+                ePlayer.getPlayer().sendMessage(Txt.parse("{s}Your mute penalty has ended!"));
             }
         }.runTaskLater(RamEssentials.getInstance(), ticks);
     }

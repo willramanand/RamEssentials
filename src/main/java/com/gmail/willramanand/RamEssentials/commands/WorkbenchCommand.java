@@ -1,17 +1,14 @@
 package com.gmail.willramanand.RamEssentials.commands;
 
-import co.aikar.commands.BaseCommand;
-import co.aikar.commands.annotation.*;
+import co.aikar.commands.annotation.CommandAlias;
+import co.aikar.commands.annotation.CommandPermission;
+import co.aikar.commands.annotation.Default;
+import co.aikar.commands.annotation.Description;
 import com.gmail.willramanand.RamEssentials.RamEssentials;
-import org.bukkit.Bukkit;
-import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.event.inventory.InventoryType;
-import org.bukkit.inventory.CraftingInventory;
-import org.bukkit.inventory.Inventory;
 
 @CommandAlias("workbench|craft")
-public class WorkbenchCommand extends BaseCommand {
+public class WorkbenchCommand extends RBaseCommand {
 
     private final RamEssentials plugin;
 
@@ -22,8 +19,7 @@ public class WorkbenchCommand extends BaseCommand {
     @Default
     @Description("Opens crafting inventory.")
     @CommandPermission("ramessentials.workbench")
-    public void workBench(CommandSender sender) {
-        Player player = (Player) sender;
+    public void workBench(Player player) {
         player.openWorkbench(player.getLocation(), true);
     }
 }

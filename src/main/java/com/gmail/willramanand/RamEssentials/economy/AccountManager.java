@@ -1,9 +1,7 @@
 package com.gmail.willramanand.RamEssentials.economy;
 
 import com.gmail.willramanand.RamEssentials.RamEssentials;
-import com.gmail.willramanand.RamEssentials.utils.ColorUtils;
-import com.google.common.collect.BiMap;
-import com.google.common.collect.HashBiMap;
+import com.gmail.willramanand.RamEssentials.utils.Txt;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -36,9 +34,9 @@ public class AccountManager {
         if (!file.exists()) {
             try {
                 file.createNewFile();
-                plugin.getLogger().info(ColorUtils.colorMessage("&eCreated accounts file!"));
+                plugin.getLogger().info(Txt.parse("{s}Created accounts file!"));
             } catch (IOException e) {
-                plugin.getLogger().info(ColorUtils.colorMessage("&cFailed to created accounts file!"));
+                plugin.getLogger().info(Txt.parse("{w}Failed to created accounts file!"));
             }
         }
 
@@ -52,7 +50,7 @@ public class AccountManager {
                 createAccount(UUID.fromString(s), config.getDouble(s + ".balance"));
                 i++;
             }
-            plugin.getLogger().info(ColorUtils.colorMessage("&eLoaded &d" + i + " &eaccounts!"));
+            plugin.getLogger().info(Txt.parse("{s}Loaded {h}" + i + " {s}accounts!"));
         }
     }
 
@@ -69,7 +67,7 @@ public class AccountManager {
             try {
                 config.save(file);
             } catch (IOException e) {
-                plugin.getLogger().info(ColorUtils.colorMessage("&cFailed to save accounts file!"));
+                plugin.getLogger().info(Txt.parse("{w}Failed to save accounts file!"));
             }
         }
     }

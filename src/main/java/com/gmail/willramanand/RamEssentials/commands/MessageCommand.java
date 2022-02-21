@@ -1,15 +1,13 @@
 package com.gmail.willramanand.RamEssentials.commands;
 
-import co.aikar.commands.BaseCommand;
 import co.aikar.commands.annotation.*;
 import com.gmail.willramanand.RamEssentials.RamEssentials;
 import com.gmail.willramanand.RamEssentials.player.EPlayer;
-import com.gmail.willramanand.RamEssentials.utils.ColorUtils;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 @CommandAlias("message|msg")
-public class MessageCommand extends BaseCommand {
+public class MessageCommand extends RBaseCommand {
 
     private final RamEssentials plugin;
 
@@ -22,7 +20,7 @@ public class MessageCommand extends BaseCommand {
     @Description("Message a player on the server")
     public void messagePlayer(CommandSender sender, @Flags("other") Player player, String message) {
         if (!(sender instanceof Player)) {
-            sender.sendMessage(ColorUtils.colorMessage("&cYou must be player to use this command!"));
+            msg(sender,"{w}You must be player to use this command!");
             return;
         }
 
@@ -30,22 +28,22 @@ public class MessageCommand extends BaseCommand {
 
         EPlayer ePlayer = plugin.getPlayerManager().getPlayerData(playerSender);
         if (ePlayer.isDoNotDisturb()) {
-            sender.sendMessage(ColorUtils.colorMessage("&cYou cannot send a message if you are do not disturb!"));
+            msg(sender, "{w}You cannot send a message if you are do not disturb!");
             return;
         }
 
 
         EPlayer ePlayerOther = plugin.getPlayerManager().getPlayerData(player);
         if (ePlayerOther.isDoNotDisturb()) {
-            sender.sendMessage(ColorUtils.colorMessage("&cThis player is do not disturb!"));
+            msg(sender, "{w}This player is do not disturb!");
             return;
         } else if (ePlayerOther.getIgnoredPlayers().contains(playerSender.getUniqueId())) {
-            player.sendMessage(ColorUtils.colorMessage("&cYou cannot send a message to a player ignoring you!"));
+            msg(sender, "{w}You cannot send a message to a player ignoring you!");
             return;
         }
 
-        playerSender.sendMessage(ColorUtils.colorMessage("&e➜ &d" + player.getName() + "&e: " + message));
-        player.sendMessage(ColorUtils.colorMessage("&d" + playerSender.getName() + " &e➜ : " + message));
+        msg(playerSender, "{s}➜ {h}" + player.getName() + "{s} " + message);
+        msg(player, "{h}" + playerSender.getName() + " {s}➜ " + message);
         plugin.getMessageManager().addLastPlayer(player, playerSender);
     }
 
@@ -54,31 +52,33 @@ public class MessageCommand extends BaseCommand {
     @Description("Reply to a person")
     public void replyPlayer(CommandSender sender, String message) {
         if (!(sender instanceof Player)) {
-            sender.sendMessage(ColorUtils.colorMessage("&cOnly a player can direct reply. Use &d/msg &cinstead!"));
+            msg(sender,"{w}You must be player to use this command!");
             return;
         }
 
-        EPlayer ePlayer = plugin.getPlayerManager().getPlayerData((Player) sender);
+        Player player = (Player) sender;
+
+        EPlayer ePlayer = getData(player);
         if (ePlayer.isDoNotDisturb()) {
-            sender.sendMessage(ColorUtils.colorMessage("&cYou cannot send a message if you are do not disturb!"));
+            msg(sender, "{w}You cannot send a message if you are do not disturb!");
             return;
         }
 
         if (plugin.getMessageManager().getLastPlayer((Player) sender) == null) {
-            sender.sendMessage(ColorUtils.colorMessage("&cNo recent players to reply to!"));
+            msg(sender, "{w}No recent players to reply to!");
             return;
         }
 
-        Player playerTo = plugin.getMessageManager().getLastPlayer((Player) sender);
+        Player playerTo = plugin.getMessageManager().getLastPlayer(player);
 
-        EPlayer ePlayerOther = plugin.getPlayerManager().getPlayerData(playerTo);
+        EPlayer ePlayerOther = getData(playerTo);
         if (ePlayerOther.isDoNotDisturb()) {
-            sender.sendMessage(ColorUtils.colorMessage("&cThis player is do not disturb!"));
+            msg(sender, "{w}This player is do not disturb!");
             return;
         }
 
-        sender.sendMessage(ColorUtils.colorMessage("&e➜ &d" + playerTo.getName() + "&e: " + message));
-        playerTo.sendMessage(ColorUtils.colorMessage("&d" + sender.getName() + " &e➜ : " + message));
-        plugin.getMessageManager().addLastPlayer(playerTo, (Player) sender);
+        msg(sender, "{s}➜ {h}" + playerTo.getName() + "{s} " + message);
+        msg(playerTo, "{h}" + player.getName() + " {s}➜ " + message);
+        plugin.getMessageManager().addLastPlayer(playerTo, player);
     }
 }
