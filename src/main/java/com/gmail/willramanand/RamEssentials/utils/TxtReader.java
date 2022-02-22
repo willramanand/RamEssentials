@@ -43,7 +43,7 @@ public class TxtReader {
     public static void sendRules(Player player) {
         File file = new File(RamEssentials.getInstance().getDataFolder().getPath() + "/rules.txt");
 
-        player.sendMessage(Txt.parse("&6---- &bRules &6----"));
+        player.sendMessage(Txt.header("RULES"));
         try {
             Scanner sc = new Scanner(file);
 

@@ -4,6 +4,7 @@ import co.aikar.commands.annotation.CommandAlias;
 import co.aikar.commands.annotation.Default;
 import co.aikar.commands.annotation.Description;
 import com.gmail.willramanand.RamEssentials.RamEssentials;
+import com.gmail.willramanand.RamEssentials.utils.Txt;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 
@@ -35,7 +36,7 @@ public class HelpCommand extends RBaseCommand {
 
     @Default
     @Description("Show help for all commands on server.")
-    public void onHelp(CommandSender sender, @Default("1") int page) {
+    public void onHelpPage(CommandSender sender, @Default("1") int page) {
         final Map<Integer, List<Command>> commandPages = new HashMap<>();
 
         int pageCount = 1;
@@ -51,14 +52,20 @@ public class HelpCommand extends RBaseCommand {
         }
 
         int totalPages = pageCount;
+
+        if (commandPages.get(totalPages).isEmpty()) {
+            commandPages.remove(totalPages);
+            totalPages--;
+        }
+
         if (commandPages.get(page) == null) {
             msg(sender, "{w}Page is out of bounds! Please select between 1 and " + totalPages);
             return;
         }
 
-        msg(sender, "{gold}------- {aqua}Help {yellow}" + page + " {gray}/ " + "{gold}" + totalPages + " -------");
+        msg(sender, Txt.header("HELP {yellow}" + page + " {gray}/ " + "{gold}" + totalPages));
         for (Command cmd : commandPages.get(page)) {
-            msg(sender, "{aqua}/" + cmd.getName() + ": {white}" + cmd.getDescription());
+            msg(sender, "{gold}/" + cmd.getName() + " {white}" + cmd.getDescription());
         }
     }
 }

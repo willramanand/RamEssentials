@@ -8,6 +8,7 @@ import com.gmail.willramanand.RamEssentials.RamEssentials;
 import com.gmail.willramanand.RamEssentials.player.EPlayer;
 import com.gmail.willramanand.RamEssentials.utils.EasyComponent;
 import com.gmail.willramanand.RamEssentials.utils.TeleportUtils;
+import com.gmail.willramanand.RamEssentials.utils.Txt;
 import org.bukkit.entity.Player;
 
 public class HomeCommand extends RBaseCommand {
@@ -28,7 +29,7 @@ public class HomeCommand extends RBaseCommand {
             if (ePlayer.getHomeList().isEmpty()) {
                 msg(player, "{w}You have no homes to list!");
             } else {
-                msg(player, "{gold}---- {aqua}Homes {gold}----");
+                msg(player, Txt.header("HOMES"));
                 for (String s : ePlayer.getHomeList()) {
                     EasyComponent component = new EasyComponent(s);
                     msg(player, component.clickEvent("/home " + s).hoverEvent("{s}Click to teleport to {h}" + s + "{s}!").get());

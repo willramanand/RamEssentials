@@ -113,7 +113,7 @@ public final class RamEssentials extends JavaPlugin {
             playerConfig.save(player, true);
         }
 
-        log.info("&cDisabled");
+        log.info(Txt.parse("{w}Disabled"));
     }
 
     @Override
@@ -149,9 +149,9 @@ public final class RamEssentials extends JavaPlugin {
 
     private void setupHelpLimit() {
         if (commandsPerPage == 0) {
-            commandsPerPage = 6;
-            this.getConfig().set("commandsPerPage", 6);
-            log.info(Txt.parse("{s}Commands per page is empty in config! Setting to {h}6"));
+            commandsPerPage = 7;
+            this.getConfig().set("commandsPerPage", 7);
+            log.info(Txt.parse("{s}Commands per page is empty in config! Setting to {h}7"));
             this.saveConfig();
         }
     }

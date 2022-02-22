@@ -28,6 +28,11 @@ public class Txt {
         return component.content(componentString);
     }
 
+    public static String header(String headerTitle) {
+        return parse("{gold}{str}                  {r}{aqua}{bold} " + headerTitle + " {r}{gold}{str}                  ");
+    }
+
+
     private static String replaceAlternateChars(String message) {
         if (alternateChars.isEmpty()) {
             setupAlternateCodes();

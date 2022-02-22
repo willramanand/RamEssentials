@@ -4,6 +4,7 @@ import co.aikar.commands.annotation.*;
 import com.gmail.willramanand.RamEssentials.RamEssentials;
 import com.gmail.willramanand.RamEssentials.utils.EasyComponent;
 import com.gmail.willramanand.RamEssentials.utils.TeleportUtils;
+import com.gmail.willramanand.RamEssentials.utils.Txt;
 import org.bukkit.entity.Player;
 
 @CommandAlias("warp")
@@ -24,7 +25,7 @@ public class WarpCommand extends RBaseCommand {
                 msg(player,"{w}There are no warps on this server!");
                 return;
             }
-            msg(player, "{gold}---- {aqua}Warps {gold}----");
+            msg(player, Txt.header("WARPS"));
             for (String s : plugin.getWarps().getWarpList()) {
                 EasyComponent component = new EasyComponent(s);
                 msg(player, component.clickEvent("/warp " + s).hoverEvent("{s}Click to warp to {h}" + s + "{s}!").get());

@@ -4,6 +4,7 @@ import co.aikar.commands.annotation.CommandAlias;
 import co.aikar.commands.annotation.Default;
 import co.aikar.commands.annotation.Description;
 import com.gmail.willramanand.RamEssentials.RamEssentials;
+import com.gmail.willramanand.RamEssentials.utils.Txt;
 import com.gmail.willramanand.RamEssentials.utils.TxtReader;
 import org.bukkit.entity.Player;
 
@@ -19,6 +20,7 @@ public class MotdCommand extends RBaseCommand {
     @Default
     @Description("Outputs the message of the day")
     public void motd(Player player) {
+        msg(player, Txt.header("MOTD"));
         TxtReader.sendMotd(player);
     }
 }
