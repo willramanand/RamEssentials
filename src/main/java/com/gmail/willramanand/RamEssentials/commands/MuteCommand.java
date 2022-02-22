@@ -2,11 +2,12 @@ package com.gmail.willramanand.RamEssentials.commands;
 
 import co.aikar.commands.annotation.*;
 import com.gmail.willramanand.RamEssentials.RamEssentials;
-import com.gmail.willramanand.RamEssentials.data.MuteType;
 import com.gmail.willramanand.RamEssentials.player.EPlayer;
 import com.gmail.willramanand.RamEssentials.utils.MuteTimer;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+
+import java.util.Date;
 
 @CommandAlias("mute")
 public class MuteCommand extends RBaseCommand {
@@ -31,7 +32,6 @@ public class MuteCommand extends RBaseCommand {
 
         ePlayer.setMuted(true);
         ePlayer.setMuteReason(reason);
-        ePlayer.setMuteType(MuteType.PERM);
 
         msg(sender, "{s}You have muted the player {h}" + player.getName() + " {s}permanently.");
         msg(player, "{s}You have been muted {h}PERMANENTLY{s}.");
@@ -52,9 +52,7 @@ public class MuteCommand extends RBaseCommand {
 
         ePlayer.setMuted(true);
         ePlayer.setMuteReason(reason);
-        ePlayer.setMuteType(MuteType.TEMP);
-        plugin.getTempMutedPlayers().add(ePlayer.getUuid());
-        MuteTimer.runTimer(ePlayer, seconds);
+        ePlayer.setMuteTime(seconds);
 
         msg(sender, "{s}You have muted the player {h}" + player.getName() + " {s}for {h}" + seconds + " {s}seconds.");
         msg(player, "{s}You have been muted for {h}" + seconds + " {s}seconds.");
@@ -77,13 +75,9 @@ public class MuteCommand extends RBaseCommand {
             return;
         }
 
-        if (ePlayer.getMuteType() == MuteType.TEMP) {
-            plugin.getTempMutedPlayers().remove(ePlayer.getUuid());
-        }
-
         ePlayer.setMuted(false);
         ePlayer.setMuteReason(null);
-        ePlayer.setMuteType(null);
+        ePlayer.setMuteExpire(null);
 
         msg(sender,"{s}You have unmuted the player {h}" + player.getName() + "{s}.");
         msg(player, "{s}You have been unmuted.");

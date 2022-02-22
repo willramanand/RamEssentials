@@ -62,6 +62,11 @@ public class PlayerListener implements Listener {
             }
             event.getPlayer().sendMessage(Txt.parse("{s}Gamemode set to {h}" + event.getPlayer().getGameMode().name() + "{s}."));
         }
+
+        if (ePlayer.isMuted()) {
+            long seconds = (ePlayer.getMuteExpire().getTimeInMillis() - System.currentTimeMillis()) / 1000;
+            event.getPlayer().sendMessage(Txt.parse("{w}You are currently muted for {h}" + seconds + " {w}seconds!"));
+        }
     }
 
     @EventHandler
@@ -73,7 +78,9 @@ public class PlayerListener implements Listener {
     public void checkMuted(AsyncChatEvent event) {
         EPlayer ePlayer = plugin.getPlayerManager().getPlayerData(event.getPlayer());
         if (ePlayer.isMuted()) {
-            event.getPlayer().sendMessage(Txt.parse("{w}You are currently muted!"));
+            long seconds = (ePlayer.getMuteExpire().getTimeInMillis() - System.currentTimeMillis()) / 1000;
+            event.getPlayer().sendMessage(Txt.parse("{w}Muted for: {white}" + ePlayer.getMuteReason()));
+            event.getPlayer().sendMessage(Txt.parse("{w}Expires in {h}" + seconds + "{w} seconds!"));
             event.setCancelled(true);
         }
     }

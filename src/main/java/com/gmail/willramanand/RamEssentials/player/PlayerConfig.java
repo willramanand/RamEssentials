@@ -1,7 +1,6 @@
 package com.gmail.willramanand.RamEssentials.player;
 
 import com.gmail.willramanand.RamEssentials.RamEssentials;
-import com.gmail.willramanand.RamEssentials.data.MuteType;
 import com.gmail.willramanand.RamEssentials.utils.Txt;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -9,9 +8,12 @@ import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
+import org.checkerframework.checker.units.qual.C;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.UUID;
 
 public class PlayerConfig {
@@ -66,6 +68,7 @@ public class PlayerConfig {
             boolean isDoNotDisturb = config.getBoolean("isDoNotDisturb");
             boolean isMuted = config.getBoolean("isMuted");
             String muteReason = config.getString("muteReason");
+            Date muteExpire = config.getObject("muteExpire", Date.class);
 
             Location lastLocation = config.getLocation("lastLocation");
 
@@ -74,8 +77,10 @@ public class PlayerConfig {
             ePlayer.setMuted(isMuted);
             ePlayer.setMuteReason(muteReason);
 
-            if (isMuted) {
-                ePlayer.setMuteType(MuteType.PERM);
+            if (isMuted && muteExpire != null) {
+                Calendar calendar = Calendar.getInstance();
+                calendar.setTime(muteExpire);
+                ePlayer.setMuteExpire(calendar);
             }
 
             if (lastLocation != null) {
@@ -119,9 +124,12 @@ public class PlayerConfig {
             config.set("isGodMode", ePlayer.isGodMode());
             config.set("isDoNotDisturb", ePlayer.isDoNotDisturb());
 
-            if (ePlayer.getMuteType() != null && ePlayer.getMuteType() != MuteType.TEMP) {
+            if (ePlayer.isMuted()) {
                 config.set("isMuted", ePlayer.isMuted());
                 config.set("muteReason", ePlayer.getMuteReason());
+                if (ePlayer.getMuteExpire() != null) {
+                    config.set("muteExpire", ePlayer.getMuteExpire().getTime());
+                }
             }
 
             config.set("lastLocation", ePlayer.getLastLocation());
@@ -170,7 +178,6 @@ public class PlayerConfig {
             if (isMuted) {
                 ePlayer.setMuted(true);
                 ePlayer.setMuteReason("Muted by OP");
-                ePlayer.setMuteType(MuteType.PERM);
             }
 
             String moneyString = essConfig.getString("money");

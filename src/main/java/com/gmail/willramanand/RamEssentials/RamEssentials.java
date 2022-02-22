@@ -42,8 +42,6 @@ public final class RamEssentials extends JavaPlugin {
     private MessageManager messageManager;
     private AccountManager accountManager;
 
-    private final List<UUID> tempMutedPlayers = new ArrayList<>();
-
     private int houseLimit = 0;
     private int commandsPerPage = 0;
 
@@ -93,6 +91,8 @@ public final class RamEssentials extends JavaPlugin {
         playerManager.startAutoSave();
         accountManager.runAutoSave();
 
+        MuteTimer.runMuteTimer();
+
         startTime = System.currentTimeMillis() - startTime;
         log.info(Txt.parse("{gold}=== {aqua}ENABLE {darkgreen}COMPLETE {gold}({s}Took {h}" + startTime +"ms{gold}) ==="));
     }
@@ -102,12 +102,6 @@ public final class RamEssentials extends JavaPlugin {
         serverSpawn.save();
         warps.save();
         accountManager.save();
-
-        for (UUID uuid : tempMutedPlayers) {
-            MuteTimer.clearMute(uuid);
-        }
-
-        tempMutedPlayers.clear();
 
         for (Player player : Bukkit.getOnlinePlayers()) {
             playerConfig.save(player, true);
@@ -246,8 +240,6 @@ public final class RamEssentials extends JavaPlugin {
     public PlayerConfig getPlayerConfig() { return playerConfig; }
 
     public PlayerManager getPlayerManager() { return playerManager; }
-
-    public List<UUID> getTempMutedPlayers() { return tempMutedPlayers; }
 
     public ServerSpawn getServerSpawn() { return serverSpawn; }
 

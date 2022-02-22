@@ -1,16 +1,12 @@
 package com.gmail.willramanand.RamEssentials.player;
 
 import com.gmail.willramanand.RamEssentials.RamEssentials;
-import com.gmail.willramanand.RamEssentials.data.MuteType;
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 
 public class EPlayer {
 
@@ -24,7 +20,7 @@ public class EPlayer {
 
     private boolean isMuted;
     private String muteReason;
-    private MuteType muteType;
+    private Calendar muteExpire;
 
     private Location lastLocation;
 
@@ -41,7 +37,7 @@ public class EPlayer {
         this.isDoNotDisturb = false;
         this.isMuted = false;
         this.muteReason = null;
-        this.muteType = null;
+        this.muteExpire = null;
         this.lastLocation = null;
         this.uuid = this.player.getUniqueId();
         this.homes = HashBiMap.create();
@@ -90,12 +86,19 @@ public class EPlayer {
         this.muteReason = muteReason;
     }
 
-    public MuteType getMuteType() {
-        return muteType;
+    public Calendar getMuteExpire() {
+        return muteExpire;
     }
 
-    public void setMuteType(MuteType muteType) {
-        this.muteType = muteType;
+    public void setMuteExpire(Calendar muteExpire) {
+        this.muteExpire = muteExpire;
+    }
+
+    public void setMuteTime(int seconds) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(new Date());
+        calendar.add(Calendar.SECOND, seconds);
+        this.muteExpire = calendar;
     }
 
     public Location getLastLocation() {
@@ -134,7 +137,9 @@ public class EPlayer {
         return ignoredPlayers.contains(uuid);
     }
 
-    public List<UUID> getIgnoredPlayers() { return ignoredPlayers; }
+    public List<UUID> getIgnoredPlayers() {
+        return ignoredPlayers;
+    }
 
     public boolean isSaving() {
         return saving;
