@@ -124,12 +124,10 @@ public class PlayerConfig {
             config.set("isGodMode", ePlayer.isGodMode());
             config.set("isDoNotDisturb", ePlayer.isDoNotDisturb());
 
-            if (ePlayer.isMuted()) {
-                config.set("isMuted", ePlayer.isMuted());
-                config.set("muteReason", ePlayer.getMuteReason());
-                if (ePlayer.getMuteExpire() != null) {
-                    config.set("muteExpire", ePlayer.getMuteExpire().getTime());
-                }
+            config.set("isMuted", ePlayer.isMuted());
+            config.set("muteReason", ePlayer.getMuteReason());
+            if (ePlayer.getMuteExpire() != null) {
+                config.set("muteExpire", ePlayer.getMuteExpire().getTime());
             }
 
             config.set("lastLocation", ePlayer.getLastLocation());

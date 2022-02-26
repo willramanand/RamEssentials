@@ -11,16 +11,18 @@ import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 
 public class Warps {
 
     private final RamEssentials plugin;
-    private final BiMap<String, Location> warps;
+    private final Map<String, Location> warps;
 
     public Warps(RamEssentials plugin) {
         this.plugin = plugin;
-        this.warps = HashBiMap.create();
+        this.warps = new HashMap<>();
     }
 
     public void load() {

@@ -6,12 +6,209 @@ softdepend: [ Vault ]
 authors: [ WillRam ]
 description: Provides essentials commands and functionality to your paper server.
 website: willramanand.github.io
+commands:
+  warp:
+    description: Teleport to a warp location
+    usage: /<command> [warpname]
+  setwarp:
+    description: Set a warp location to your current location
+    usage: /<command> <warpname>
+    permission: ramessentials.setwarp
+  delwarp:
+    description: Delete a warp location
+    usage: /<command> <warpname>
+    permission: ramessentials.delwarp
+  broadcast:
+    description: Broadcast message to server
+    usage: /<command> <message>
+    aliases: [cast, bc]
+    permission: ramessentials.broadcast
+  broadcastworld:
+    description: Broadcast message to players on specific world
+    usage: /<command> <world> <message>
+    aliases: [castworld, bcw]
+    permission: ramessentials.broadcast
+  gamemode:
+    description: Change to a different gamemode
+    usage: /<command> <gamemode>
+    aliases: [gm]
+    permission: ramessentials.gamemode
+  afk:
+    description: Toggle your afk status
+    usage: /<command>
+  anvil:
+    description: Opens an anvil inventory
+    usage: /<command>
+    aliases: [anv]
+    permission: ramessentials.anvil
+  back:
+    description: Return to your previous location
+    usage: /<command>
+  balance:
+    description: Show the balance of a player's account
+    usage: /<command> [player]
+    aliases: [bal, money, account]
+  cartographytable:
+    description: Opens a cartography table inventory
+    usage: /<command>
+    aliases: [carttable]
+    permission: ramessentials.cartographytable
+  donotdisturb:
+    description: Toggle to prevent direct messages
+    usage: /<command>
+    aliases: [dnd]
+  economy:
+    description: Manage the server's economy
+    usage: /<command>
+    aliases: [eco]
+    permission: ramessentials.eco
+  enderchest:
+    description: Opens the enderchest of select player
+    usage: /<command> [player]
+    aliases: [endsee, endchest]
+    permission: ramessentials.enderchest
+  fly:
+    description: Toggle flight
+    usage: /<command>
+    permission: ramessentials.fly
+  flyspeed:
+    description: Change your flight speed
+    usage: /<command> [speed]
+    permission: ramessentials.flyspeed
+  godmode:
+    description: Toggle god mode
+    usage: /<command>
+    aliases: [god]
+    permission: ramessentials.god
+  grindstone:
+    description: Opens a grindstone inventory
+    usage: /<command>
+    aliases: [grind, gstone]
+    permission: ramessentials.grindstone
+  heal:
+    description: Heals the selected player
+    usage: /<command> [player]
+    permission: ramessentials.heal
+  help:
+    description: Show the server command help
+    usage: /<command> [page]
+    aliases: [?]
+  home:
+    description: Teleport to one of your homes
+    usage: /<command> [homename]
+  sethome:
+    description: Set a home
+    usage: /<command> <homename>
+    aliases: [homeset]
+  delhome:
+    description: Delete a home
+    usage: /<command> <homename>
+    aliases: [homedel]
+  ignore:
+    description: Prevent another player from sending requests and messages
+    usage: /<command> <playername>
+    aliases: [block]
+  inventorysee:
+    description: Look at another player's inventory
+    usage: /<command> <playername>
+    aliases: [invsee]
+    permission: ramessentials.invsee
+  killplayer:
+    description: Kill another player
+    usage: /<command> <playername>
+    aliases: [killother, killp]
+    permission: ramessentials.killplayer
+  loom:
+    description: Opens a loom inventory
+    usage: /<command>
+    permission: ramessentials.loom
+  message:
+    description: Send another player a message
+    usage: /<command> <playername> <message>
+    aliases: [msg]
+  reply:
+    description: Reply to most recent player
+    usage: /<command> <message>
+    aliases: [r]
+  messageoftheday:
+    description: Outputs the server motd
+    usage: /<command>
+    aliases: [motd]
+  mute:
+    description: Mutes a player
+    usage: /<command> <playername> [reason]
+    permission: ramessentials.mute
+  mutetemp:
+    description: Temporarily mutes a player
+    usage: /<command> <playername> [seconds] [reason]
+    aliases: [tempmute]
+    permission: ramessentials.mute
+  unmute:
+    description: Removes a mute from a player
+    usage: /<command> <playername>
+    permission: ramessentials.unmute
+  pay:
+    description: Pay another player
+    usage: /<command> <playername> <amount>
+  rules:
+    description: Show the server rules
+    usage: /<command>
+  setspawn:
+    description: Set the server spawn
+    usage: /<command>
+    permission: ramessentials.setspawn
+  smithingtable:
+    description: Opens a smithing table inventory
+    usage: /<command>
+    aliases: [smithtable]
+    permission: ramessentials.smithingtable
+  spawn:
+    description: Teleport to server spawn or world spawn
+    usage: /<command> [worldname]
+  stonecutter:
+    description: Opens a stonecutting table
+    usage: /<command>
+    aliases: [cutter]
+    permission: ramessentials.stonecutter
+  suicide:
+    description: Take the easy way out
+    usage: /<command>
+  teleport:
+    description: Teleport to another player
+    usage: /<command> <player1> <player2>
+    aliases: [tp, tpp, tpp2p]
+    permission: ramessentials.teleport
+  teleportpos:
+    description: Teleport to specific coordinates
+    usage: /<command> <x> <y> <z>
+    aliases: [tppos, tpcoords]
+    permission: ramessentials.teleport
+  tpa:
+    description: Request to teleport to another player
+    usage: /<command> <playername>
+    aliases: [tpask]
+  tpaccept:
+    description: Accept a teleport request
+    usage: /<command> [playername]
+  tpadeny:
+    description: Deny a teleport request
+    usage: /<command> [playername]
+  walkspeed:
+    description: Set your walk speed
+    usage: /<command> [speed]
+    permission: ramessentials.walkspeed
+  workbench:
+    description: Opens a crafting inventory
+    usage: /<command>
+    permission: ramessentials.workbench
+  world:
+    description: Teleport to a world
+    usage: /<command> <worldname>
+    permission: ramessentials.world
 permissions:
   ramessentials.broadcast:
     default: op
   ramessentials.enderchest:
-    default: op
-  ramessentials.enderchest.other:
     default: op
   ramessentials.workbench:
     default: true
@@ -45,6 +242,8 @@ permissions:
     default: op
   ramessentials.fly:
     default: op
+  ramessentials.flyspeed:
+    default: op
   ramessentials.walkspeed:
     default: op
   ramessentials.eco:
@@ -54,4 +253,6 @@ permissions:
   ramessentials.gamemode:
     default: op
   ramessentials.heal:
+    default: op
+  ramessentials.god:
     default: op

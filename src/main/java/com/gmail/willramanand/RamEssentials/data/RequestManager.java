@@ -36,9 +36,9 @@ public class RequestManager {
 
         playerTo.sendMessage(Txt.parse("{s}You have received a teleport request from {h}" + playerFrom.getName()));
         EasyComponent componentAccept = new EasyComponent("{s}Type {h}/tpaaccept {s}to accept this request.");
-        playerTo.sendMessage(componentAccept.clickEvent("/tpa accept " + playerFrom.getName()).hoverEvent("&6Click here to accept &b" + playerFrom.getName() + "'s &6request!").get());
+        playerTo.sendMessage(componentAccept.clickEvent("/tpaccept " + playerFrom.getName()).hoverEvent("&6Click here to accept &b" + playerFrom.getName() + "'s &6request!").get());
         EasyComponent componentDeny = new EasyComponent("{s}Type {h}/tpadeny {s}to deny this request.");
-        playerTo.sendMessage(componentDeny.clickEvent("/tpa deny " + playerFrom.getName()).hoverEvent("&6Click here to deny &b" + playerFrom.getName() + "'s &6request!").get());
+        playerTo.sendMessage(componentDeny.clickEvent("/tpadeny " + playerFrom.getName()).hoverEvent("&6Click here to deny &b" + playerFrom.getName() + "'s &6request!").get());
         playerTo.sendMessage(Txt.parse("{s}This request will be automatically denied in {h}120 {s}seconds."));
 
         startTimer(playerTo, playerFrom);

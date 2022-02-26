@@ -64,8 +64,12 @@ public class PlayerListener implements Listener {
         }
 
         if (ePlayer.isMuted()) {
-            long seconds = (ePlayer.getMuteExpire().getTimeInMillis() - System.currentTimeMillis()) / 1000;
-            event.getPlayer().sendMessage(Txt.parse("{w}You are currently muted for {h}" + seconds + " {w}seconds!"));
+            if (ePlayer.getMuteExpire() == null) {
+                event.getPlayer().sendMessage(Txt.parse("{w}You are currently muted!"));
+            } else {
+                long seconds = (ePlayer.getMuteExpire().getTimeInMillis() - System.currentTimeMillis()) / 1000;
+                event.getPlayer().sendMessage(Txt.parse("{w}You are currently muted for {h}" + seconds + " {w}seconds!"));
+            }
         }
     }
 
@@ -78,9 +82,14 @@ public class PlayerListener implements Listener {
     public void checkMuted(AsyncChatEvent event) {
         EPlayer ePlayer = plugin.getPlayerManager().getPlayerData(event.getPlayer());
         if (ePlayer.isMuted()) {
-            long seconds = (ePlayer.getMuteExpire().getTimeInMillis() - System.currentTimeMillis()) / 1000;
-            event.getPlayer().sendMessage(Txt.parse("{w}Muted for: {white}" + ePlayer.getMuteReason()));
-            event.getPlayer().sendMessage(Txt.parse("{w}Expires in {h}" + seconds + "{w} seconds!"));
+
+            if (ePlayer.getMuteExpire() == null) {
+                event.getPlayer().sendMessage(Txt.parse("{w}Muted for: {white}" + ePlayer.getMuteReason()));
+            } else {
+                long seconds = (ePlayer.getMuteExpire().getTimeInMillis() - System.currentTimeMillis()) / 1000;
+                event.getPlayer().sendMessage(Txt.parse("{w}Muted for: {white}" + ePlayer.getMuteReason()));
+                event.getPlayer().sendMessage(Txt.parse("{w}Expires in {h}" + seconds + "{w} seconds!"));
+            }
             event.setCancelled(true);
         }
     }

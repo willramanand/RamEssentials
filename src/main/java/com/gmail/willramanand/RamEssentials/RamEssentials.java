@@ -1,7 +1,8 @@
 package com.gmail.willramanand.RamEssentials;
 
-import co.aikar.commands.PaperCommandManager;
 import com.gmail.willramanand.RamEssentials.commands.*;
+import com.gmail.willramanand.RamEssentials.commands.inv.*;
+import com.gmail.willramanand.RamEssentials.commands.eco.CmdEcoRoot;
 import com.gmail.willramanand.RamEssentials.data.MessageManager;
 import com.gmail.willramanand.RamEssentials.data.RequestManager;
 import com.gmail.willramanand.RamEssentials.data.ServerSpawn;
@@ -9,7 +10,6 @@ import com.gmail.willramanand.RamEssentials.data.Warps;
 import com.gmail.willramanand.RamEssentials.economy.AccountManager;
 import com.gmail.willramanand.RamEssentials.economy.RamEssentialsEconomy;
 import com.gmail.willramanand.RamEssentials.listeners.PlayerListener;
-import com.gmail.willramanand.RamEssentials.player.EPlayer;
 import com.gmail.willramanand.RamEssentials.player.PlayerConfig;
 import com.gmail.willramanand.RamEssentials.player.PlayerManager;
 import com.gmail.willramanand.RamEssentials.utils.AFKTimer;
@@ -18,12 +18,12 @@ import com.gmail.willramanand.RamEssentials.utils.Txt;
 import com.gmail.willramanand.RamEssentials.utils.TxtReader;
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.Bukkit;
+import org.bukkit.command.CommandExecutor;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.ServicePriority;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.util.*;
 import java.util.logging.Logger;
 
 public final class RamEssentials extends JavaPlugin {
@@ -94,7 +94,7 @@ public final class RamEssentials extends JavaPlugin {
         MuteTimer.runMuteTimer();
 
         startTime = System.currentTimeMillis() - startTime;
-        log.info(Txt.parse("{gold}=== {aqua}ENABLE {darkgreen}COMPLETE {gold}({s}Took {h}" + startTime +"ms{gold}) ==="));
+        log.info(Txt.parse("{gold}=== {aqua}ENABLE {darkgreen}COMPLETE {gold}({s}Took {h}" + startTime + "ms{gold}) ==="));
     }
 
     @Override
@@ -151,85 +151,58 @@ public final class RamEssentials extends JavaPlugin {
     }
 
     private void registerCommands() {
-        PaperCommandManager commandManager = new PaperCommandManager(this);
+        addCommand("afk", new CmdAFK(this));
+        addCommand("anvil", new CmdAnvil(this));
+        addCommand("back", new CmdBack(this));
+        addCommand("balance", new CmdBalance(this));
+        addCommand("broadcast", new CmdBroadcast(this));
+        addCommand("broadcastworld", new CmdBroadcastWorld(this));
+        addCommand("cartographytable", new CmdCartographyTable(this));
+        addCommand("delhome", new CmdDelHome(this));
+        addCommand("delwarp", new CmdDelWarp(this));
+        addCommand("donotdisturb", new CmdDND(this));
+        addCommand("eco", new CmdEcoRoot(this));
+        addCommand("enderchest", new CmdEnderChest(this));
+        addCommand("fly", new CmdFly(this));
+        addCommand("flyspeed", new CmdFlySpeed(this));
+        addCommand("gamemode", new CmdGamemode(this));
+        addCommand("godmode", new CmdGod(this));
+        addCommand("grindstone", new CmdGrindstone(this));
+        addCommand("heal", new CmdHeal(this));
+        addCommand("help", new CmdHelp(this, getCommandsPerPage()));
+        addCommand("home", new CmdHome(this));
+        addCommand("ignore", new CmdIgnore(this));
+        addCommand("inventorysee", new CmdInvsee(this));
+        addCommand("killplayer", new CmdKillPlayer(this));
+        addCommand("loom", new CmdLoom(this));
+        addCommand("message", new CmdMessage(this));
+        addCommand("messageoftheday", new CmdMotd(this));
+        addCommand("mute", new CmdMute(this));
+        addCommand("mutetemp", new CmdMuteTemp(this));
+        addCommand("pay", new CmdPay(this));
+        addCommand("reply", new CmdReply(this));
+        addCommand("rules", new CmdRules(this));
+        addCommand("sethome", new CmdSetHome(this));
+        addCommand("setspawn", new CmdSetSpawn(this));
+        addCommand("setwarp", new CmdSetWarp(this));
+        addCommand("smithingtable", new CmdSmithingTable(this));
+        addCommand("spawn", new CmdSpawn(this));
+        addCommand("stonecutter", new CmdStonecutter(this));
+        addCommand("suicide", new CmdSuicide(this));
+        addCommand("teleport", new CmdTeleport(this));
+        addCommand("teleportpos", new CmdTeleportPos(this));
+        addCommand("tpa", new CmdTPA(this));
+        addCommand("tpaccept", new CmdTPAccept(this));
+        addCommand("tpadeny", new CmdTPADeny(this));
+        addCommand("unmute", new CmdUnmute(this));
+        addCommand("walkspeed", new CmdWalkSpeed(this));
+        addCommand("warp", new CmdWarp(this));
+        addCommand("workbench", new CmdWorkbench(this));
+        addCommand("world", new CmdWorld(this));
+    }
 
-        commandManager.enableUnstableAPI("help");
-
-        commandManager.getCommandCompletions().registerAsyncCompletion("warps", context -> warps.getWarpList());
-
-        commandManager.getCommandCompletions().registerAsyncCompletion("homes", context -> {
-            Player player = context.getPlayer();
-            EPlayer ePlayer = this.getPlayerManager().getPlayerData(player);
-
-            if (ePlayer.getHomeList().isEmpty()) {
-                return null;
-            }
-            return ePlayer.getHomeList();
-        });
-
-        commandManager.getCommandCompletions().registerAsyncCompletion("requests", context -> {
-           Player playerTo = context.getPlayer();
-
-           if (this.requestManager.getRequests(playerTo) == null) {
-               return null;
-           }
-           Set<String> requestNames = new HashSet<>();
-           for (Player player : requestManager.getRequests(playerTo)) {
-               requestNames.add(player.getName());
-           }
-           return requestNames;
-        });
-
-        // Teleport Commands
-        commandManager.registerCommand(new TeleportCommand(this));
-        commandManager.registerCommand(new SpawnCommand(this));
-        commandManager.registerCommand(new SetSpawnCommand(this));
-        commandManager.registerCommand(new WarpCommand(this));
-        commandManager.registerCommand(new BackCommand(this));
-        commandManager.registerCommand(new HomeCommand(this));
-        commandManager.registerCommand(new TPACommand(this));
-        commandManager.registerCommand(new WorldCommand(this));
-
-        // Messaging Commands
-        commandManager.registerCommand(new BroadcastCommand(this));
-        commandManager.registerCommand(new BroadcastWorldCommand(this));
-        commandManager.registerCommand(new MessageCommand(this));
-        commandManager.registerCommand(new DNDCommand(this));
-        commandManager.registerCommand(new IgnoreCommand(this));
-
-        // Inventory Commands
-        commandManager.registerCommand(new EnderChestCommand(this));
-        commandManager.registerCommand(new WorkbenchCommand(this));
-        commandManager.registerCommand(new AnvilCommand(this));
-        commandManager.registerCommand(new SmithingTableCommand(this));
-        commandManager.registerCommand(new CartographyTableCommand(this));
-        commandManager.registerCommand(new GrindstoneCommand(this));
-        commandManager.registerCommand(new LoomCommand(this));
-        commandManager.registerCommand(new StoneCutterCommand(this));
-        commandManager.registerCommand(new InventoryCommand(this));
-
-        // Misc Commands
-        commandManager.registerCommand(new KillPlayerCommand(this));
-        commandManager.registerCommand(new SuicideCommand(this));
-        commandManager.registerCommand(new GodCommand(this));
-        commandManager.registerCommand(new MotdCommand(this));
-        commandManager.registerCommand(new RulesCommand(this));
-        commandManager.registerCommand(new FlyCommand(this));
-        commandManager.registerCommand(new WalkSpeedCommand(this));
-        commandManager.registerCommand(new FlySpeedCommand(this));
-        commandManager.registerCommand(new AFKCommand(this));
-        commandManager.registerCommand(new RamEssentialsCommand(this));
-        commandManager.registerCommand(new HelpCommand(this, commandsPerPage));
-
-        // Admin Commands
-        commandManager.registerCommand(new MuteCommand(this));
-        commandManager.registerCommand(new GamemodeCommand(this));
-        commandManager.registerCommand(new HealCommand(this));
-
-        // Money Commands
-        commandManager.registerCommand(new BalanceCommand(this));
-        commandManager.registerCommand(new EcoCommand(this));
-        commandManager.registerCommand(new PayCommand(this));
+    private void addCommand(String name, CommandExecutor executor) {
+        this.getCommand(name).setExecutor(executor);
     }
 
     private void registerEvents() {
@@ -237,21 +210,43 @@ public final class RamEssentials extends JavaPlugin {
         pm.registerEvents(new PlayerListener(this), this);
     }
 
-    public PlayerConfig getPlayerConfig() { return playerConfig; }
+    public PlayerConfig getPlayerConfig() {
+        return playerConfig;
+    }
 
-    public PlayerManager getPlayerManager() { return playerManager; }
+    public PlayerManager getPlayerManager() {
+        return playerManager;
+    }
 
-    public ServerSpawn getServerSpawn() { return serverSpawn; }
+    public ServerSpawn getServerSpawn() {
+        return serverSpawn;
+    }
 
-    public Warps getWarps() { return warps; }
+    public Warps getWarps() {
+        return warps;
+    }
 
-    public RequestManager getRequestManager() { return requestManager; }
+    public RequestManager getRequestManager() {
+        return requestManager;
+    }
 
-    public MessageManager getMessageManager() { return messageManager; }
+    public MessageManager getMessageManager() {
+        return messageManager;
+    }
 
-    public AccountManager getAccountManager() { return accountManager; }
+    public AccountManager getAccountManager() {
+        return accountManager;
+    }
 
-    public AFKTimer getAfkTimer() { return afkTimer; }
+    public AFKTimer getAfkTimer() {
+        return afkTimer;
+    }
 
-    public int getHouseLimit() { return houseLimit; }
+    public int getHouseLimit() {
+        return houseLimit;
+    }
+
+    public int getCommandsPerPage() {
+        return commandsPerPage;
+    }
 }
