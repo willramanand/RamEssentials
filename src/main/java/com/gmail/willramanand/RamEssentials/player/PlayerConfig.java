@@ -8,7 +8,6 @@ import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
-import org.checkerframework.checker.units.qual.C;
 
 import java.io.File;
 import java.io.IOException;
@@ -35,7 +34,7 @@ public class PlayerConfig {
         if (!file.exists()) {
             try {
                 file.createNewFile();
-                Bukkit.getServer().getConsoleSender().sendMessage(Txt.parse("&2Created player config for UUID: " + player.getUniqueId()));
+                plugin.getLogger().info(Txt.parse("&2Created player config for UUID: " + player.getUniqueId()));
 
                 FileConfiguration config = YamlConfiguration.loadConfiguration(file);
                 EPlayer ePlayer = new EPlayer(plugin, player);
@@ -48,11 +47,11 @@ public class PlayerConfig {
                     try {
                         config.save(file);
                     } catch (IOException e) {
-                        Bukkit.getServer().getConsoleSender().sendMessage(Txt.parse("&4Could not save player config for UUID: " + player.getUniqueId()));
+                        plugin.getLogger().info(Txt.parse("&4Could not save player config for UUID: " + player.getUniqueId()));
                     }
                 }
             } catch (IOException e) {
-                Bukkit.getServer().getConsoleSender().sendMessage(Txt.parse("&4Could not create player config for UUID: " + player.getUniqueId()));
+                plugin.getLogger().info(Txt.parse("&4Could not create player config for UUID: " + player.getUniqueId()));
             }
         }
     }
@@ -105,7 +104,7 @@ public class PlayerConfig {
 
             plugin.getPlayerManager().addPlayerData(ePlayer);
         } else {
-            Bukkit.getServer().getConsoleSender().sendMessage(Txt.parse("&bCould not load player config for UUID: " + player.getUniqueId()));
+            plugin.getLogger().info(Txt.parse("&bCould not load player config for UUID: " + player.getUniqueId()));
             setup(player);
         }
     }
@@ -150,10 +149,10 @@ public class PlayerConfig {
                     plugin.getPlayerManager().removePlayerData(player.getUniqueId());
                 }
             } catch (IOException e) {
-                Bukkit.getServer().getConsoleSender().sendMessage(Txt.parse("&bCould not save player config for UUID: " + player.getUniqueId()));
+                plugin.getLogger().info(Txt.parse("{w}Could not save player config for UUID: " + player.getUniqueId()));
             }
         } else {
-            Bukkit.getServer().getConsoleSender().sendMessage(Txt.parse("&bCould not save player config for UUID: " + player.getUniqueId() + " because it does not exist!"));
+            plugin.getLogger().info(Txt.parse("{w}Could not save player config for UUID: " + player.getUniqueId() + " because it does not exist!"));
         }
         ePlayer.setSaving(false);
     }
@@ -163,7 +162,7 @@ public class PlayerConfig {
         File file = new File(Bukkit.getServer().getPluginsFolder().getPath() + "/Essentials/userdata/" + player.getUniqueId() + ".yml");
 
         if (file.exists()) {
-            plugin.getLogger().info(Txt.parse("&eConverting essentials data for &d" + player.getName()));
+            plugin.getLogger().info(Txt.parse("{s}Converting essentials data for {h}" + player.getName()));
             FileConfiguration essConfig = YamlConfiguration.loadConfiguration(file);
             EPlayer ePlayer = plugin.getPlayerManager().getPlayerData(player);
 
@@ -198,7 +197,7 @@ public class PlayerConfig {
                     ePlayer.addHome(s, new Location(Bukkit.getWorld(worldName), xCoord, yCoord, zCoord, (float) yaw, (float) pitch));
                 }
             }
-            plugin.getLogger().info(Txt.parse("&eConversion &2COMPLETE&e!"));
+            plugin.getLogger().info(Txt.parse("{s}Conversion {green}COMPLETE{w}!"));
         }
     }
 }

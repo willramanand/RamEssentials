@@ -1,9 +1,8 @@
 package com.gmail.willramanand.RamEssentials.data;
 
 import com.gmail.willramanand.RamEssentials.RamEssentials;
+import com.gmail.willramanand.RamEssentials.lang.Lang;
 import com.gmail.willramanand.RamEssentials.utils.Txt;
-import com.google.common.collect.BiMap;
-import com.google.common.collect.HashBiMap;
 import org.bukkit.Location;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -38,7 +37,7 @@ public class Warps {
                 ConfigurationSection section = config.getConfigurationSection("warps");
 
                 if (section == null) {
-                    plugin.getLogger().info(Txt.parse("{s}No warps section detected."));
+                    plugin.getLogger().info(Txt.parse(Lang.WARPS_SECTION_NOT_DETECTED));
                 } else {
                     Set<String> warpNames = section.getKeys(false);
 
@@ -47,11 +46,11 @@ public class Warps {
                         i++;
                         warps.put(s, section.getLocation(s));
                     }
-                    plugin.getLogger().info(Txt.parse("{s}Loaded {h}" + i + " {s}warps."));
+                    plugin.getLogger().info(Txt.process(Lang.WARPS_LOADED, "{count}", String.valueOf(i)));
                 }
             }
         } catch (IOException exception) {
-            plugin.getLogger().info(Txt.parse("{w}Failed to create warps file!"));
+            plugin.getLogger().info(Txt.parse(Lang.WARPS_CREATE_FAIL));
         }
     }
 
@@ -74,7 +73,7 @@ public class Warps {
                 config.save(warpsFile);
             }
         } catch (IOException e) {
-            plugin.getLogger().info(Txt.parse("{w}Failed to create warps file!"));
+            plugin.getLogger().info(Txt.parse(Lang.WARPS_CREATE_FAIL));
         }
     }
 

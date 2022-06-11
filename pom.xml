@@ -6,7 +6,7 @@
 
     <groupId>com.gmail.willramanand</groupId>
     <artifactId>RamEssentials</artifactId>
-    <version>1.0.0-BETA</version>
+    <version>1.0.1-BETA</version>
     <packaging>jar</packaging>
     <name>RamEssentials</name>
     <description>Provides essentials commands and functionality to your paper server.</description>
@@ -63,7 +63,7 @@
         <dependency>
             <groupId>io.papermc.paper</groupId>
             <artifactId>paper-api</artifactId>
-            <version>1.18.1-R0.1-SNAPSHOT</version>
+            <version>1.19-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
@@ -75,7 +75,7 @@
         <dependency>
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
-            <version>31.0.1-jre</version>
+            <version>31.1-jre</version>
             <scope>provided</scope>
         </dependency>
     </dependencies>

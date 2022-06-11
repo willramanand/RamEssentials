@@ -3,9 +3,6 @@ package com.gmail.willramanand.RamEssentials.data;
 import com.gmail.willramanand.RamEssentials.RamEssentials;
 import com.gmail.willramanand.RamEssentials.utils.EasyComponent;
 import com.gmail.willramanand.RamEssentials.utils.Txt;
-import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.event.ClickEvent;
-import net.kyori.adventure.text.event.HoverEvent;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 

@@ -1,6 +1,7 @@
 package com.gmail.willramanand.RamEssentials.economy;
 
 import com.gmail.willramanand.RamEssentials.RamEssentials;
+import com.gmail.willramanand.RamEssentials.lang.Lang;
 import com.gmail.willramanand.RamEssentials.utils.Txt;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
@@ -34,9 +35,9 @@ public class AccountManager {
         if (!file.exists()) {
             try {
                 file.createNewFile();
-                plugin.getLogger().info(Txt.parse("{s}Created accounts file!"));
+                plugin.getLogger().info(Txt.parse(Lang.ACCOUNTS_CREATE));
             } catch (IOException e) {
-                plugin.getLogger().info(Txt.parse("{w}Failed to created accounts file!"));
+                plugin.getLogger().info(Txt.parse(Lang.ACCOUNTS_CREATE_FAIL));
             }
         }
 
@@ -50,7 +51,7 @@ public class AccountManager {
                 createAccount(UUID.fromString(s), config.getDouble(s + ".balance"));
                 i++;
             }
-            plugin.getLogger().info(Txt.parse("{s}Loaded {h}" + i + " {s}accounts!"));
+            plugin.getLogger().info(Txt.process(Lang.ACCOUNTS_LOADED, "{count}", String.valueOf(i)));
         }
     }
 
@@ -67,7 +68,7 @@ public class AccountManager {
             try {
                 config.save(file);
             } catch (IOException e) {
-                plugin.getLogger().info(Txt.parse("{w}Failed to save accounts file!"));
+                plugin.getLogger().info(Txt.parse(Lang.ACCOUNTS_SAVE_FAIL));
             }
         }
     }

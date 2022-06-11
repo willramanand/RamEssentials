@@ -96,8 +96,7 @@ public class PlayerListener implements Listener {
 
     @EventHandler
     public void checkGodMode(EntityDamageEvent event) {
-        if (event.getEntity() instanceof Player) {
-            Player player = (Player) event.getEntity();
+        if (event.getEntity() instanceof Player player) {
             EPlayer ePlayer = plugin.getPlayerManager().getPlayerData(player);
 
             if (ePlayer.isGodMode()) {
@@ -108,8 +107,7 @@ public class PlayerListener implements Listener {
 
     @EventHandler
     public void onDeath(EntityDeathEvent event) {
-        if (event.getEntity() instanceof Player) {
-            Player player = (Player) event.getEntity();
+        if (event.getEntity() instanceof Player player) {
             EPlayer ePlayer = plugin.getPlayerManager().getPlayerData(player);
 
             ePlayer.setLastLocation(event.getEntity().getLocation());

@@ -1,14 +1,16 @@
 package com.gmail.willramanand.RamEssentials;
 
 import com.gmail.willramanand.RamEssentials.commands.*;
-import com.gmail.willramanand.RamEssentials.commands.inv.*;
 import com.gmail.willramanand.RamEssentials.commands.eco.CmdEcoRoot;
+import com.gmail.willramanand.RamEssentials.commands.inv.*;
 import com.gmail.willramanand.RamEssentials.data.MessageManager;
 import com.gmail.willramanand.RamEssentials.data.RequestManager;
 import com.gmail.willramanand.RamEssentials.data.ServerSpawn;
 import com.gmail.willramanand.RamEssentials.data.Warps;
 import com.gmail.willramanand.RamEssentials.economy.AccountManager;
 import com.gmail.willramanand.RamEssentials.economy.RamEssentialsEconomy;
+import com.gmail.willramanand.RamEssentials.lang.Lang;
+import com.gmail.willramanand.RamEssentials.lang.LangConfiguration;
 import com.gmail.willramanand.RamEssentials.listeners.PlayerListener;
 import com.gmail.willramanand.RamEssentials.player.PlayerConfig;
 import com.gmail.willramanand.RamEssentials.player.PlayerManager;
@@ -31,6 +33,8 @@ public final class RamEssentials extends JavaPlugin {
     private final Logger log = this.getLogger();
     private static RamEssentials i;
 
+    private LangConfiguration langConfiguration;
+
     private PlayerManager playerManager;
     private PlayerConfig playerConfig;
 
@@ -44,16 +48,21 @@ public final class RamEssentials extends JavaPlugin {
 
     private int houseLimit = 0;
     private int commandsPerPage = 0;
+    private int teleportDelay = 0;
 
     @Override
     public void onEnable() {
         i = this;
 
         long startTime = System.currentTimeMillis();
-        log.info(Txt.parse("{gold}==={aqua} ENABLE START {gold}==="));
+
+        langConfiguration = new LangConfiguration(this);
+        langConfiguration.load();
+
+        log.info(Txt.parse(Lang.ENABLE_START));
 
         if (isVaultActive()) {
-            log.info(Txt.parse("{s}Enabling {h}Vault {s}integration."));
+            log.info(Txt.parse(Lang.ENABLE_VAULT_INT));
         }
 
         playerManager = new PlayerManager(this);
@@ -75,6 +84,9 @@ public final class RamEssentials extends JavaPlugin {
         commandsPerPage = this.getConfig().getInt("commandsPerPage");
         setupHelpLimit();
 
+        teleportDelay = this.getConfig().getInt("teleportDelay");
+        setupTeleportDelay();
+
         TxtReader.setup();
 
         accountManager.load();
@@ -94,11 +106,13 @@ public final class RamEssentials extends JavaPlugin {
         MuteTimer.runMuteTimer();
 
         startTime = System.currentTimeMillis() - startTime;
-        log.info(Txt.parse("{gold}=== {aqua}ENABLE {darkgreen}COMPLETE {gold}({s}Took {h}" + startTime + "ms{gold}) ==="));
+        log.info(Txt.process(Lang.ENABLE_COMPLETE, "{start-time}", String.valueOf(startTime)));
     }
 
     @Override
     public void onDisable() {
+        log.info(Txt.parse(Lang.DISABLE_START));
+
         serverSpawn.save();
         warps.save();
         accountManager.save();
@@ -107,7 +121,7 @@ public final class RamEssentials extends JavaPlugin {
             playerConfig.save(player, true);
         }
 
-        log.info(Txt.parse("{w}Disabled"));
+        log.info(Txt.parse(Lang.DISABLE_COMPLETE));
     }
 
     @Override
@@ -126,7 +140,7 @@ public final class RamEssentials extends JavaPlugin {
 
     public boolean isVaultActive() {
         if (getServer().getPluginManager().getPlugin("Vault") == null) {
-            log.warning("Vault is not installed, disabling Vault integration!");
+            log.info(Txt.parse(Lang.VAULT_NOT_FOUND));
             return false;
         }
         return true;
@@ -136,7 +150,7 @@ public final class RamEssentials extends JavaPlugin {
         if (houseLimit == 0) {
             houseLimit = 3;
             this.getConfig().set("home-limit", 3);
-            log.info(Txt.parse("{s}Homes limit is empty in config! Setting to {h}3"));
+            log.info(Txt.parse(Lang.HOME_LIMIT_EMPTY));
             this.saveConfig();
         }
     }
@@ -145,8 +159,24 @@ public final class RamEssentials extends JavaPlugin {
         if (commandsPerPage == 0) {
             commandsPerPage = 7;
             this.getConfig().set("commandsPerPage", 7);
-            log.info(Txt.parse("{s}Commands per page is empty in config! Setting to {h}7"));
+            log.info(Txt.parse(Lang.CMDS_PER_PAGE_EMPTY));
             this.saveConfig();
+        }
+    }
+
+    private void setupTeleportDelay() {
+        if (this.getConfig().get("teleportDelay") == null) {
+            log.info(Txt.parse(Lang.TP_DELAY_EMPTY));
+            teleportDelay = 0;
+            this.getConfig().set("teleportDelay", 0);
+            this.saveConfig();
+        } else {
+            if (teleportDelay < 0) {
+                log.info(Txt.parse("{w}Invalid teleport delay! Setting to {h}0{w}!"));
+                teleportDelay = 0;
+                this.getConfig().set("teleportDelay", 0);
+                this.saveConfig();
+            }
         }
     }
 
@@ -210,6 +240,8 @@ public final class RamEssentials extends JavaPlugin {
         pm.registerEvents(new PlayerListener(this), this);
     }
 
+    public String getLang(Lang lang) { return langConfiguration.get(lang); }
+
     public PlayerConfig getPlayerConfig() {
         return playerConfig;
     }
@@ -249,4 +281,6 @@ public final class RamEssentials extends JavaPlugin {
     public int getCommandsPerPage() {
         return commandsPerPage;
     }
+
+    public int getTeleportDelay() { return teleportDelay; }
 }

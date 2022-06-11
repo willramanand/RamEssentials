@@ -1,6 +1,7 @@
 package com.gmail.willramanand.RamEssentials.data;
 
 import com.gmail.willramanand.RamEssentials.RamEssentials;
+import com.gmail.willramanand.RamEssentials.lang.Lang;
 import com.gmail.willramanand.RamEssentials.utils.Txt;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -21,7 +22,7 @@ public class ServerSpawn {
         ConfigurationSection section = config.getConfigurationSection("server_spawn");
 
         if (section == null || section.getLocation("location") == null) {
-            plugin.getLogger().info(Txt.parse("{s}Setting server spawn to {h}overworld {s}default spawn."));
+            plugin.getLogger().info(Txt.parse(Lang.SERVER_SPAWN_SET_DEFAULT));
 
             spawnLoc = Bukkit.getWorlds().get(0).getSpawnLocation();
 
@@ -40,6 +41,7 @@ public class ServerSpawn {
         section.set("location", spawnLoc);
 
         plugin.saveConfig();
+        plugin.getLogger().info(Txt.parse(Lang.SERVER_SPAWN_SAVED));
     }
 
     public void setLocation(Location location) {

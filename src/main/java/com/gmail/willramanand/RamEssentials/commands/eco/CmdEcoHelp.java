@@ -12,6 +12,7 @@ import java.util.List;
 
 public class CmdEcoHelp extends EssCommand {
     private final CmdEcoRoot root;
+
     public CmdEcoHelp(RamEssentials plugin, CmdEcoRoot root) {
         super(plugin, true, false, "ramessentials.eco", 0, 0);
         this.root = root;
@@ -21,7 +22,7 @@ public class CmdEcoHelp extends EssCommand {
 
     @Override
     public void perform(CommandContext context) {
-        context.msg(Txt.header("ECONOMY"));
+        context.msg(Txt.header("ECONOMY HELP"));
         for (EssCommand ecoSubCommand : root.subCommands) {
             if (ecoSubCommand instanceof CmdEcoHelp) continue;
             context.msg("{aqua}/eco " + ecoSubCommand.aliases.get(0) + " <player> <amount>{white} " + ecoSubCommand.getHelpText());
