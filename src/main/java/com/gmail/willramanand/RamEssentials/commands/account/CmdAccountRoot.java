@@ -1,9 +1,11 @@
-package com.gmail.willramanand.RamEssentials.commands.eco;
+package com.gmail.willramanand.RamEssentials.commands.account;
 
 import com.gmail.willramanand.RamEssentials.RamEssentials;
 import com.gmail.willramanand.RamEssentials.commands.CommandContext;
 import com.gmail.willramanand.RamEssentials.commands.EssCommand;
-import com.gmail.willramanand.RamEssentials.commands.bank.CmdBankRoot;
+import com.gmail.willramanand.RamEssentials.commands.bank.CmdBankCreate;
+import com.gmail.willramanand.RamEssentials.commands.bank.CmdBankDelete;
+import com.gmail.willramanand.RamEssentials.commands.bank.CmdBankView;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.jetbrains.annotations.NotNull;
@@ -12,32 +14,33 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class CmdEcoRoot extends EssCommand {
+public class CmdAccountRoot extends EssCommand {
 
-    public CmdEcoAdd cmdEcoAdd;
-    public CmdEcoSet cmdEcoSet;
-    public CmdEcoSubtract cmdEcoSubtract;
-    public CmdEcoHelp cmdEcoHelp;
-    public CmdBankRoot cmdBankRoot;
-
-    public CmdEcoRoot(RamEssentials plugin) {
+    CmdAccountHelp cmdAccountHelp;
+    CmdAccountCreate cmdAccountCreate;
+    CmdAccountDelete cmdAccountDelete;
+    CmdAccountDeposit cmdAccountDeposit;
+    CmdAccountWithdraw cmdAccountWithdraw;
+    public CmdAccountRoot(RamEssentials plugin) {
         super(plugin, true, false, 0, -1);
 
-        cmdEcoAdd = new CmdEcoAdd(plugin);
-        cmdEcoSet = new CmdEcoSet(plugin);
-        cmdEcoSubtract = new CmdEcoSubtract(plugin);
-        cmdEcoHelp = new CmdEcoHelp(plugin, this);
+        cmdAccountHelp = new CmdAccountHelp(plugin, this);
+        cmdAccountCreate = new CmdAccountCreate(plugin);
+        cmdAccountDelete = new CmdAccountDelete(plugin);
+        cmdAccountDeposit = new CmdAccountDeposit(plugin);
+        cmdAccountWithdraw = new CmdAccountWithdraw(plugin);
 
-        this.subCommands.add(cmdEcoAdd);
-        this.subCommands.add(cmdEcoSet);
-        this.subCommands.add(cmdEcoSubtract);
-        this.subCommands.add(cmdEcoHelp);
+        this.subCommands.add(cmdAccountHelp);
+        this.subCommands.add(cmdAccountCreate);
+        this.subCommands.add(cmdAccountDelete);
+        this.subCommands.add(cmdAccountDeposit);
+        this.subCommands.add(cmdAccountWithdraw);
     }
 
     @Override
     public void perform(CommandContext context) {
         context.commandChain.add(this);
-        this.cmdEcoHelp.execute(context);
+        this.cmdAccountHelp.execute(context);
     }
 
     @Override

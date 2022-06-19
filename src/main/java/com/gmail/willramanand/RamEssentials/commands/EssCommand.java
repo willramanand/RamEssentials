@@ -30,6 +30,8 @@ public abstract class EssCommand implements TabExecutor {
 
     public String helpText;
 
+    public String usage;
+
     public List<EssCommand> subCommands;
 
 
@@ -42,6 +44,7 @@ public abstract class EssCommand implements TabExecutor {
         this.totalArgs = totalArgs;
         this.aliases = new ArrayList<>();
         this.subCommands = new ArrayList<>();
+        this.usage = "";
     }
 
     public EssCommand(RamEssentials plugin, boolean enabled, boolean playerOnly, String permission, int requiredArgsSize, int totalArgs) {
@@ -53,6 +56,7 @@ public abstract class EssCommand implements TabExecutor {
         this.totalArgs = totalArgs;
         this.aliases = new ArrayList<>();
         this.subCommands = new ArrayList<>();
+        this.usage = "";
     }
 
 
@@ -87,12 +91,12 @@ public abstract class EssCommand implements TabExecutor {
 
     public boolean validCall(CommandContext context) {
         if (requiredArgsSize != 0 && requiredArgsSize > context.args.size()) {
-            context.msg("{w}Usage: " + context.command.getUsage().replace("<command>", context.command.getName()));
+            context.msg("{w}Usage: " + context.command.getUsage().replace("<command>", context.command.getName()) + (aliases.get(0) != null ? aliases.get(0) : "") + usage);
             return false;
         }
 
         if (totalArgs != -1 && totalArgs < context.args.size()) {
-            context.msg("{w}Too many args! Usage: " + context.command.getUsage().replace("<command>", context.command.getName()));
+            context.msg("{w}Too many args! Usage: " + context.command.getUsage().replace("<command>", context.command.getName()) + (aliases.get(0) != null ? aliases.get(0) : "") + usage);
             return false;
         }
 

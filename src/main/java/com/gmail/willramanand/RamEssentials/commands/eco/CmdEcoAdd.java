@@ -16,6 +16,7 @@ public class CmdEcoAdd extends EssCommand {
     public CmdEcoAdd(RamEssentials plugin) {
         super(plugin, true, false, "ramessentials.eco", 2, 2);
         this.aliases.addAll(Arrays.asList("add", "deposit"));
+        this.usage = " <player> <amount>";
         this.helpText = "Add a specific amount of currency to player's account";
     }
 

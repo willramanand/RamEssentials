@@ -15,6 +15,7 @@ public class CmdEcoSubtract extends EssCommand {
     public CmdEcoSubtract(RamEssentials plugin) {
         super(plugin, true, true, "ramessentials.eco", 2, 2);
         this.aliases.addAll(Arrays.asList("subtract", "withdraw"));
+        this.usage = " <player> <amount>";
         this.helpText = "Subtract a certain amount of currency from a player's account";
     }
 

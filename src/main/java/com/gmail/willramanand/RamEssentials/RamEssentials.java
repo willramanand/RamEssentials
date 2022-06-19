@@ -1,6 +1,8 @@
 package com.gmail.willramanand.RamEssentials;
 
 import com.gmail.willramanand.RamEssentials.commands.*;
+import com.gmail.willramanand.RamEssentials.commands.account.CmdAccountRoot;
+import com.gmail.willramanand.RamEssentials.commands.bank.CmdBankRoot;
 import com.gmail.willramanand.RamEssentials.commands.eco.CmdEcoRoot;
 import com.gmail.willramanand.RamEssentials.commands.inv.*;
 import com.gmail.willramanand.RamEssentials.data.MessageManager;
@@ -8,6 +10,8 @@ import com.gmail.willramanand.RamEssentials.data.RequestManager;
 import com.gmail.willramanand.RamEssentials.data.ServerSpawn;
 import com.gmail.willramanand.RamEssentials.data.Warps;
 import com.gmail.willramanand.RamEssentials.economy.AccountManager;
+import com.gmail.willramanand.RamEssentials.economy.Bank;
+import com.gmail.willramanand.RamEssentials.economy.BankManager;
 import com.gmail.willramanand.RamEssentials.economy.RamEssentialsEconomy;
 import com.gmail.willramanand.RamEssentials.lang.Lang;
 import com.gmail.willramanand.RamEssentials.lang.LangConfiguration;
@@ -46,6 +50,8 @@ public final class RamEssentials extends JavaPlugin {
     private MessageManager messageManager;
     private AccountManager accountManager;
 
+    private BankManager bankManager;
+
     private int houseLimit = 0;
     private int commandsPerPage = 0;
     private int teleportDelay = 0;
@@ -72,6 +78,7 @@ public final class RamEssentials extends JavaPlugin {
         requestManager = new RequestManager(this);
         messageManager = new MessageManager(this);
         accountManager = new AccountManager(this);
+        bankManager = new BankManager(this);
         afkTimer = new AFKTimer(this);
 
         // Config
@@ -90,6 +97,7 @@ public final class RamEssentials extends JavaPlugin {
         TxtReader.setup();
 
         accountManager.load();
+        bankManager.load();
 
         serverSpawn.load();
         warps.load();
@@ -102,6 +110,7 @@ public final class RamEssentials extends JavaPlugin {
 
         playerManager.startAutoSave();
         accountManager.runAutoSave();
+        bankManager.runAutoSave();
 
         MuteTimer.runMuteTimer();
 
@@ -116,6 +125,7 @@ public final class RamEssentials extends JavaPlugin {
         serverSpawn.save();
         warps.save();
         accountManager.save();
+        bankManager.save();
 
         for (Player player : Bukkit.getOnlinePlayers()) {
             playerConfig.save(player, true);
@@ -181,10 +191,12 @@ public final class RamEssentials extends JavaPlugin {
     }
 
     private void registerCommands() {
+        addCommand("account", new CmdAccountRoot(this));
         addCommand("afk", new CmdAFK(this));
         addCommand("anvil", new CmdAnvil(this));
         addCommand("back", new CmdBack(this));
         addCommand("balance", new CmdBalance(this));
+        addCommand("bank", new CmdBankRoot(this));
         addCommand("broadcast", new CmdBroadcast(this));
         addCommand("broadcastworld", new CmdBroadcastWorld(this));
         addCommand("cartographytable", new CmdCartographyTable(this));
@@ -269,6 +281,8 @@ public final class RamEssentials extends JavaPlugin {
     public AccountManager getAccountManager() {
         return accountManager;
     }
+
+    public BankManager getBankManager() { return bankManager; }
 
     public AFKTimer getAfkTimer() {
         return afkTimer;

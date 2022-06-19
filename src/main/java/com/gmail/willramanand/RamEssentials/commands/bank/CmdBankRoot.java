@@ -1,9 +1,8 @@
-package com.gmail.willramanand.RamEssentials.commands.eco;
+package com.gmail.willramanand.RamEssentials.commands.bank;
 
 import com.gmail.willramanand.RamEssentials.RamEssentials;
 import com.gmail.willramanand.RamEssentials.commands.CommandContext;
 import com.gmail.willramanand.RamEssentials.commands.EssCommand;
-import com.gmail.willramanand.RamEssentials.commands.bank.CmdBankRoot;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.jetbrains.annotations.NotNull;
@@ -12,32 +11,33 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class CmdEcoRoot extends EssCommand {
+public class CmdBankRoot extends EssCommand {
 
-    public CmdEcoAdd cmdEcoAdd;
-    public CmdEcoSet cmdEcoSet;
-    public CmdEcoSubtract cmdEcoSubtract;
-    public CmdEcoHelp cmdEcoHelp;
-    public CmdBankRoot cmdBankRoot;
-
-    public CmdEcoRoot(RamEssentials plugin) {
+    CmdBankHelp cmdBankHelp;
+    CmdBankCreate cmdBankCreate;
+    CmdBankDelete cmdBankDelete;
+    CmdBankView cmdBankView;
+    CmdBankEdit cmdBankEdit;
+    public CmdBankRoot(RamEssentials plugin) {
         super(plugin, true, false, 0, -1);
 
-        cmdEcoAdd = new CmdEcoAdd(plugin);
-        cmdEcoSet = new CmdEcoSet(plugin);
-        cmdEcoSubtract = new CmdEcoSubtract(plugin);
-        cmdEcoHelp = new CmdEcoHelp(plugin, this);
+        cmdBankHelp = new CmdBankHelp(plugin, this);
+        cmdBankCreate = new CmdBankCreate(plugin);
+        cmdBankDelete = new CmdBankDelete(plugin);
+        cmdBankView = new CmdBankView(plugin);
+        cmdBankEdit = new CmdBankEdit(plugin);
 
-        this.subCommands.add(cmdEcoAdd);
-        this.subCommands.add(cmdEcoSet);
-        this.subCommands.add(cmdEcoSubtract);
-        this.subCommands.add(cmdEcoHelp);
+        this.subCommands.add(cmdBankHelp);
+        this.subCommands.add(cmdBankCreate);
+        this.subCommands.add(cmdBankDelete);
+        this.subCommands.add(cmdBankView);
+        this.subCommands.add(cmdBankEdit);
     }
 
     @Override
     public void perform(CommandContext context) {
         context.commandChain.add(this);
-        this.cmdEcoHelp.execute(context);
+        this.cmdBankHelp.execute(context);
     }
 
     @Override

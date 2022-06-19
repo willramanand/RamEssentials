@@ -14,7 +14,8 @@ import java.util.List;
 public class CmdEcoSet extends EssCommand {
     public CmdEcoSet(RamEssentials plugin) {
         super(plugin, true, false, "ramessentials.eco", 2, 2);
-        this.aliases.addAll(Collections.singletonList("set"));
+        this.aliases.add("set");
+        this.usage = " <player> <amount>";
         this.helpText = "Set the amount of current in a player's account";
     }
 

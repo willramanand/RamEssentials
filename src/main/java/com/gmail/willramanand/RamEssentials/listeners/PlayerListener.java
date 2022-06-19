@@ -2,9 +2,12 @@ package com.gmail.willramanand.RamEssentials.listeners;
 
 import com.gmail.willramanand.RamEssentials.RamEssentials;
 import com.gmail.willramanand.RamEssentials.player.EPlayer;
+import com.gmail.willramanand.RamEssentials.utils.EasyComponent;
+import com.gmail.willramanand.RamEssentials.utils.Formatter;
 import com.gmail.willramanand.RamEssentials.utils.Txt;
 import com.gmail.willramanand.RamEssentials.utils.TxtReader;
 import io.papermc.paper.event.player.AsyncChatEvent;
+import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -109,8 +112,20 @@ public class PlayerListener implements Listener {
     public void onDeath(EntityDeathEvent event) {
         if (event.getEntity() instanceof Player player) {
             EPlayer ePlayer = plugin.getPlayerManager().getPlayerData(player);
-
             ePlayer.setLastLocation(event.getEntity().getLocation());
+
+            double balance = plugin.getAccountManager().getBalance(player);
+            plugin.getAccountManager().setBalance(player, 0.0);
+            if (event.getEntity().getKiller() == null) {
+                player.sendMessage(Txt.parse("{s}You have lost all the money in your wallet!"));
+                Bukkit.broadcast(new EasyComponent("{h}" + player.getName() + " {s}has gone broke!").get());
+            } else {
+                Player killer = event.getEntity().getKiller();
+                plugin.getAccountManager().addToBalance(event.getEntity().getKiller(), balance);
+                player.sendMessage(Txt.parse("{h}" + killer.getName() + " {s}has taken all the money in your wallet!"));
+                killer.sendMessage(Txt.parse("{s}You received {h}" + Formatter.formatMoney(balance) + " {s}for killing {h}" + player.getName()));
+                Bukkit.broadcast(new EasyComponent("{h}" + killer.getName() + " {s}has robbed {h}" + player.getName() + " {s}of all their money!").get());
+            }
         }
     }
 }

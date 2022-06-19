@@ -33,6 +33,10 @@ commands:
     usage: /<command> <gamemode>
     aliases: [gm]
     permission: ramessentials.gamemode
+  account:
+    description: The root command for account operations.
+    usage: /<command>
+    aliases: [acc]
   afk:
     description: Toggle your afk status
     usage: /<command>
@@ -48,6 +52,9 @@ commands:
     description: Show the balance of a player's account
     usage: /<command> [player]
     aliases: [bal, money, account]
+  bank:
+    description: The bank root command
+    usage: /<command>
   cartographytable:
     description: Opens a cartography table inventory
     usage: /<command>

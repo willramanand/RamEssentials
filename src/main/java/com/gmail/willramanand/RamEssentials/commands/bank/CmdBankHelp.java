@@ -1,4 +1,4 @@
-package com.gmail.willramanand.RamEssentials.commands.eco;
+package com.gmail.willramanand.RamEssentials.commands.bank;
 
 import com.gmail.willramanand.RamEssentials.RamEssentials;
 import com.gmail.willramanand.RamEssentials.commands.CommandContext;
@@ -10,21 +10,22 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class CmdEcoHelp extends EssCommand {
-    private final CmdEcoRoot root;
+public class CmdBankHelp extends EssCommand {
 
-    public CmdEcoHelp(RamEssentials plugin, CmdEcoRoot root) {
+    private final CmdBankRoot root;
+
+    public CmdBankHelp(RamEssentials plugin, CmdBankRoot root) {
         super(plugin, true, false, "ramessentials.eco", 0, 0);
         this.root = root;
         this.aliases.addAll(Arrays.asList("help", "h"));
-        this.helpText = "This is the help command for managing the economy";
+        this.helpText = "This is the help command for managing the bank system";
     }
 
     @Override
     public void perform(CommandContext context) {
-        context.msg(Txt.header("ECONOMY HELP"));
-        for (EssCommand ecoSubCommand : root.subCommands) {
-            context.msg("{h}/eco " + ecoSubCommand.aliases.get(0) + ecoSubCommand.usage + " {s}" + ecoSubCommand.getHelpText());
+        context.msg(Txt.header("BANK HELP"));
+        for (EssCommand bankSubCommand : root.subCommands) {
+            context.msg("{h}/bank " + bankSubCommand.aliases.get(0) + bankSubCommand.usage + " {s}" + bankSubCommand.getHelpText());
         }
     }
 

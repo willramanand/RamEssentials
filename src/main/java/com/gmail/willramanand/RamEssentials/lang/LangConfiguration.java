@@ -24,7 +24,7 @@ public class LangConfiguration {
     }
 
     private void setup() {
-        File file = new File(plugin.getDataFolder() + "/lang-en.yml");
+        File file = new File(plugin.getDataFolder() + "/lang/lang-en.yml");
 
         if (!file.exists()) {
             try {
@@ -52,7 +52,7 @@ public class LangConfiguration {
     }
 
     public void load() {
-        File file = new File(plugin.getDataFolder() + "/lang-en.yml");
+        File file = new File(plugin.getDataFolder() + "/lang/lang-en.yml");
 
         if (file.exists()) {
             FileConfiguration config = YamlConfiguration.loadConfiguration(file);

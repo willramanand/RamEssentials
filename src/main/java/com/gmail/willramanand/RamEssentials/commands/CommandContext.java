@@ -111,7 +111,7 @@ public class CommandContext {
     }
 
     public Integer argAsInt(int index) {
-        return argAsInt(index, null);
+        return argAsInt(index, 0);
     }
 
     // Double args
@@ -131,7 +131,7 @@ public class CommandContext {
     }
 
     public Double argAsDouble(int index) {
-        return argAsDouble(index, null);
+        return argAsDouble(index, 0.0);
     }
 
     // Float args
@@ -151,7 +151,7 @@ public class CommandContext {
     }
 
     public Float argAsFloat(int index) {
-        return argAsFloat(index, null);
+        return argAsFloat(index, 0.0f);
     }
 
     // Player args
