@@ -17,7 +17,7 @@ public class CmdBankHelp extends EssCommand {
     public CmdBankHelp(RamEssentials plugin, CmdBankRoot root) {
         super(plugin, true, false, "ramessentials.eco", 0, 0);
         this.root = root;
-        this.aliases.addAll(Arrays.asList("help", "h"));
+        this.aliases.add("help");
         this.helpText = "This is the help command for managing the bank system";
     }
 

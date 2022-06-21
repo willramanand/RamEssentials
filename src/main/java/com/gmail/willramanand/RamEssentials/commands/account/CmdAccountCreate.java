@@ -15,7 +15,7 @@ public class CmdAccountCreate extends EssCommand {
 
     public CmdAccountCreate(RamEssentials plugin) {
         super(plugin, true, true, 1, 1);
-        this.aliases.addAll(Arrays.asList("create", "c"));
+        this.aliases.add("create");
         this.usage = " <bankName>";
         this.helpText = "This allows a player to create an account at specified bank.";
     }

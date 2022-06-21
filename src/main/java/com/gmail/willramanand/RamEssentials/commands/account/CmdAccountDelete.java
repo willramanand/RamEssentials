@@ -16,7 +16,7 @@ public class CmdAccountDelete extends EssCommand {
 
     public CmdAccountDelete(RamEssentials plugin) {
         super(plugin, true, true, 1, 1);
-        this.aliases.addAll(Arrays.asList("delete", "d"));
+        this.aliases.add("delete");
         this.usage = " <bankName>";
         this.helpText = "This allows a player to delete an account at specified bank.";
     }

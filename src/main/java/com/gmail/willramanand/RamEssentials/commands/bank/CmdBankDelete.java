@@ -13,7 +13,7 @@ public class CmdBankDelete extends EssCommand {
 
     public CmdBankDelete(RamEssentials plugin) {
         super(plugin, true, false, "ramessentials.eco",  1, 1);
-        this.aliases.addAll(Arrays.asList("delete", "d"));
+        this.aliases.add("delete");
         this.usage = " <name>";
         this.helpText = "This is the command for delete banks.";
     }

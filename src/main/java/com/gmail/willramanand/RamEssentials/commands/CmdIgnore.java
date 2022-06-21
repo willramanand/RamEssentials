@@ -24,11 +24,11 @@ public class CmdIgnore extends EssCommand {
             return;
         }
 
-        if (ePlayer.getIgnoredPlayers().contains(playerOther.getUniqueId())) {
-            ePlayer.getIgnoredPlayers().remove(playerOther.getUniqueId());
+        if (ePlayer.isIgnoring(playerOther.getUniqueId())) {
+            ePlayer.removeIgnored(playerOther.getUniqueId());
             context.msg("{s}You are no longer ignoring {h}" + playerOther.getName());
         } else {
-            ePlayer.getIgnoredPlayers().add(playerOther.getUniqueId());
+            ePlayer.addIgnored(playerOther.getUniqueId());
             context.msg("{s}You are now ignoring {h}" + playerOther.getName());
         }
     }

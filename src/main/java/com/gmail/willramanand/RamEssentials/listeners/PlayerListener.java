@@ -2,10 +2,7 @@ package com.gmail.willramanand.RamEssentials.listeners;
 
 import com.gmail.willramanand.RamEssentials.RamEssentials;
 import com.gmail.willramanand.RamEssentials.player.EPlayer;
-import com.gmail.willramanand.RamEssentials.utils.EasyComponent;
-import com.gmail.willramanand.RamEssentials.utils.Formatter;
-import com.gmail.willramanand.RamEssentials.utils.Txt;
-import com.gmail.willramanand.RamEssentials.utils.TxtReader;
+import com.gmail.willramanand.RamEssentials.utils.*;
 import io.papermc.paper.event.player.AsyncChatEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
@@ -15,6 +12,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
 public class PlayerListener implements Listener {
@@ -126,6 +124,14 @@ public class PlayerListener implements Listener {
                 killer.sendMessage(Txt.parse("{s}You received {h}" + Formatter.formatMoney(balance) + " {s}for killing {h}" + player.getName()));
                 Bukkit.broadcast(new EasyComponent("{h}" + killer.getName() + " {s}has robbed {h}" + player.getName() + " {s}of all their money!").get());
             }
+        }
+    }
+
+    @EventHandler
+    public void onMove(PlayerMoveEvent event) {
+        if (TeleportUtils.hasTPTask(event.getPlayer())) {
+            TeleportUtils.clearTPTask(event.getPlayer());
+            event.getPlayer().sendMessage(Txt.parse("{s}Teleport was cancelled!"));
         }
     }
 }

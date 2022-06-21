@@ -3,6 +3,7 @@ package com.gmail.willramanand.RamEssentials.commands;
 import com.gmail.willramanand.RamEssentials.RamEssentials;
 import com.gmail.willramanand.RamEssentials.player.EPlayer;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -16,14 +17,16 @@ public class CmdMuteTemp extends EssCommand {
 
     @Override
     public void perform(CommandContext context) {
-        EPlayer ePlayer = context.argAsEPlayer(0);
+        Player player = context.argAsPlayer(0);
         int seconds = context.argAsInt(1, 60);
         String reason = context.argAsConcatString(2, "Muted by OP.");
 
-        if (ePlayer == null) {
+        if (player == null) {
             context.msg("{w}That player does not exist or is not online!");
             return;
         }
+
+        EPlayer ePlayer = plugin.getPlayerManager().getPlayerData(player);
 
         if (ePlayer.isMuted()) {
             context.msg("{w}Player is already muted!");

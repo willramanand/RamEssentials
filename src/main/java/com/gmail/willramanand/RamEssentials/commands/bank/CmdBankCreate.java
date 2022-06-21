@@ -6,12 +6,13 @@ import com.gmail.willramanand.RamEssentials.commands.EssCommand;
 import org.bukkit.command.CommandSender;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public class CmdBankCreate extends EssCommand {
     public CmdBankCreate(RamEssentials plugin) {
         super(plugin, true, false, "ramessentials.eco", 1, 4);
-        this.aliases.addAll(Arrays.asList("create", "c"));
+        this.aliases.add("create");
         this.usage = " <name> [baseInterest] [interestMult] [openingCost]";
         this.helpText = "This commands allows administrators to create banks";
     }

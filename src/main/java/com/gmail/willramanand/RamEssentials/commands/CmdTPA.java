@@ -29,7 +29,7 @@ public class CmdTPA extends EssCommand {
 
         EPlayer ePlayer = plugin.getPlayerManager().getPlayerData(playerTo);
 
-        if (ePlayer.getIgnoredPlayers().contains(context.player.getUniqueId())) {
+        if (ePlayer.isIgnoring(context.player.getUniqueId())) {
             context.msg("{w}You cannot send a request to a player ignoring you!");
             return;
         }

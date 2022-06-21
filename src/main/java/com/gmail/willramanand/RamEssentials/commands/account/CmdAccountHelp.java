@@ -17,7 +17,7 @@ public class CmdAccountHelp extends EssCommand {
     public CmdAccountHelp(RamEssentials plugin, CmdAccountRoot root) {
         super(plugin, true, false, 0, 0);
         this.root = root;
-        this.aliases.addAll(Arrays.asList("help", "h"));
+        this.aliases.add("help");
         this.helpText = "This is the help command for managing your account.";
     }
 

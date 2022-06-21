@@ -16,7 +16,7 @@ public class CmdAccountWithdraw extends EssCommand {
 
     public CmdAccountWithdraw(RamEssentials plugin) {
         super(plugin, true, true, 2, 2);
-        this.aliases.addAll(Arrays.asList("withdraw", "w"));
+        this.aliases.add("withdraw");
         this.usage = " <bankName> <amount>";
         this.helpText = "This allows a player to withdraw money from an account at a specific bank.";
     }

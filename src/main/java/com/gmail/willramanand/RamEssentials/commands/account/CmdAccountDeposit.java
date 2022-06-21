@@ -16,7 +16,7 @@ public class CmdAccountDeposit extends EssCommand {
 
     public CmdAccountDeposit(RamEssentials plugin) {
         super(plugin, true, true, 2, 2);
-        this.aliases.addAll(Arrays.asList("deposit", "d"));
+        this.aliases.add("deposit");
         this.usage = " <bankName> <amount>";
         this.helpText = "This allows a player to deposit money to an account at a specific bank.";
     }

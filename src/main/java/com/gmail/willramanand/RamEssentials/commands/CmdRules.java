@@ -16,7 +16,6 @@ public class CmdRules extends EssCommand {
 
     @Override
     public void perform(CommandContext context) {
-        context.msg(Txt.header("RULES"));
         TxtReader.sendRules(context.player);
     }
 

@@ -4,17 +4,15 @@ import com.gmail.willramanand.RamEssentials.RamEssentials;
 import com.gmail.willramanand.RamEssentials.commands.CommandContext;
 import com.gmail.willramanand.RamEssentials.commands.EssCommand;
 import com.gmail.willramanand.RamEssentials.economy.Bank;
-import com.gmail.willramanand.RamEssentials.utils.Txt;
 import org.bukkit.command.CommandSender;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class CmdBankEdit extends EssCommand {
     public CmdBankEdit(RamEssentials plugin) {
         super(plugin, true, false, "ramessentials.eco", 4, 4);
-        this.aliases.addAll(Arrays.asList("edit", "e"));
+        this.aliases.add("edit");
         this.usage = " <name> [baseInterest] [interestMult] [openingCost]";
         this.helpText = "This commands allows administrators to edit banks";
     }
@@ -53,12 +51,7 @@ public class CmdBankEdit extends EssCommand {
         bank.setMultInterest(mult);
         bank.setOpeningCost(openingCost);
 
-        context.msg(Txt.header(bankName.toUpperCase()));
-        context.msg("{s}Admin Bank: " + (bank.isAdmin() ? "{green}yes" : "{w}no"));
-        context.msg("{s}Capital: {h}" + bank.getCapital());
-        context.msg("{s}Base Interest: {h}" + bank.getBaseInterest());
-        context.msg("{s}Interest Multiplier: {h}" + bank.getMultInterest());
-        context.msg("{s}Number of accounts: {h}" + bank.getBankAccounts().keySet().size() + " {s}accounts");
+        context.msg(bank.toString());
     }
 
     @Override

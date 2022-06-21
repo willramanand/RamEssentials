@@ -15,11 +15,11 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.UUID;
 
-public class PlayerConfig {
+public class PlayerConfiguration {
 
     private final RamEssentials plugin;
 
-    public PlayerConfig(RamEssentials plugin) {
+    public PlayerConfiguration(RamEssentials plugin) {
         this.plugin = plugin;
     }
 

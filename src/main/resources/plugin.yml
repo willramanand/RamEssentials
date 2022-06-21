@@ -182,13 +182,8 @@ commands:
     usage: /<command>
   teleport:
     description: Teleport to another player
-    usage: /<command> <player1> <player2>
-    aliases: [tp, tpp, tpp2p]
-    permission: ramessentials.teleport
-  teleportpos:
-    description: Teleport to specific coordinates
-    usage: /<command> <x> <y> <z>
-    aliases: [tppos, tpcoords]
+    usage: /<command> <player1/x> [player2/y] [z]
+    aliases: [tp]
     permission: ramessentials.teleport
   tpa:
     description: Request to teleport to another player

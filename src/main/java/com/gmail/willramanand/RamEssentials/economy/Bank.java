@@ -122,4 +122,14 @@ public class Bank {
             }
         }.runTaskTimerAsynchronously(RamEssentials.getInstance(), 24000L, 24000L);
     }
+
+    @Override
+    public String toString() {
+        return Txt.header(name.toUpperCase()) +
+                "\n{s}Admin Bank: " + (isAdmin ? "{green}yes" : "{w}no") +
+                "\n{s}Capital: {h}" + Formatter.formatMoney(capital) +
+                "\n{s}Base Interest: {h}" + baseInterest +
+                "\n{s}Interest Multiplier: {h}" + multInterest +
+                "\n{s}Number of accounts: {h}" + bankAccounts.keySet().size() + " {s}accounts";
+    }
 }

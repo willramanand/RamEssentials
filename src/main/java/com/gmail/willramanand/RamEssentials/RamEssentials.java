@@ -10,13 +10,12 @@ import com.gmail.willramanand.RamEssentials.data.RequestManager;
 import com.gmail.willramanand.RamEssentials.data.ServerSpawn;
 import com.gmail.willramanand.RamEssentials.data.Warps;
 import com.gmail.willramanand.RamEssentials.economy.AccountManager;
-import com.gmail.willramanand.RamEssentials.economy.Bank;
 import com.gmail.willramanand.RamEssentials.economy.BankManager;
 import com.gmail.willramanand.RamEssentials.economy.RamEssentialsEconomy;
 import com.gmail.willramanand.RamEssentials.lang.Lang;
 import com.gmail.willramanand.RamEssentials.lang.LangConfiguration;
 import com.gmail.willramanand.RamEssentials.listeners.PlayerListener;
-import com.gmail.willramanand.RamEssentials.player.PlayerConfig;
+import com.gmail.willramanand.RamEssentials.player.PlayerConfiguration;
 import com.gmail.willramanand.RamEssentials.player.PlayerManager;
 import com.gmail.willramanand.RamEssentials.utils.AFKTimer;
 import com.gmail.willramanand.RamEssentials.utils.MuteTimer;
@@ -40,7 +39,7 @@ public final class RamEssentials extends JavaPlugin {
     private LangConfiguration langConfiguration;
 
     private PlayerManager playerManager;
-    private PlayerConfig playerConfig;
+    private PlayerConfiguration playerConfiguration;
 
     private ServerSpawn serverSpawn;
     private Warps warps;
@@ -72,7 +71,7 @@ public final class RamEssentials extends JavaPlugin {
         }
 
         playerManager = new PlayerManager(this);
-        playerConfig = new PlayerConfig(this);
+        playerConfiguration = new PlayerConfiguration(this);
         serverSpawn = new ServerSpawn(this);
         warps = new Warps(this);
         requestManager = new RequestManager(this);
@@ -128,7 +127,7 @@ public final class RamEssentials extends JavaPlugin {
         bankManager.save();
 
         for (Player player : Bukkit.getOnlinePlayers()) {
-            playerConfig.save(player, true);
+            playerConfiguration.save(player, true);
         }
 
         log.info(Txt.parse(Lang.DISABLE_COMPLETE));
@@ -232,7 +231,6 @@ public final class RamEssentials extends JavaPlugin {
         addCommand("stonecutter", new CmdStonecutter(this));
         addCommand("suicide", new CmdSuicide(this));
         addCommand("teleport", new CmdTeleport(this));
-        addCommand("teleportpos", new CmdTeleportPos(this));
         addCommand("tpa", new CmdTPA(this));
         addCommand("tpaccept", new CmdTPAccept(this));
         addCommand("tpadeny", new CmdTPADeny(this));
@@ -254,8 +252,8 @@ public final class RamEssentials extends JavaPlugin {
 
     public String getLang(Lang lang) { return langConfiguration.get(lang); }
 
-    public PlayerConfig getPlayerConfig() {
-        return playerConfig;
+    public PlayerConfiguration getPlayerConfig() {
+        return playerConfiguration;
     }
 
     public PlayerManager getPlayerManager() {

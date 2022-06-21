@@ -91,12 +91,12 @@ public abstract class EssCommand implements TabExecutor {
 
     public boolean validCall(CommandContext context) {
         if (requiredArgsSize != 0 && requiredArgsSize > context.args.size()) {
-            context.msg("{w}Usage: " + context.command.getUsage().replace("<command>", context.command.getName()) + (aliases.get(0) != null ? aliases.get(0) : "") + usage);
+            context.msg("{w}Usage: " + context.command.getUsage().replace("<command>", context.command.getName()) + (aliases.size() > 0 ? " " + aliases.get(0) : "") + usage);
             return false;
         }
 
         if (totalArgs != -1 && totalArgs < context.args.size()) {
-            context.msg("{w}Too many args! Usage: " + context.command.getUsage().replace("<command>", context.command.getName()) + (aliases.get(0) != null ? aliases.get(0) : "") + usage);
+            context.msg("{w}Too many args! Usage: " + context.command.getUsage().replace("<command>", context.command.getName()) + (aliases.size() > 0 ? " "  + aliases.get(0) : "") + usage);
             return false;
         }
 

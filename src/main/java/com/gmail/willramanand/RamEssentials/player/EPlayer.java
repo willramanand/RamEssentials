@@ -133,7 +133,7 @@ public class EPlayer {
         ignoredPlayers.remove(uuid);
     }
 
-    public boolean isIgnored(UUID uuid) {
+    public boolean isIgnoring(UUID uuid) {
         return ignoredPlayers.contains(uuid);
     }
 

@@ -24,6 +24,11 @@ public class LangConfiguration {
     }
 
     private void setup() {
+        File dir = new File(plugin.getDataFolder().getPath() + "/lang/");
+        if (!dir.exists()) {
+            dir.mkdir();
+        }
+
         File file = new File(plugin.getDataFolder() + "/lang/lang-en.yml");
 
         if (!file.exists()) {

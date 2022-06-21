@@ -35,7 +35,7 @@ public enum Lang {
     /* =========================== PLUGIN SETUP/END RELATED MESSAGES END =============================== */
     ;
 
-    private String def;
+    private final String def;
 
     Lang(String def) {
         this.def = def;

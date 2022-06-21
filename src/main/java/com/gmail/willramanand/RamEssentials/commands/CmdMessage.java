@@ -40,7 +40,7 @@ public class CmdMessage extends EssCommand {
         if (ePlayerOther.isDoNotDisturb()) {
             context.msg("{w}This player is do not disturb!");
             return;
-        } else if (ePlayerOther.getIgnoredPlayers().contains(context.player.getUniqueId())) {
+        } else if (ePlayerOther.isIgnoring(context.player.getUniqueId())) {
             context.msg("{w}You cannot send a message to a player ignoring you!");
             return;
         }

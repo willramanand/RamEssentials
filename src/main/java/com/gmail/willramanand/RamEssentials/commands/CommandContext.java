@@ -12,6 +12,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class CommandContext {
@@ -86,12 +87,7 @@ public class CommandContext {
             return def;
         }
 
-        StringBuilder concat = new StringBuilder();
-
-        for (int i = index; i < args.size(); i++) {
-            concat.append(args.get(i)).append(" ");
-        }
-        return concat.toString();
+        return String.join(" ", List.of(args).subList(index, args.size()).toArray(new String[]{}));
     }
 
     // Int args
