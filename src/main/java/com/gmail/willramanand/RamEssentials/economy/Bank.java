@@ -120,7 +120,7 @@ public class Bank {
                     account.getHolder().getPlayer().sendMessage(Txt.parse("{h}" + Formatter.formatMoney(interest) + " {s}interest has been deposited into your account at {h}" + name));
                 }
             }
-        }.runTaskTimerAsynchronously(RamEssentials.getInstance(), 24000L, 24000L);
+        }.runTaskTimerAsynchronously(RamEssentials.getInstance(), 144000L, 144000L);
     }
 
     @Override

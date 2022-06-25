@@ -32,6 +32,7 @@ public class CmdMute extends EssCommand {
         }
 
         ePlayer.setMuted(true);
+        ePlayer.setMuteExpire(null);
         ePlayer.setMuteReason(reason);
 
         context.msg("{s}You have muted the player {h}" + player.getName() + " {s}permanently.");

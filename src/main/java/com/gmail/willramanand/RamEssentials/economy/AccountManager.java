@@ -94,6 +94,7 @@ public class AccountManager {
     @Deprecated
     public void createAccount(String playerName, double amount) {
         UUID uuid = getUUIDByPlayerName(playerName);
+        if (uuid == null) return;
         accounts.put(uuid, amount);
     }
 
@@ -108,7 +109,7 @@ public class AccountManager {
     @Deprecated
     public boolean hasAccount(String playerName) {
         UUID uuid = getUUIDByPlayerName(playerName);
-        return accounts.containsKey(uuid);
+        return uuid != null && accounts.containsKey(uuid);
     }
 
     public void setBalance(OfflinePlayer player, double amount) {
@@ -123,6 +124,7 @@ public class AccountManager {
     @Deprecated
     public void setBalance(String playerName, double amount) {
         UUID uuid = getUUIDByPlayerName(playerName);
+        if (uuid == null) return;
         accounts.put(uuid, amount);
     }
 
@@ -137,7 +139,7 @@ public class AccountManager {
     @Deprecated
     public double getBalance(String playerName) {
         UUID uuid = getUUIDByPlayerName(playerName);
-        return accounts.get(uuid);
+        return uuid != null ? accounts.get(uuid) : 0.0;
     }
 
     public void addToBalance(OfflinePlayer player, double amount) {
@@ -155,6 +157,7 @@ public class AccountManager {
     @Deprecated
     public void addToBalance(String playerName, double amount) {
         UUID uuid = getUUIDByPlayerName(playerName);
+        if (uuid == null) return;
         double initial = accounts.get(uuid);
         double newAmount = initial + amount;
         accounts.put(uuid, newAmount);
@@ -175,6 +178,7 @@ public class AccountManager {
     @Deprecated
     public void subFromBalance(String playerName, double amount) {
         UUID uuid = getUUIDByPlayerName(playerName);
+        if (uuid == null) return;
         double initial = accounts.get(uuid);
         double newAmount = initial - amount;
         accounts.put(uuid, newAmount);
@@ -194,7 +198,7 @@ public class AccountManager {
     public boolean isValidTransaction(String playerName, double amount) {
         UUID uuid = getUUIDByPlayerName(playerName);
         double initial = accounts.get(uuid);
-        return (initial - amount) >= 0;
+        return uuid != null && (initial - amount) >= 0;
     }
 
     public String getPlayerNameByUUID(UUID uuid) {
@@ -209,10 +213,7 @@ public class AccountManager {
     @Deprecated
     public UUID getUUIDByPlayerName(String playerName) {
         OfflinePlayer player = Bukkit.getOfflinePlayer(playerName);
-        if (player != null) {
-            return player.getUniqueId();
-        }
-        return null;
+        return player.getUniqueId();
     }
 
 }
